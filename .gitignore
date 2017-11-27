@@ -1,0 +1,5 @@
+IntershipProject/bin/*
+IntershipProject/obj/*
+packages/
+*.suo
+.vs/*
