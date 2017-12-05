@@ -44,7 +44,7 @@
             </GroupBox>
         </Viewbox>
 
-        <ListView Grid.Row="1"/>
+        <DataGrid Grid.Row="1"/>
     </Grid>
     
 </Page>

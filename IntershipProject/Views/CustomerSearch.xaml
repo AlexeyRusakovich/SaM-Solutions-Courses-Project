@@ -48,7 +48,7 @@
             </StackPanel>
 
         </Grid>
-        <ListView Grid.Row="1" Margin="0,20,0,0"/>
+        <DataGrid Grid.Row="1" Margin="0,20,0,0"/>
     </Grid>
     
 </Page>

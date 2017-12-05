@@ -8,23 +8,14 @@
         xmlns:my ="clr-namespace:IntershipProject.ViewModels"
         xmlns:k ="clr-namespace:IntershipProject.Views"
         mc:Ignorable="d"
-        Width="800"
-        Height="600"
-        MinWidth="450" 
+        Height="{Binding MainWindowHeight, Source={StaticResource WinEventHandlerClass}}"
+        Width="{Binding MainWindowWidth, Source={StaticResource WinEventHandlerClass}}" 
+        MinWidth="600"
         MinHeight="400"
-        Style="{StaticResource WindowStyle}">
+        Style="{StaticResource WindowStyle}" ResizeMode="CanResize">
 
-    <Window.Resources>
-
-        <Style x:Key="RectBorderStyle" TargetType="{x:Type Rectangle}">
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="Fill" Value="Transparent" />
-            <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType=Window}}" />
-        </Style>
-        
-    </Window.Resources> 
-
-    <Grid DataContext="{StaticResource WinEventHandlerClass}">  
+    
+    <Grid DataContext="{StaticResource WinEventHandlerClass}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -34,101 +25,60 @@
         <Grid Grid.Row="1">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" MaxWidth="150"/>
+                <ColumnDefinition Width="Auto" MaxWidth="200"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            
-            <Grid Grid.Column="0" Background="#FF48C0D3">
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition  Height="5"/>
-                </Grid.RowDefinitions>
+            <Rectangle Width="5" HorizontalAlignment="Left" Fill="White" Panel.ZIndex="1"/>
+            <Rectangle Height="5" VerticalAlignment="Bottom" Fill="White" Panel.ZIndex="1"/>
 
+            <HamburgerMenu:HamburgerMenu    HorizontalAlignment="Left" 
+                                            SelectionIndicatorColor="White" 
+                                            MenuIconColor="White" 
+                                            Visibility="{Binding MenuVisibility}"
+                                            Background="#FF48C0D3" 
+                                            MenuItemForeground="#2f3748"
+                                            Panel.ZIndex="2">
 
-                <ScrollViewer  VerticalScrollBarVisibility="Hidden" Grid.Row="0">
-
-                    <StackPanel   Background="#FF48C0D3">
-
-                        <Rectangle Height="5" Fill="#2f3748"/>
-
-                        <Button Height="40"
-                                Margin="0, 150, 0, 0"
-                                Style="{StaticResource MenuButtonStyle}" 
-                                Content="Клиенты"
-                                Command="{Binding ChangeCustomerSPVisibilty}"/>
-
-                        <StackPanel Visibility="{Binding CustomerStackPanelVisibility}">
-                            <Button Height="30" 
-                                    Style="{StaticResource SubMenuButtonStyle}" 
-                                    Content="Все клиенты"
-                                    Command="{Binding ChangeWindowContent}"
-                                    CommandParameter="customers"/>
-                            <Button Height="30" 
-                                    Style="{StaticResource SubMenuButtonStyle}" 
-                                    Content="Поиск"
-                                    Command="{Binding ChangeWindowContent}"
-                                    CommandParameter="customerSearch"/>
-                        </StackPanel>
-
-                        <Button Height="40" 
-                                Style="{StaticResource MenuButtonStyle}" 
-                                Content="Заказы"
-                                Command="{Binding ChangeOrdersSPVisibilty}"/>
-                        <StackPanel Visibility="{Binding OrdersStackPanelVisibility}">
-                            <Button Height="30" 
-                                    Style="{StaticResource SubMenuButtonStyle}" 
-                                    Content="Регистрация"
-                                    Command="{Binding ChangeWindowContent}"
-                                    CommandParameter="orderRegistration"/>
-                            <Button Height="30" 
-                                    Style="{StaticResource SubMenuButtonStyle}" 
-                                    Content="Очередность"
-                                    Command="{Binding ChangeWindowContent}"
-                                    CommandParameter=""/>
-                            <Button Height="30" 
-                                    Style="{StaticResource SubMenuButtonStyle}" 
-                                    Content="Поиск"
-                                    Command="{Binding ChangeWindowContent}"
-                                    CommandParameter="ordersSearch"/>
-                        </StackPanel>
-
-                    </StackPanel>
-                    
-                </ScrollViewer>
-
-                <Rectangle Fill="#2f3748" Grid.Row="1"/>
-
-            </Grid>
+                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/customer.png" 
+                                                     Text="Customers" 
+                                                     SelectionCommand="{Binding SetCustomerContent}"/>
+                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/order_add.png" 
+                                                     Text="Add orders" 
+                                                     SelectionCommand="{Binding SetAddOrderContent}"/>
+                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/order_search.png" 
+                                                     Text="Search orders" 
+                                                     SelectionCommand="{Binding SetSearchOrderContent}"/>
+                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/order_history.png" 
+                                                     Text="Orders history" 
+                                                     SelectionCommand="{Binding SetOrderHistoryContent}"/>
+                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/order_queue.png" 
+                                                     Text="Orders queue" 
+                                                     SelectionCommand="{Binding SetOrderQueueContent}"/>
+            </HamburgerMenu:HamburgerMenu>
 
 
             <Grid Grid.Column="1">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="1"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="5"/>
-                </Grid.ColumnDefinitions>
-                
-                <Frame Grid.Row="1" Grid.Column="0" Name="MainContent" 
-                   Content="{Binding MainContent}"
-                   NavigationUIVisibility="Hidden"/>
 
-                <Rectangle Fill="#2f3748" Grid.Column="0" Grid.Row="0" />
-                <Rectangle Fill="#2f3748" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"/>
-                <Rectangle Fill="#2f3748" Grid.Column="0" Grid.Row="2"/>
+                <Frame  Grid.Row="1" 
+                        Content="{Binding MainContent}"
+                        NavigationUIVisibility="Hidden"/>
+
+
+                <Rectangle Grid.Row="0" Fill="#FF48C0D3"/>
 
 
             </Grid>
-            
+
         </Grid>
 
-        <Rectangle  Fill="#FF48C0D3" Grid.Row="0">
+        <Rectangle  Fill="White" Grid.Row="0">
 
             <Rectangle.InputBindings>
                 <MouseBinding MouseAction="LeftDoubleClick"
@@ -155,182 +105,5 @@
 
         </StackPanel>
 
-        <Rectangle x:Name="leftSizeGrip"
-                   Grid.Row="0"
-                   Grid.RowSpan="2"
-            Width="7"
-            HorizontalAlignment="Left"
-            Cursor="SizeWE"
-            Style="{StaticResource RectBorderStyle}">
-            
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding Resize_InitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonUp">
-                    <i:InvokeCommandAction Command="{Binding Resize_EndCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseMove">
-                    <i:InvokeCommandAction Command="{Binding Resize_Form}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            
-        </Rectangle>
-
-        <Rectangle x:Name="rightSizeGrip"
-                   Grid.Row="0"
-                   Grid.RowSpan="2"
-                    Width="7"
-                    HorizontalAlignment="Right"
-                    Cursor="SizeWE"
-                    Style="{StaticResource RectBorderStyle}" >  
-
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding Resize_InitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonUp">
-                    <i:InvokeCommandAction Command="{Binding Resize_EndCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseMove">
-                    <i:InvokeCommandAction Command="{Binding Resize_Form}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-
-        </Rectangle>        
-
-        <Rectangle x:Name="topSizeGrip"
-            Grid.ColumnSpan="2"
-            Height="7"
-            VerticalAlignment="Top"
-            Cursor="SizeNS"
-            Style="{StaticResource RectBorderStyle}" >
-
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding Resize_InitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonUp">
-                    <i:InvokeCommandAction Command="{Binding Resize_EndCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseMove">
-                    <i:InvokeCommandAction Command="{Binding Resize_Form}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-
-        </Rectangle>
-
-        <Rectangle x:Name="bottomSizeGrip"
-            Grid.Row="1"
-            Height="7"
-            VerticalAlignment="Bottom"
-            Cursor="SizeNS"
-            Style="{StaticResource RectBorderStyle}">
-
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding Resize_InitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonUp">
-                    <i:InvokeCommandAction Command="{Binding Resize_EndCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseMove">
-                    <i:InvokeCommandAction Command="{Binding Resize_Form}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-
-        </Rectangle>
-
-        <Rectangle Name="bottomLeftSizeGrip"
-                   Grid.Row="1"
-            Width="7"
-            Height="7"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Cursor="SizeNESW"
-            Style="{StaticResource RectBorderStyle}">
-
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding Resize_InitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonUp">
-                    <i:InvokeCommandAction Command="{Binding Resize_EndCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseMove">
-                    <i:InvokeCommandAction Command="{Binding Resize_Form}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-
-        </Rectangle>
-
-        <Rectangle Name="topLeftSizeGrip"
-            Width="7"
-            Height="7"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Cursor="SizeNWSE"
-            Style="{StaticResource RectBorderStyle}">
-
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding Resize_InitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonUp">
-                    <i:InvokeCommandAction Command="{Binding Resize_EndCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseMove">
-                    <i:InvokeCommandAction Command="{Binding Resize_Form}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-
-        </Rectangle>
-
-        <Rectangle Name="bottomRightSizeGrip"
-            Grid.RowSpan="2"
-            Width="7"
-            Height="7"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Cursor="SizeNWSE"
-            Style="{StaticResource RectBorderStyle}">
-
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding Resize_InitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonUp">
-                    <i:InvokeCommandAction Command="{Binding Resize_EndCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseMove">
-                    <i:InvokeCommandAction Command="{Binding Resize_Form}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-
-        </Rectangle>
-
-        <Rectangle Name="topRightSizeGrip"
-            Grid.ColumnSpan="2"
-            Width="7"
-            Height="7"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Top"
-            Cursor="SizeNESW"
-            Style="{StaticResource RectBorderStyle}">
-
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding Resize_InitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseLeftButtonUp">
-                    <i:InvokeCommandAction Command="{Binding Resize_EndCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="MouseMove">
-                    <i:InvokeCommandAction Command="{Binding Resize_Form}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Rectangle}, Mode=FindAncestor}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-
-        </Rectangle>        
-        
     </Grid>
 </Window>

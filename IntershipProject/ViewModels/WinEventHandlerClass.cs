@@ -9,6 +9,7 @@ using System.Windows;
 using IntershipProject.Views;
 using System.Windows.Input;
 using System.Windows.Shapes;
+using System.Windows.Forms;
 
 namespace IntershipProject.ViewModels
 {
@@ -17,31 +18,46 @@ namespace IntershipProject.ViewModels
 
         public WinEventHandlerClass()
         {
-            MainContent = customers;
-        }        
+            MainContent = appAuthorization;
+            AppAuthorizationViewManager.SuccessAuthorization += SuccessAuthorizationEventHandler;
+        }
 
         #region DependencyProperties
 
 
-        public Visibility CustomerStackPanelVisibility
+        public Visibility MenuVisibility
         {
-            get { return (Visibility)GetValue(CustomerStackPanelVisibilityProperty); }
-            set { SetValue(CustomerStackPanelVisibilityProperty, value); }
-        }        
-
-        public static readonly DependencyProperty CustomerStackPanelVisibilityProperty =
-            DependencyProperty.Register("CustomerStackPanelVisibility", typeof(Visibility), typeof(WinEventHandlerClass), new PropertyMetadata(Visibility.Collapsed));
-
-
-
-        public Visibility OrdersStackPanelVisibility
-        {
-            get { return (Visibility)GetValue(OrdersStackPanelVisibilityProperty); }
-            set { SetValue(OrdersStackPanelVisibilityProperty, value); }
+            get { return (Visibility)GetValue(MenuVisibilityProperty); }
+            set { SetValue(MenuVisibilityProperty, value); }
         }
+
+        // Using a DependencyProperty as the backing store for MenuVisibility.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MenuVisibilityProperty =
+            DependencyProperty.Register("MenuVisibility", typeof(Visibility), typeof(WinEventHandlerClass), new PropertyMetadata(Visibility.Collapsed));
         
-        public static readonly DependencyProperty OrdersStackPanelVisibilityProperty =
-            DependencyProperty.Register("OrdersStackPanelVisibility", typeof(Visibility), typeof(WinEventHandlerClass), new PropertyMetadata(Visibility.Collapsed));
+
+
+        public int MainWindowWidth
+        {
+            get { return (int)GetValue(MainWindowWidthProperty); }
+            set { SetValue(MainWindowWidthProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MainWindowWidth.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MainWindowWidthProperty =
+            DependencyProperty.Register("MainWindowWidth", typeof(int), typeof(WinEventHandlerClass), new PropertyMetadata(400));
+
+
+
+        public int MainWindowHeight
+        {
+            get { return (int)GetValue(MainWindowHeightProperty); }
+            set { SetValue(MainWindowHeightProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MainWindowWidth.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MainWindowHeightProperty =
+            DependencyProperty.Register("MainWindowHeight", typeof(int), typeof(WinEventHandlerClass), new PropertyMetadata(400));
 
 
 
@@ -60,10 +76,14 @@ namespace IntershipProject.ViewModels
 
         #region Simple Properties
 
+        private enum Pages { CUSTOMERS, ADD_ORDERS, SEARCH_ORDERS, ORDERS_HISTORY, ORDER_QUEUE };
+
         private CustomerSearch customerSearch = new CustomerSearch();
         private Customers customers = new Customers();
         private OrderRegistration orderRegistration = new OrderRegistration();
         private OrdersSearch ordersSearch = new OrdersSearch();
+        private AppAuthorization appAuthorization = new AppAuthorization();
+        private OrdersQueue ordersQueue = new OrdersQueue();
 
         #endregion
 
@@ -71,59 +91,119 @@ namespace IntershipProject.ViewModels
 
         #region Handlers of menu buttons clicks
 
-        private ICommand changeCustomerSPVisibilty;
-        public ICommand ChangeCustomerSPVisibilty
+        public void SuccessAuthorizationEventHandler()
+        {
+            MainContent = customerSearch;
+            MenuVisibility = Visibility.Visible;
+        }
+
+
+        private ICommand setCustomerContent;
+        public ICommand SetCustomerContent
         {
             get
             {
-                if (changeCustomerSPVisibilty == null)
-                    changeCustomerSPVisibilty = new MyCommands((object obj) => CustomerStackPanelVisibility =  (CustomerStackPanelVisibility == Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed);
-                return changeCustomerSPVisibilty;
-
+                if (setCustomerContent == null)
+                    setCustomerContent = new MyCommands(setCustomerContentFunc);
+                return setCustomerContent;
             }
         }
+        private void setCustomerContentFunc(object obj)
+        {
+            changeWindowContentFunc(Pages.CUSTOMERS);
+        }
 
-        private ICommand changeOrdersSPVisibilty;
-        public ICommand ChangeOrdersSPVisibilty
+
+
+        private ICommand setAddOrderContent;
+        public ICommand SetAddOrderContent
         {
             get
             {
-                if (changeOrdersSPVisibilty == null)
-                    changeOrdersSPVisibilty = new MyCommands((object obj) => OrdersStackPanelVisibility = (OrdersStackPanelVisibility == Visibility.Collapsed) ? Visibility.Visible : Visibility.Collapsed);
-                return changeOrdersSPVisibilty;
-
+                if (setAddOrderContent == null)
+                    setAddOrderContent = new MyCommands(setAddOrderContentFunc);
+                return setAddOrderContent;
             }
         }
+        private void setAddOrderContentFunc(object obj)
+        {
+            changeWindowContentFunc(Pages.ADD_ORDERS);
+        }
 
-        private ICommand changeWindowContent;
-        public ICommand ChangeWindowContent
+
+        private ICommand setSearchOrderContent;
+        public ICommand SetSearchOrderContent
         {
             get
             {
-                if (changeWindowContent == null)
-                    changeWindowContent = new MyCommands(changeWindowContentFunc);
-                return changeWindowContent;
-
+                if (setSearchOrderContent == null)
+                    setSearchOrderContent = new MyCommands(setSearchOrderContentFunc);
+                return setSearchOrderContent;
             }
         }
-        private void changeWindowContentFunc(object param)
+        private void setSearchOrderContentFunc(object obj)
         {
-            switch (param as string)
+            changeWindowContentFunc(Pages.SEARCH_ORDERS);
+        }
+
+
+
+        private ICommand setOrderQueueContent;
+        public ICommand SetOrderQueueContent
+        {
+            get
             {
-                case "customerSearch":
+                if (setOrderQueueContent == null)
+                    setOrderQueueContent = new MyCommands(setOrderQueueContentFunc);
+                return setOrderQueueContent;
+            }
+        }
+        private void setOrderQueueContentFunc(object obj)
+        {
+            changeWindowContentFunc(Pages.ORDER_QUEUE);
+        }
+
+
+
+        private ICommand setOrderHistoryContent;
+        public ICommand SetOrderHistoryContent
+        {
+            get
+            {
+                if (setOrderHistoryContent == null)
+                    setOrderHistoryContent = new MyCommands(setOrderHistoryContentFunc);
+                return setOrderHistoryContent;
+            }
+        }
+        private void setOrderHistoryContentFunc(object obj)
+        {
+            changeWindowContentFunc(Pages.ORDERS_HISTORY);
+        }
+
+
+
+        private void changeWindowContentFunc(Pages pageName)
+        {
+            switch (pageName)
+            {
+                case Pages.CUSTOMERS:
                     MainContent = customerSearch;
                     break;
 
-                case "customers":
-                    MainContent = customers;
-                    break;
+                //case "Orders history":
+                //    MainContent = ;
+                //    break;
 
-                case "orderRegistration":
+                case Pages.ADD_ORDERS:
                     MainContent = orderRegistration;
                     break;
 
-                case "ordersSearch":
+                case Pages.SEARCH_ORDERS:
                     MainContent = ordersSearch;
+                    break;
+
+                case Pages.ORDER_QUEUE:
+                    MainContent = ordersQueue;
                     break;
 
             }
@@ -202,119 +282,6 @@ namespace IntershipProject.ViewModels
         }
 
         #endregion Windows Handlers
-
-        #region Resizing window commands
-
-        bool ResizeInProcess = false;
-        private ICommand resize_InitCommand;
-        public ICommand Resize_InitCommand
-        {
-            get
-            {
-                if (resize_InitCommand == null)
-                    resize_InitCommand = new MyCommands(Resize_Init);
-                return resize_InitCommand;
-            }
-                
-        }
-        private void Resize_Init(object sender)
-        {
-            if (sender is Rectangle senderRect)
-            {
-                ResizeInProcess = true;
-                senderRect.CaptureMouse();
-            }
-        }
-
-
-        private ICommand resize_EndCommand;
-        public ICommand Resize_EndCommand
-        {
-            get
-            {
-                if (resize_EndCommand == null)
-                    resize_EndCommand = new MyCommands(Resize_End);
-                return resize_EndCommand;
-            }
-
-        }
-        private void Resize_End(object sender)
-        {
-            if (sender is Rectangle senderRect)
-            {
-                ResizeInProcess = false;
-                senderRect.ReleaseMouseCapture();
-            }
-        }
-
-
-        private ICommand resize_Form;
-        public ICommand Resize_Form
-        {
-            get
-            {
-                if (resize_Form == null)
-                    resize_Form = new MyCommands(Resizeing_Form);
-                return resize_Form;
-            }
-        }
-        private void Resizeing_Form(object sender)
-        {
-
-            if (ResizeInProcess)
-            {
-                MouseDevice e = InputManager.Current.PrimaryMouseDevice;
-                Rectangle senderRect = sender as Rectangle;
-                Window mainWindow = senderRect.Tag as Window;
-                if (senderRect != null)
-                {
-                    double width = e.GetPosition(mainWindow).X;
-                    double height = e.GetPosition(mainWindow).Y;
-                    senderRect.CaptureMouse();
-                    if (senderRect.Name.ToLower().Contains("right"))
-                    {
-                        width += 5;
-                        if (width >= 0)
-                            mainWindow.Width = width;
-                    }
-                    if (senderRect.Name.ToLower().Contains("left"))
-                    {
-                        width -= 5;
-                        if(mainWindow.Width >= mainWindow.MinWidth)
-                            mainWindow.Left += width;
-                        
-                        width = mainWindow.Width - width;
-                        if (width >= 0)
-                        {
-                            mainWindow.Width = width;
-                        }
-                    }
-                    if (senderRect.Name.ToLower().Contains("bottom"))
-                    {
-                        height += 5;
-                        if (height >= 0)
-                            mainWindow.Height = height;
-                    }
-                    if (senderRect.Name.ToLower().Contains("top"))
-                    {
-                        height -= 5;
-
-                        if(mainWindow.Width >= mainWindow.MinWidth)
-                            mainWindow.Top += height;
-
-                        height = mainWindow.Height - height;
-                        if (height >= 0)
-                        {
-                            mainWindow.Height = height;
-                        }
-                    }
-                }
-            }
-        }
-
-
-        #endregion Resizing window commands
-
 
         #endregion Commands & Handlers
     }

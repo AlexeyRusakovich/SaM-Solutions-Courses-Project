@@ -19,6 +19,6 @@
                 <Label Content="Только клиенты текущего пользователя"/>
             </StackPanel>
 
-        <ListView Grid.Row="1"/>
+        <DataGrid Grid.Row="1"/>
     </Grid>
 </Page>

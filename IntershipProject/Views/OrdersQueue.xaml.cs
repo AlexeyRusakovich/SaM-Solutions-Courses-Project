@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace IntershipProject.Views
 {
     /// <summary>
-    /// Логика взаимодействия для AppAuthorization.xaml
+    /// Логика взаимодействия для OrdersQueue.xaml
     /// </summary>
-    public partial class AppAuthorization : Page
+    public partial class OrdersQueue : Page
     {
-        public AppAuthorization()
+        public OrdersQueue()
         {
             InitializeComponent();
         }
