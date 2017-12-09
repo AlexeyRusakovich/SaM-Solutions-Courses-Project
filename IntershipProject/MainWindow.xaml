@@ -8,14 +8,12 @@
         xmlns:my ="clr-namespace:IntershipProject.ViewModels"
         xmlns:k ="clr-namespace:IntershipProject.Views"
         mc:Ignorable="d"
-        Height="{Binding MainWindowHeight, Source={StaticResource WinEventHandlerClass}}"
-        Width="{Binding MainWindowWidth, Source={StaticResource WinEventHandlerClass}}" 
         MinWidth="600"
         MinHeight="400"
         Style="{StaticResource WindowStyle}" ResizeMode="CanResize">
 
-    
-    <Grid DataContext="{StaticResource WinEventHandlerClass}">
+
+    <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -29,8 +27,6 @@
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
 
-            <Rectangle Width="5" HorizontalAlignment="Left" Fill="White" Panel.ZIndex="1"/>
-            <Rectangle Height="5" VerticalAlignment="Bottom" Fill="White" Panel.ZIndex="1"/>
 
             <HamburgerMenu:HamburgerMenu    HorizontalAlignment="Left" 
                                             SelectionIndicatorColor="White" 

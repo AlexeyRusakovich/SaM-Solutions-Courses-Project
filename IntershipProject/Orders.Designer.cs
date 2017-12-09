@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "D:\SaM-Solutions-courses-project\IntershipProject\Orders.edmx" включено. 
+﻿// Создание кода T4 для модели "C:\Users\admin\Desktop\IntershipProject\IntershipProject\Orders.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

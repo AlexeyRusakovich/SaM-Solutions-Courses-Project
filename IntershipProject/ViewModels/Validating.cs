@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 
 namespace IntershipProject.ViewModels
 {
-    class Validating
+    public class Validating
     {
+        
         private static string ValidateStandartString(string standartString, int maxLength = 50, int minLength = 3)
         {
             if (string.IsNullOrEmpty(standartString))

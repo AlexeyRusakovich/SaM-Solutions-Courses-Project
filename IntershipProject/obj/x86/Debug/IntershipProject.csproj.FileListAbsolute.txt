@@ -1,0 +1,12 @@
+C:\Users\admin\Desktop\IntershipProject\IntershipProject\obj\x86\Debug\MainWindow.g.cs
+C:\Users\admin\Desktop\IntershipProject\IntershipProject\obj\x86\Debug\Views\AppAuthorizationView.g.cs
+C:\Users\admin\Desktop\IntershipProject\IntershipProject\obj\x86\Debug\Views\CustomerSearchView.g.cs
+C:\Users\admin\Desktop\IntershipProject\IntershipProject\obj\x86\Debug\Views\CustomersView.g.cs
+C:\Users\admin\Desktop\IntershipProject\IntershipProject\obj\x86\Debug\Views\OrderRegistrationView.g.cs
+C:\Users\admin\Desktop\IntershipProject\IntershipProject\obj\x86\Debug\Views\OrdersQueueView.g.cs
+C:\Users\admin\Desktop\IntershipProject\IntershipProject\obj\x86\Debug\Views\OrdersSearchView.g.cs
+C:\Users\admin\Desktop\IntershipProject\IntershipProject\obj\x86\Debug\App.g.cs
+C:\Users\admin\Desktop\IntershipProject\IntershipProject\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\admin\Desktop\IntershipProject\IntershipProject\obj\x86\Debug\IntershipProject_MarkupCompile.cache
+C:\Users\admin\Desktop\IntershipProject\IntershipProject\obj\x86\Debug\IntershipProject_MarkupCompile.lref
+C:\Users\admin\Desktop\IntershipProject\IntershipProject\obj\x86\Debug\IntershipProject_Content.g.cs
