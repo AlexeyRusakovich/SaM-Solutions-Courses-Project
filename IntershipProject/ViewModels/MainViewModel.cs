@@ -19,7 +19,6 @@ namespace IntershipProject.ViewModels
 
         public MainViewModel()
         {
-            MainContent = appAuthorization;
             AppAuthorizationViewModel.SuccessAuthorization += SuccessAuthorizationEventHandler;
             AppLoggingChecker.onAppLogin += OnLogin;
         }
@@ -37,7 +36,7 @@ namespace IntershipProject.ViewModels
 
         // Using a DependencyProperty as the backing store for MenuVisibility.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MenuVisibilityProperty =
-            DependencyProperty.Register("MenuVisibility", typeof(Visibility), typeof(MainViewModel), new PropertyMetadata(Visibility.Collapsed));
+            DependencyProperty.Register("MenuVisibility", typeof(Visibility), typeof(MainViewModel), new PropertyMetadata(Visibility.Visible));
 
         public System.Windows.Controls.Page MainContent
         {
@@ -54,14 +53,14 @@ namespace IntershipProject.ViewModels
 
         #region Simple View Properties
 
-        private enum Pages { CUSTOMERS, ADD_ORDERS, SEARCH_ORDERS, ORDERS_HISTORY, ORDER_QUEUE };
-
-        private CustomerSearchView customerSearch = new CustomerSearchView();
-        private CustomersView customers = new CustomersView();
-        private OrderRegistrationView orderRegistration = new OrderRegistrationView();
-        private OrdersSearchView ordersSearch = new OrdersSearchView();
-        private AppAuthorizationView appAuthorization = new AppAuthorizationView();
-        private OrdersQueueView ordersQueue = new OrdersQueueView();
+        public enum Pages { CUSTOMERS, ORDERS_ADD, ORDERS_SEARCH, ORDERS_HISTORY, ORDER_QUEUE, APP_AUTHORIZATION };
+        
+        public CustomersView customers;        
+        public AppAuthorizationView appAuthorization;
+        public OrdersRegistrationView orderRegistration;
+        public OrdersSearchView ordersSearch;
+        public OrdersQueueView ordersQueue;
+        public OrdersHistoryView ordersHistoryView;
 
         #endregion
 
@@ -71,10 +70,9 @@ namespace IntershipProject.ViewModels
 
         public void SuccessAuthorizationEventHandler()
         {
-            MainContent = customerSearch;
+            MainContent = customers;
             MenuVisibility = Visibility.Visible;
         }
-
 
         private ICommand setCustomerContent;
         public ICommand SetCustomerContent
@@ -105,7 +103,7 @@ namespace IntershipProject.ViewModels
         }
         private void setAddOrderContentFunc(object obj)
         {
-            changeWindowContentFunc(Pages.ADD_ORDERS);
+            changeWindowContentFunc(Pages.ORDERS_ADD);
         }
 
 
@@ -121,7 +119,7 @@ namespace IntershipProject.ViewModels
         }
         private void setSearchOrderContentFunc(object obj)
         {
-            changeWindowContentFunc(Pages.SEARCH_ORDERS);
+            changeWindowContentFunc(Pages.ORDERS_SEARCH);
         }
 
 
@@ -157,32 +155,36 @@ namespace IntershipProject.ViewModels
         {
             changeWindowContentFunc(Pages.ORDERS_HISTORY);
         }
+        
 
-
-
-        private void changeWindowContentFunc(Pages pageName)
+        public void changeWindowContentFunc(Pages pageName)
         {
             switch (pageName)
             {
                 case Pages.CUSTOMERS:
-                    MainContent = customerSearch;
+                    MainContent = customers;
                     break;
 
-                //case "Orders history":
-                //    MainContent = ;
-                //    break;
+                case Pages.APP_AUTHORIZATION:
+                    MainContent = appAuthorization;
+                    break;
 
-                case Pages.ADD_ORDERS:
+                case Pages.ORDERS_HISTORY:
+                    MainContent = ordersHistoryView;
+                    break;
+
+                case Pages.ORDERS_ADD:
                     MainContent = orderRegistration;
                     break;
 
-                case Pages.SEARCH_ORDERS:
+                case Pages.ORDERS_SEARCH:
                     MainContent = ordersSearch;
                     break;
 
                 case Pages.ORDER_QUEUE:
                     MainContent = ordersQueue;
                     break;
+                    
 
             }
         }
@@ -315,14 +317,16 @@ namespace IntershipProject.ViewModels
         {
             CurrentUserName = await AppLoggingChecker.GetUserNameById(currentUserId);
             CurrentUserNameVisibility = Visibility.Visible;
+            ChangingWindowState(null);
         }
 
         private void OnUnLogin(object parameter)
         {
+            App.Current.MainWindow.WindowState = WindowState.Normal;
             MenuVisibility = Visibility.Collapsed;
             CurrentUserNameVisibility = Visibility.Collapsed;
             MainContent = appAuthorization;
-            
+                  
         }
 
         #endregion

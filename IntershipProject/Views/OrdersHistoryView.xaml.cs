@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace IntershipProject.Views
 {
     /// <summary>
-    /// Логика взаимодействия для CustomerSearchView.xaml
+    /// Логика взаимодействия для OrdersHistoryView.xaml
     /// </summary>
-    public partial class CustomerSearchView : Page
+    public partial class OrdersHistoryView : Page
     {
-        public CustomerSearchView()
+        public OrdersHistoryView()
         {
             InitializeComponent();
         }

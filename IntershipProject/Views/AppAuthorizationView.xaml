@@ -10,58 +10,68 @@
       d:DesignHeight="300" d:DesignWidth="300"
       Title="AppAuthorization">
     
-    <Page.DataContext>
-        <vm:AppAuthorizationViewModel/>
-    </Page.DataContext>
+    
     <Page.InputBindings>
         <KeyBinding Command="{Binding LogInTheApp}" CommandParameter="{Binding ElementName=txtPassword}" Key="Enter"/>
     </Page.InputBindings>
 
     <Grid Background="#2f3748">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-            <Label  Height="40" HorizontalAlignment="Center" Content="Login" FontSize="20" Foreground="#17a2b8" FontFamily="Segoe UI"/>
-            <TextBox Margin="0" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Login}"/>
-            <Label  HorizontalAlignment="Center" Content="Password" Height="40" FontSize="20" Foreground="#17a2b8" FontFamily="Segoe UI"/>
-            <PasswordBox Name="txtPassword" Margin="0" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-
-            <Button Content="Enter" FontSize="18" Margin="20" FontFamily="Segoe UI" Height="40" Command="{Binding LogInTheApp}" CommandParameter="{Binding ElementName=txtPassword}">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Grid Background="#17a2b8" x:Name="Grid">
-                                        <ContentPresenter Height="20" HorizontalAlignment="Center"/>
-                                    </Grid>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsPressed" Value="True">
-                                            <Setter Property="Background" TargetName="Grid" Value="#FF3780A2"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="FontFamily" Value="MV Boli"/>
-                        <Setter Property="FontSize" Value="16"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="#FFEEAD22"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
+        <Grid>
             
-            <Label Content="{Binding ConnectionErrorStringContent}" Margin="0" Foreground="Red" HorizontalAlignment="Center" Visibility="{Binding ConnectionErrorStringVisibility}"/>
-            <Controls:ProgressRing IsActive="{Binding IsConnectionChecking}" Foreground="#17a2b8" />
-        </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" MaxWidth="500" Margin="0, 30, 0, 0">
+                <Label  Height="40" HorizontalAlignment="Center" Content="Login" FontSize="20" Foreground="#17a2b8" FontFamily="Segoe UI"/>
+                <TextBox Margin="0" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding Login}"/>
+                <Label  HorizontalAlignment="Center" Content="Password" Height="40" FontSize="20" Foreground="#17a2b8" FontFamily="Segoe UI"/>
+                <PasswordBox Name="txtPassword" Margin="0" Height="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                <Button Content="Enter" FontSize="18" Margin="0, 30, 0, 20" FontFamily="Segoe UI" Height="40" Command="{Binding LogInTheApp}" CommandParameter="{Binding ElementName=txtPassword}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Grid Background="#17a2b8" x:Name="Grid">
+                                            <ContentPresenter Height="20" HorizontalAlignment="Center"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter Property="Background" TargetName="Grid" Value="#FF3780A2"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontFamily" Value="MV Boli"/>
+                            <Setter Property="FontSize" Value="16"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="#FFEEAD22"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                
+                
+            </StackPanel>
+        </Grid>
+        
+        <Label Grid.Row="1" Content="{Binding ConnectionErrorStringContent}" Margin="0" Foreground="Red" HorizontalAlignment="Center" Visibility="{Binding ConnectionErrorStringVisibility}"/>
+        <Controls:ProgressRing Grid.Row="2" IsActive="{Binding IsConnectionChecking}"  Foreground="#17a2b8" />
     </Grid>
 </Page>

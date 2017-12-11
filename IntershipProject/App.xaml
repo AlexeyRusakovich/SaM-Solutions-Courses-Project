@@ -12,6 +12,7 @@
                 <ResourceDictionary  Source="Styles/FlatTextBoxStyle.xaml"/>
                 <ResourceDictionary  Source="Styles/FlatComboBoxStyle.xaml"/>
                 <ResourceDictionary  Source="Styles/LabelStyle.xaml"/>
+                <ResourceDictionary  Source="Styles/RadioButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

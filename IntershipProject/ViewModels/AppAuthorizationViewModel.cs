@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using System.Configuration;
 using IntershipProject.Models;
-using IntershipProject.IoC;
 using Unity;
 
 namespace IntershipProject.ViewModels

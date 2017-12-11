@@ -15,22 +15,16 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Unity.Attributes;
 
-namespace IntershipProject
+namespace IntershipProject.Views
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для MainView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainView : Window
     {
-        public MainWindow()
+        public MainView()
         {
             InitializeComponent();
-        }
-
-        [Dependency]
-        public MainViewModel ViewModel
-        {
-            set { DataContext = value; }
         }
     }
 }

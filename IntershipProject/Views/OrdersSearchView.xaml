@@ -4,9 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntershipProject.Views"
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-      Title="OrdersSearch">
+      mc:Ignorable="d"
+      Title="OrdersSearch" d:DesignWidth="484" d:DesignHeight="471">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -14,36 +13,61 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Viewbox Height="200" HorizontalAlignment="Left">
-            <GroupBox Grid.Row="0" BorderBrush="{x:Null}">
+        <WrapPanel x:Name="WrapPanel">
 
-                <StackPanel>
+            <StackPanel Margin="10">
 
-                    <RadioButton     Content="Все заказы" 
-                                     Margin="10,10,0,0"/>
+                <RadioButton    Content="Заказы моих клиентов"
+                                GroupName="Group1"
+                                Style="{StaticResource RadioButtonStyle}"
+                                Margin="10"/>
 
-                    <RadioButton    Name="ClientCompanyRadioButton" 
+
+                <RadioButton    Content="Заказы всех клиентов"
+                                GroupName="Group1"
+                                Style="{StaticResource RadioButtonStyle}"
+                                Margin="10"/>
+
+            </StackPanel>
+
+            <StackPanel Margin="10">
+
+                <RadioButton    Name="ClientCompanyRadioButton" 
+                                    GroupName="Group1"
+                                    Style="{StaticResource RadioButtonStyle}"
                                     Content="Заказы конкретного клиента"
                                     Margin="10,10,0,0"/>
 
-                    <ComboBox     Width="100" 
-                                  HorizontalAlignment="Left" 
-                                  Margin="30, 10, 0, 0" 
-                                  IsEnabled="{Binding Path=IsChecked,ElementName=ClientCompanyRadioButton}"/>
+                <ComboBox       Width="150" 
+                                    HorizontalAlignment="Left" 
+                                    Margin="30, 10, 0, 0" 
+                                    IsEnabled="{Binding Path=IsChecked,ElementName=ClientCompanyRadioButton}"/>
+            </StackPanel>
+
+            <StackPanel Margin="10">
 
                     <RadioButton    Content="Заказы группы клиентов одной компании" 
-                                Name="GroupCompanyRadioButton"
-                                Margin="10,10,0,0" />
+                                    GroupName="Group1"
+                                    Style="{StaticResource RadioButtonStyle}"
+                                    Name="GroupCompanyRadioButton"
+                                    Margin="10,10,0,0" />
 
                     <ComboBox   Margin="30, 10 , 0, 0"
-                            Width="100" 
-                            HorizontalAlignment="Left" 
-                            IsEnabled="{Binding Path=IsChecked,ElementName=GroupCompanyRadioButton}"/>
+                                    Width="150" 
+                                    HorizontalAlignment="Left" 
+                                    IsEnabled="{Binding Path=IsChecked,ElementName=GroupCompanyRadioButton}"/>
+            </StackPanel>
 
-                </StackPanel>
-            </GroupBox>
-        </Viewbox>
 
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="15">
+                    <Label Content="Статус заказа" Margin="0" />
+                    <ComboBox Width="150" Height="23" Margin="10, 0, 0, 0"/>
+            </StackPanel>
+
+           
+
+        </WrapPanel>
         <DataGrid Grid.Row="1"/>
     </Grid>
 

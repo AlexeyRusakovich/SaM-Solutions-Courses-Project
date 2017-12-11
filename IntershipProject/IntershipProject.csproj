@@ -145,7 +145,6 @@
     <Compile Include="Employees.cs">
       <DependentUpon>Orders.tt</DependentUpon>
     </Compile>
-    <Compile Include="IoC\ContainerBootStrapper.cs" />
     <Compile Include="Models\AppLoggingChecker.cs" />
     <Compile Include="Models\DatabaseConnectionChecker.cs" />
     <Compile Include="OrderDetails.cs">
@@ -173,21 +172,25 @@
       <DependentUpon>Orders.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AppAuthorizationViewModel.cs" />
+    <Compile Include="ViewModels\CustomersViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\myCommands.cs" />
+    <Compile Include="ViewModels\Commands\myCommands.cs" />
+    <Compile Include="ViewModels\OrdersHistoryViewModel.cs" />
+    <Compile Include="ViewModels\OrdersRegistrationViewModel.cs" />
     <Compile Include="ViewModels\OrdersQueueViewModel.cs" />
-    <Compile Include="ViewModels\Validating.cs" />
+    <Compile Include="ViewModels\OrdersSearchViewModel.cs" />
+    <Compile Include="ViewModels\Validating\Validating.cs" />
     <Compile Include="Views\AppAuthorizationView.xaml.cs">
       <DependentUpon>AppAuthorizationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CustomerSearchView.xaml.cs">
-      <DependentUpon>CustomerSearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomersView.xaml.cs">
       <DependentUpon>CustomersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\OrderRegistrationView.xaml.cs">
-      <DependentUpon>OrderRegistrationView.xaml</DependentUpon>
+    <Compile Include="Views\OrdersRegistrationView.xaml.cs">
+      <DependentUpon>OrdersRegistrationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrdersHistoryView.xaml.cs">
+      <DependentUpon>OrdersHistoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\OrdersQueueView.xaml.cs">
       <DependentUpon>OrdersQueueView.xaml</DependentUpon>
@@ -195,7 +198,11 @@
     <Compile Include="Views\OrdersSearchView.xaml.cs">
       <DependentUpon>OrdersSearchView.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Styles\RadioButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -203,8 +210,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Styles\CheckBoxStyle.xaml">
@@ -235,15 +242,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CustomerSearchView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\CustomersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\OrderRegistrationView.xaml">
+    <Page Include="Views\OrdersRegistrationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OrdersHistoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

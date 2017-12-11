@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace IntershipProject.Views
 {
     /// <summary>
-    /// Логика взаимодействия для OrderRegistrationView.xaml
+    /// Логика взаимодействия для OrdersRegistrationView.xaml
     /// </summary>
-    public partial class OrderRegistrationView : Page
+    public partial class OrdersRegistrationView : Page
     {
-        public OrderRegistrationView()
+        public OrdersRegistrationView()
         {
             InitializeComponent();
         }

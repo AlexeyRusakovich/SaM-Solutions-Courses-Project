@@ -8,10 +8,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="OrdersQueue">
-    
-    <Page.DataContext>
-        <v:OrdersQueueViewModel/>
-    </Page.DataContext>
 
     <Grid>
         <Grid.ColumnDefinitions>

@@ -1,6 +1,7 @@
 ﻿
 FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\App.xaml;;
-FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\MainWindow.xaml;;
+FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Styles\RadioButtonStyle.xaml;;
+FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Views\MainView.xaml;;
 FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Styles\CheckBoxStyle.xaml;;
 FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Styles\FlatComboBoxStyle.xaml;;
 FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Styles\FlatTextBoxStyle.xaml;;
@@ -8,9 +9,9 @@ FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Styles\LabelStyl
 FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Styles\MainWindowButtonsStyles.xaml;;
 FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Styles\MainWindowStyle.xaml;;
 FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Views\AppAuthorizationView.xaml;;
-FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Views\CustomerSearchView.xaml;;
 FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Views\CustomersView.xaml;;
-FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Views\OrderRegistrationView.xaml;;
+FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Views\OrdersRegistrationView.xaml;;
+FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Views\OrdersHistoryView.xaml;;
 FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Views\OrdersQueueView.xaml;;
 FD:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\Views\OrdersSearchView.xaml;;
 
