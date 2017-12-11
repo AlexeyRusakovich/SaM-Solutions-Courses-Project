@@ -13,6 +13,9 @@
     <Page.DataContext>
         <vm:AppAuthorizationViewModel/>
     </Page.DataContext>
+    <Page.InputBindings>
+        <KeyBinding Command="{Binding LogInTheApp}" CommandParameter="{Binding ElementName=txtPassword}" Key="Enter"/>
+    </Page.InputBindings>
 
     <Grid Background="#2f3748">
         <Grid.ColumnDefinitions>
@@ -56,6 +59,7 @@
                     </Style>
                 </Button.Style>
             </Button>
+            
             <Label Content="{Binding ConnectionErrorStringContent}" Margin="0" Foreground="Red" HorizontalAlignment="Center" Visibility="{Binding ConnectionErrorStringVisibility}"/>
             <Controls:ProgressRing IsActive="{Binding IsConnectionChecking}" Foreground="#17a2b8" />
         </StackPanel>

@@ -29,5 +29,6 @@ namespace IntershipProject
         public virtual DbSet<Employees> Employees { get; set; }
         public virtual DbSet<OrderDetails> OrderDetails { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<OrderStatuses> OrderStatuses { get; set; }
     }
 }

@@ -90,8 +90,51 @@
         </Rectangle>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10,0,0,0">
-            <Image Source="/Resources/order.png" Width="24" Height="24"/>
+            
+            <Image Source="/Resources/order.png" Width="24" Height="24" />
             <Label Style="{x:Null}"  Content="BestOrders" FontFamily="Myanmar Text" FontSize="15" Foreground="#2f3748" FontWeight="Bold"/>
+
+            <StackPanel Orientation="Horizontal" Visibility="{Binding CurrentUserNameVisibility}">
+
+                <Label Content="{Binding CurrentUserName}">
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="FontFamily" Value="Myanmar Text"/>
+                            <Setter Property="FontSize" Value="15"/>
+                            <Setter Property="Margin" Value="30, 0, 0, 0"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="#FF48C0D3"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Foreground" Value="#2f3748"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+
+                <Image Width="20" Margin="10,0,0,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding UnloggingFromApp}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Source" Value="/Resources/exit_mouse_over.png"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="False">
+                                    <Setter Property="Source" Value="/Resources/exit.png"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+                
+            </StackPanel>
         </StackPanel>
 
         <StackPanel  Grid.Row="0" Margin="0,0,2.5,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="30" Orientation="Horizontal" >

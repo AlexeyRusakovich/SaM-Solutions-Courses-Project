@@ -136,7 +136,11 @@ namespace IntershipProject.ViewModels
             ConnectionErrorStringContent = await AppLoggingChecker.IsUserExist(Login, password);
 
             if (ConnectionErrorStringContent == null)
+            {
+
                 SuccessAuthorization?.Invoke();
+           
+            }
             else
                 ConnectionErrorStringVisibility = Visibility.Visible;
 

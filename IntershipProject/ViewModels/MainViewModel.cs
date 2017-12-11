@@ -9,19 +9,25 @@ using System.Windows;
 using IntershipProject.Views;
 using System.Windows.Input;
 using System.Windows.Shapes;
+using IntershipProject.Models;
 
 namespace IntershipProject.ViewModels
 {
     public class MainViewModel : DependencyObject
     {
+        #region Constructor
+
         public MainViewModel()
         {
             MainContent = appAuthorization;
             AppAuthorizationViewModel.SuccessAuthorization += SuccessAuthorizationEventHandler;
+            AppLoggingChecker.onAppLogin += OnLogin;
         }
 
-        #region DependencyProperties
+        #endregion
 
+        #region DependencyProperties
+        
 
         public Visibility MenuVisibility
         {
@@ -46,7 +52,7 @@ namespace IntershipProject.ViewModels
 
         #endregion DependencyProperties & Properties
 
-        #region Simple Properties
+        #region Simple View Properties
 
         private enum Pages { CUSTOMERS, ADD_ORDERS, SEARCH_ORDERS, ORDERS_HISTORY, ORDER_QUEUE };
 
@@ -254,6 +260,72 @@ namespace IntershipProject.ViewModels
         }
 
         #endregion Windows Handlers
+
+        #region Handling login\unlogin to the app 
+
+        private static int currentUserId;
+        public static int CurrentUserId
+        {
+            get
+            {
+                return currentUserId;
+            }
+            set
+            {
+                currentUserId = value;
+            }
+        }
+
+        private ICommand unloggingFromApp;
+
+        public ICommand UnloggingFromApp
+        {
+            get
+            {
+                if (unloggingFromApp == null)
+                    unloggingFromApp = new MyCommands(OnUnLogin);
+                return unloggingFromApp;
+            }
+        }
+
+        public Visibility CurrentUserNameVisibility
+        {
+            get { return (Visibility)GetValue(CurrentUserNameVisibilityProperty); }
+            set { SetValue(CurrentUserNameVisibilityProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CurrentUserNameVisibility.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentUserNameVisibilityProperty =
+            DependencyProperty.Register("CurrentUserNameVisibility", typeof(Visibility), typeof(MainViewModel), new PropertyMetadata(Visibility.Collapsed));
+        
+
+        public string CurrentUserName
+        {
+            get { return (string)GetValue(CurrentUserNameProperty); }
+            set { SetValue(CurrentUserNameProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CurrentUserName.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentUserNameProperty =
+            DependencyProperty.Register("CurrentUserName", typeof(string), typeof(MainViewModel), new PropertyMetadata(""));
+
+
+
+        private async void OnLogin()
+        {
+            CurrentUserName = await AppLoggingChecker.GetUserNameById(currentUserId);
+            CurrentUserNameVisibility = Visibility.Visible;
+        }
+
+        private void OnUnLogin(object parameter)
+        {
+            MenuVisibility = Visibility.Collapsed;
+            CurrentUserNameVisibility = Visibility.Collapsed;
+            MainContent = appAuthorization;
+            
+        }
+
+        #endregion
 
         #endregion Commands & Handlers
     }

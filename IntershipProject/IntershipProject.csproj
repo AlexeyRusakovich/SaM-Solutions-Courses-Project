@@ -169,6 +169,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Orders.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrderStatuses.cs">
+      <DependentUpon>Orders.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\AppAuthorizationViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\myCommands.cs" />
@@ -296,22 +299,26 @@
     <Resource Include="Resources\order_search.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Orders.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Orders.Context.cs</LastGenOutput>
-      <DependentUpon>Orders.edmx</DependentUpon>
-    </Content>
-    <Content Include="Orders.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Orders.edmx</DependentUpon>
-      <LastGenOutput>Orders1.cs</LastGenOutput>
-    </Content>
+    <Resource Include="Resources\exit_mouse_over.png" />
+    <Resource Include="Resources\exit.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Orders.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Orders.edmx</DependentUpon>
+      <LastGenOutput>Orders.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Orders.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Orders.edmx</DependentUpon>
+      <LastGenOutput>Orders1.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

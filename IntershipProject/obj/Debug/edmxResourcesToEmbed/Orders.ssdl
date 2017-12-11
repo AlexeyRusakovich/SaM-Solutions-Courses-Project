@@ -31,7 +31,7 @@
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="OrderDescription" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="Priority" Type="int" Nullable="false" />
-    <Property Name="Status" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
     <Property Name="OrderDate" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="ClosingOrderDate" Type="nvarchar" MaxLength="50" />
     <Property Name="Quantity" Type="int" Nullable="false" />
@@ -47,6 +47,25 @@
     <Property Name="EmployeeId" Type="int" Nullable="false" />
     <Property Name="CustomerId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="OrderStatuses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_OrderDetails_OrderStatuses">
+    <End Role="OrderStatuses" Type="Self.OrderStatuses" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderStatuses">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="Status" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Orders_Customers">
     <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
     <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
@@ -88,6 +107,11 @@
     <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderStatuses" EntityType="Self.OrderStatuses" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_OrderDetails_OrderStatuses" Association="Self.FK_OrderDetails_OrderStatuses">
+      <End Role="OrderStatuses" EntitySet="OrderStatuses" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
     <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
       <End Role="Customers" EntitySet="Customers" />
       <End Role="Orders" EntitySet="Orders" />

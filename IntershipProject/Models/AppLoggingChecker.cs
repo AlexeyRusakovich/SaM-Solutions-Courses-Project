@@ -1,6 +1,8 @@
 ﻿using IntershipProject;
+using IntershipProject.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -12,6 +14,20 @@ namespace IntershipProject.Models
 {
     class AppLoggingChecker
     {
+        public delegate void OnAppLogin();
+
+        public static event OnAppLogin onAppLogin;
+        
+        public static async Task<string> GetUserNameById(int id)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+            var eList = await (from e in ordersEntities.Employees where e.EmployeeId.Equals(id) select e).ToListAsync();
+            if (eList.Count() != 0)
+                return eList.First().FirsName + ' ' + eList.First().LastName;
+            else
+                return "Default User";
+        }
+
         public static async Task<String> IsUserExist(string Login, string Password)
         {
             MD5 md5Hash = MD5.Create();
@@ -21,8 +37,14 @@ namespace IntershipProject.Models
 
             if (await DatabaseConnectionChecker.IsConnected())
             {
-                if (ordersEntities.Employees.Where(e => e.Login.Equals(Login) && e.Password.Equals(hash)).Count() > 0)
+                var currentUserId =  await (from e in ordersEntities.Employees where e.Login.Equals(Login) && e.Password.Equals(hash) select e).ToListAsync();
+
+                if (currentUserId.Count() != 0)
+                {
+                    MainViewModel.CurrentUserId = currentUserId.First().EmployeeId;
+                    onAppLogin?.Invoke();
                     return null;
+                }
                 else
                     return "Пользователя с таким логином и паролем не существует.";
             }
@@ -32,22 +54,16 @@ namespace IntershipProject.Models
 
         public static string GetMd5Hash(MD5 md5Hash, string input)
         {
-
-            // Convert the input string to a byte array and compute the hash.
+            
             byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
 
-            // Create a new Stringbuilder to collect the bytes
-            // and create a string.
             StringBuilder sBuilder = new StringBuilder();
-
-            // Loop through each byte of the hashed data 
-            // and format each one as a hexadecimal string.
+            
             for (int i = 0; i < data.Length; i++)
             {
                 sBuilder.Append(data[i].ToString("x2"));
             }
-
-            // Return the hexadecimal string.
+            
             return sBuilder.ToString();
         }
 
