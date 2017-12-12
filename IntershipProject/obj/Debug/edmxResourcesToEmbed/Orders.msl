@@ -7,7 +7,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
           <ScalarProperty Name="ContactFirstName" ColumnName="ContactFirstName" />
-          <ScalarProperty Name="ConractLastName" ColumnName="ConractLastName" />
+          <ScalarProperty Name="ContactLastName" ColumnName="ContactLastName" />
           <ScalarProperty Name="ContactAdress" ColumnName="ContactAdress" />
           <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
         </MappingFragment>

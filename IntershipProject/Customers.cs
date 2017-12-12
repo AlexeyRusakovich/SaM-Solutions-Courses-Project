@@ -23,7 +23,7 @@ namespace IntershipProject
         public int Id { get; set; }
         public string CompanyName { get; set; }
         public string ContactFirstName { get; set; }
-        public string ConractLastName { get; set; }
+        public string ContactLastName { get; set; }
         public string ContactAdress { get; set; }
         public string ContactPhone { get; set; }
     

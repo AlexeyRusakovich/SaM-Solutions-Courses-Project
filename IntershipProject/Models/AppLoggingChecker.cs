@@ -28,7 +28,7 @@ namespace IntershipProject.Models
                 return "Default User";
         }
 
-        public static async Task<String> IsUserExist(string Login, string Password)
+        public static async Task<System.String> IsUserExist(string Login, string Password)
         {
             MD5 md5Hash = MD5.Create();
             string hash = GetMd5Hash(md5Hash, Password);

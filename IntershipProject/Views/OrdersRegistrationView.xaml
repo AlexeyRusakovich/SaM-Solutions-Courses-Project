@@ -4,51 +4,97 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntershipProject.Views"
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-      Title="OrderRegistration">
+      mc:Ignorable="d"
+      Title="OrderRegistration" d:DesignWidth="819.5" d:DesignHeight="921.5">
 
-    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden">
+    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="25, 10, 0, 0">
 
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="300" MaxWidth="400"/>
-                <ColumnDefinition MaxWidth="600"/>
-            </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-                <Label Content="Название компании заказчика" />
-                <Label Content="Имя представителя компании" />
-                <Label Content="Фамилия представителя компании" />
-                <Label Content="Адрес компании" />
-                <Label Content="Контактный телефон" />
-                <Label Content="Адресс выполнения заказа"/>
-                <Label Content="Метод выполнения заказа"/>
-                <Label Content="Дата выполнения заказа"/>
-                <Label Content="Краткое описание заказа"/>
-                <Label Content="Полное описание заказа"/>
-                <Label Content="Стоимость выполнения заказа"/>
-                <Label Content="Количество заказанных услуг"/>
-                <Label Content="Скидка"/>
+            <Label Grid.Row="0" 
+                   Content="Регистрация заказов" 
+                   FontSize="25" 
+                   Height="40" 
+                   Foreground="#2f3748" 
+                   FontWeight="Bold"/>
 
-            </StackPanel>
+            <Grid Grid.Row="1">
 
-            <StackPanel Grid.Column="1">
-                <TextBox Style="{StaticResource TextBoxBaseStyle}" />
-                <TextBox Style="{StaticResource TextBoxBaseStyle}" />
-                <TextBox Style="{StaticResource TextBoxBaseStyle}" />
-                <TextBox Style="{StaticResource TextBoxBaseStyle}" />
-                <TextBox Style="{StaticResource TextBoxBaseStyle}" />
-                <TextBox Style="{StaticResource TextBoxBaseStyle}" />
-                <TextBox Style="{StaticResource TextBoxBaseStyle}" />
-                <TextBox Style="{StaticResource TextBoxBaseStyle}" />
-                <TextBox Style="{StaticResource TextBoxBaseStyle}" />
-                <TextBox Style="{StaticResource TextBoxBaseStyle}" />
-                <TextBox Style="{StaticResource TextBoxBaseStyle}" />
-                <TextBox Style="{StaticResource TextBoxBaseStyle}" />
-                <TextBox Style="{StaticResource TextBoxBaseStyle}" />
-            </StackPanel>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MinWidth="300" MaxWidth="400"/>
+                    <ColumnDefinition MaxWidth="600"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.Column="0">
+
+                    <Label Content="Название компании заказчика" />
+                    <Label Content="Имя заказчика*" />
+                    <Label Content="Фамилия заказчика*" />
+                    <Label Content="Контактный адрес*" />
+                    <Label Content="Контактный телефон*" />
+                    <Label Content="Дата регистрации заказа*"/>
+                    <Label Content="Описание заказа"/>
+                    
+
+                </StackPanel>
+
+                <StackPanel  Grid.Row="0" Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding CustomerCompanyName}"/>
+                    <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding CustomerFistName}"/>
+                    <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding CustomerLastName}"/>
+                    <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding CompanyAdress}"/>
+                    <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding PhoneNumber}"/>
+                    
+                    <DatePicker Margin="10" 
+                                Height="40"
+                                HorizontalAlignment="Left" 
+                                VerticalContentAlignment="Center"
+                                BorderThickness="0"
+                                Text="{Binding OrderDate}"/>
+
+                    <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding OrderDescription}" TextWrapping="Wrap"/>
+
+                </StackPanel>
+
+
+                <StackPanel Grid.Row="1" Grid.Column="0">
+                    <Label Content="Стоимость выполнения заказа*"/>
+                    <Label Content="Количество заказанных услуг*"/>
+                    <Label Content="Скидка"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1">                   
+                    <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding ServieceCost}"/>
+                    <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding ServieceCount}"/>
+                    <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding Discount}"/>
+                </StackPanel>
+
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MaxWidth="1000"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Style="{StaticResource EnterButtonStyle}" 
+                    Grid.Row="1"
+                    Margin="30" 
+                    Width="170" 
+                    Height="40" 
+                    HorizontalAlignment="Center"
+                    Content="Зарегистрировать"/>
+
+            </Grid>            
 
         </Grid>
 

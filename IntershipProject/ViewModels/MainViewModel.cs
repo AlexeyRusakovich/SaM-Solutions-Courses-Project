@@ -36,7 +36,7 @@ namespace IntershipProject.ViewModels
 
         // Using a DependencyProperty as the backing store for MenuVisibility.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MenuVisibilityProperty =
-            DependencyProperty.Register("MenuVisibility", typeof(Visibility), typeof(MainViewModel), new PropertyMetadata(Visibility.Visible));
+            DependencyProperty.Register("MenuVisibility", typeof(Visibility), typeof(MainViewModel), new PropertyMetadata(Visibility.Collapsed));
 
         public System.Windows.Controls.Page MainContent
         {

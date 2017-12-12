@@ -22,20 +22,18 @@ namespace IntershipProject
         {
             IUnityContainer unityContainer = new UnityContainer();
 
-
-
             #region Setting views datacontext
             
             MainViewModel mainViewModel = unityContainer.Resolve<MainViewModel>();
 
-            mainViewModel.appAuthorization = new AppAuthorizationView() { DataContext = unityContainer.Resolve<AppAuthorizationViewModel>() };
-            mainViewModel.customers = new CustomersView() { DataContext = unityContainer.Resolve<CustomersViewModel>()  };
-            mainViewModel.orderRegistration = new OrdersRegistrationView() { DataContext = unityContainer.Resolve<OrdersRegistrationViewModel>() };
-            mainViewModel.ordersSearch = new OrdersSearchView() { DataContext = unityContainer.Resolve<OrdersQueueViewModel>() };
-            mainViewModel.ordersQueue = new OrdersQueueView() { DataContext = unityContainer.Resolve<OrdersSearchViewModel>() };
-            mainViewModel.ordersHistoryView = new OrdersHistoryView() { DataContext = unityContainer.Resolve<OrdersHistoryViewModel>() };
+            mainViewModel.appAuthorization  = new AppAuthorizationView()    { DataContext = unityContainer.Resolve<AppAuthorizationViewModel>()     };
+            mainViewModel.customers         = new CustomersView()           { DataContext = unityContainer.Resolve<CustomersViewModel>()            };
+            mainViewModel.orderRegistration = new OrdersRegistrationView()  { DataContext = unityContainer.Resolve<OrdersRegistrationViewModel>()   };
+            mainViewModel.ordersSearch      = new OrdersSearchView()        { DataContext = unityContainer.Resolve<OrdersSearchViewModel>()          };
+            mainViewModel.ordersQueue       = new OrdersQueueView()         { DataContext = unityContainer.Resolve<OrdersQueueViewModel>()         };
+            mainViewModel.ordersHistoryView = new OrdersHistoryView()       { DataContext = unityContainer.Resolve<OrdersHistoryViewModel>()        };
 
-            mainViewModel.changeWindowContentFunc(MainViewModel.Pages.CUSTOMERS);
+            mainViewModel.changeWindowContentFunc(MainViewModel.Pages.APP_AUTHORIZATION);
 
             MainView mainView = new MainView() { DataContext = mainViewModel };
 

@@ -27,11 +27,5 @@ namespace IntershipProject.Views
         {
             InitializeComponent();
         }        
-
-        [Dependency]
-        public AppAuthorizationViewModel viewModel
-        {
-            set { DataContext = value; }
-        }
     }
 }

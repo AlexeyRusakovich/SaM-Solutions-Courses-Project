@@ -7,7 +7,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CompanyName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="ContactFirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="ConractLastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ContactLastName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="ContactAdress" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="ContactPhone" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>

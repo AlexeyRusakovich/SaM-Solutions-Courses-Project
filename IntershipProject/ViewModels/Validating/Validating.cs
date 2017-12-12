@@ -26,7 +26,7 @@ namespace IntershipProject.ViewModels
         {
             Regex loginRE = new Regex("^[a-z]+$");
 
-            if (String.IsNullOrWhiteSpace(login))
+            if (string.IsNullOrWhiteSpace(login))
                 return "Поле не должно быть пустым.";
             else if (!loginRE.IsMatch(login))
                 return "Некорректный логин.";
@@ -75,7 +75,7 @@ namespace IntershipProject.ViewModels
         {
             int result = 0;
             bool isNumber = false;
-            if (String.IsNullOrWhiteSpace(someValue))
+            if (string.IsNullOrWhiteSpace(someValue))
                 return "Поле не должно быть пустым.";
             if (!(isNumber = int.TryParse(someValue, out result)))
             {

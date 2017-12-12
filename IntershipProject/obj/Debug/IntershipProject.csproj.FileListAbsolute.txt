@@ -126,3 +126,4 @@ D:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\obj\Debug\Intersh
 D:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\obj\Debug\IntershipProject.pdb
 D:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\obj\Debug\IntershipProject.csprojResolveAssemblyReference.cache
 D:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\obj\Debug\Styles\RadioButtonStyle.baml
+D:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\obj\Debug\Styles\EnterButtonStyle.baml

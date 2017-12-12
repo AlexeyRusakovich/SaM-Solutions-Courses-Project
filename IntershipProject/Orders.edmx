@@ -12,7 +12,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ContactFirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ConractLastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ContactLastName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ContactAdress" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ContactPhone" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -142,7 +142,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ContactFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ConractLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContactLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ContactAdress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ContactPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Customers" FromRole="Customers" ToRole="Orders" />
@@ -280,7 +280,7 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="ContactFirstName" ColumnName="ContactFirstName" />
-                <ScalarProperty Name="ConractLastName" ColumnName="ConractLastName" />
+                <ScalarProperty Name="ContactLastName" ColumnName="ContactLastName" />
                 <ScalarProperty Name="ContactAdress" ColumnName="ContactAdress" />
                 <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
               </MappingFragment>

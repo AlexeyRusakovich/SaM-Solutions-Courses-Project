@@ -16,7 +16,7 @@ namespace IntershipProject.Models
                 try
                 {
                     SqlConnection cn;
-                    String connectionString = "data source = localhost; initial catalog = Orders; integrated security = True;";
+                System.String connectionString = "data source = localhost; initial catalog = Orders; integrated security = True;";
                     cn = new SqlConnection(connectionString);
                     if (cn.State == System.Data.ConnectionState.Closed)
                         await cn.OpenAsync();
