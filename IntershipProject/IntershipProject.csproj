@@ -8,11 +8,12 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>IntershipProject</RootNamespace>
     <AssemblyName>IntershipProject</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -146,6 +147,7 @@
       <DependentUpon>Orders.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AppLoggingChecker.cs" />
+    <Compile Include="Models\CustomersModel.cs" />
     <Compile Include="Models\DatabaseConnectionChecker.cs" />
     <Compile Include="Models\OrdersModel.cs" />
     <Compile Include="OrderDetails.cs">
@@ -204,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\RadioButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\DataGridCellStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -331,6 +337,8 @@
       <DependentUpon>Orders.edmx</DependentUpon>
       <LastGenOutput>Orders1.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\go_back.png" />
+    <Resource Include="Resources\go_back_mouse_over.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

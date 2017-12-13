@@ -17,12 +17,23 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" 
-                   Content="Регистрация заказов" 
-                   FontSize="25" 
-                   Height="40" 
-                   Foreground="#2f3748" 
-                   FontWeight="Bold"/>
+            <WrapPanel Grid.Row="0" >
+
+                <Label 
+                       Content="Регистрация заказов" 
+                       FontSize="25" 
+                       Margin="10, 10, 0, 0"
+                       Height="40" 
+                       Foreground="#2f3748" 
+                       FontWeight="Bold"/>
+
+                <Label 
+                   Content="{Binding ErrorStringContent}" 
+                   Margin="35, 20, 0, 0" 
+                   Foreground="Red" 
+                   Visibility="{Binding ErrorStringVisibility}"/>
+
+            </WrapPanel>
 
             <Grid Grid.Row="1">
 

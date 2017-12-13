@@ -251,12 +251,12 @@ namespace IntershipProject.ViewModels
             if (IsChecked)
             {
 
-                ConctereCustomers = new ObservableCollection<Customers>(await OrdersModel.getCustomersByUserId());
+                ConctereCustomers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
                 ConctereCompanyGroup = new ObservableCollection<String>(await OrdersModel.getCompaniesByUserId());
             }
             else if (!IsChecked)
             {
-                ConctereCustomers = new ObservableCollection<Customers>(await OrdersModel.getAllCustomers());
+                ConctereCustomers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomers());
                 ConctereCompanyGroup = new ObservableCollection<String>(await OrdersModel.getAllСompanies());
             }
 
@@ -300,7 +300,7 @@ namespace IntershipProject.ViewModels
                 {
                     if (IsConcreteClientChecked)
                     {
-                        Orders = new ObservableCollection<Orders>(await OrdersModel.getAllOrdersByCustomerId(SelectedConcreteCustomer.Id.ToString()));
+                        Orders = new ObservableCollection<Orders>(await OrdersModel.getAllOrdersByCustomerId(SelectedConcreteCustomer.Id));
                     }
                     else if (IsConcreteCompanyChecked)
                     {
@@ -315,7 +315,7 @@ namespace IntershipProject.ViewModels
                 {
                     if (IsConcreteClientChecked)
                     {
-                        Orders = new ObservableCollection<Orders>(await OrdersModel.getOrdersByCustomerIdAndUserId(SelectedConcreteCustomer.Id.ToString()));
+                        Orders = new ObservableCollection<Orders>(await OrdersModel.getOrdersByCustomerIdAndUserId(SelectedConcreteCustomer.Id));
                     }
                     else if (IsConcreteCompanyChecked)
                     {

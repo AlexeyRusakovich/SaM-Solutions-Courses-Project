@@ -12,27 +12,6 @@ namespace IntershipProject.Models
     class OrdersModel
     {
 
-        #region Customers queries
-
-        public static async Task<List<Customers>> getCustomersByUserId()
-        {
-            OrdersEntities ordersEntities = new OrdersEntities();
-
-            return await (from o in ordersEntities.Orders
-                          where o.EmployeeId.Equals(MainViewModel.CurrentUserId)
-                          select o.Customers).ToListAsync();
-        }
-
-        public static async Task<List<Customers>> getAllCustomers()
-        {
-            OrdersEntities ordersEntities = new OrdersEntities();
-
-            return await (from o in ordersEntities.Customers select o)
-                                .ToListAsync();
-        }
-
-        #endregion
-
         #region Companies queries
 
         public static async Task<List<String>> getCompaniesByUserId()
@@ -75,7 +54,7 @@ namespace IntershipProject.Models
                                         .ToListAsync());
         }
 
-        public static async Task<List<Orders>> getOrdersByCustomerIdAndUserId(string customerId)
+        public static async Task<List<Orders>> getOrdersByCustomerIdAndUserId(int customerId)
         {
             OrdersEntities ordersEntities = new OrdersEntities();
 
@@ -85,7 +64,7 @@ namespace IntershipProject.Models
                                         .ToListAsync());
         }
 
-        public static async Task<List<Orders>> getAllOrdersByCustomerId(string customerId)
+        public static async Task<List<Orders>> getAllOrdersByCustomerId(int customerId)
         {
             OrdersEntities ordersEntities = new OrdersEntities();
 

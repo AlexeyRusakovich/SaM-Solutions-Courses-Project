@@ -29,8 +29,8 @@ namespace IntershipProject
             mainViewModel.appAuthorization  = new AppAuthorizationView()    { DataContext = unityContainer.Resolve<AppAuthorizationViewModel>()     };
             mainViewModel.customers         = new CustomersView()           { DataContext = unityContainer.Resolve<CustomersViewModel>()            };
             mainViewModel.orderRegistration = new OrdersRegistrationView()  { DataContext = unityContainer.Resolve<OrdersRegistrationViewModel>()   };
-            mainViewModel.ordersSearch      = new OrdersSearchView()        { DataContext = unityContainer.Resolve<OrdersSearchViewModel>()          };
-            mainViewModel.ordersQueue       = new OrdersQueueView()         { DataContext = unityContainer.Resolve<OrdersQueueViewModel>()         };
+            mainViewModel.ordersSearch      = new OrdersSearchView()        { DataContext = unityContainer.Resolve<OrdersSearchViewModel>()         };
+            mainViewModel.ordersQueue       = new OrdersQueueView()         { DataContext = unityContainer.Resolve<OrdersQueueViewModel>()          };
             mainViewModel.ordersHistoryView = new OrdersHistoryView()       { DataContext = unityContainer.Resolve<OrdersHistoryViewModel>()        };
 
             mainViewModel.changeWindowContentFunc(MainViewModel.Pages.APP_AUTHORIZATION);
@@ -38,7 +38,6 @@ namespace IntershipProject
             MainView mainView = new MainView() { DataContext = mainViewModel };
 
             #endregion
-
 
             mainView.Show();
         }

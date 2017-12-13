@@ -122,7 +122,7 @@
                     Margin="40, 10, 0, 10"
                     Width="170" 
                     Height="40" 
-                        Command="{Binding SearchOrders}"
+                    Command="{Binding SearchOrders}"
                     Grid.Row="3"
                     Content="Поиск"/>
 
@@ -137,6 +137,7 @@
        
             <Controls:ProgressRing Grid.Row="4"  Panel.ZIndex="1"
                                    IsActive="{Binding IsWaitingRingActive}" 
+                                   Visibility="{Binding WaitinRingVisibility}"
                                    Opacity="0.5"
                                    Foreground="#17a2b8" 
                                    HorizontalAlignment="Center" 
