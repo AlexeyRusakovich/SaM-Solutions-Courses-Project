@@ -42,7 +42,7 @@
                         Margin="35, 10, 0, 0"
                         Content="Поиск среди заказов всех пользователей" 
                         IsChecked="{Binding IsCheckBoxChecked}"
-                        FontSize="16"
+                        FontSize="17"
                         Command="{Binding CheckBoxChecked}"
                         CommandParameter="{Binding IsChecked,RelativeSource={RelativeSource Self}}"/>
 
@@ -103,10 +103,10 @@
                 
                         <Label Content="Статус заказа" Margin="0" />
                         <ComboBox Width="150" 
-                                  FontSize="15"
+                                  FontSize="17"
                                   SelectedItem="{Binding Status}"
                                   ItemsSource="{Binding Statuses}"
-                                  Height="23" 
+                                  Height="27" 
                                   Margin="10, 0, 0, 0"/>
                 
                 </StackPanel>
@@ -143,7 +143,13 @@
                                    HorizontalAlignment="Center" 
                                    VerticalAlignment="Center"/>
 
-            <DataGrid Grid.Row="4" ItemsSource="{Binding Orders}" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True" IsReadOnly="True">
+            <DataGrid Grid.Row="4" 
+                      ItemsSource="{Binding Orders}" 
+                      CellStyle="{StaticResource OrdersDataGridCell}"
+                      AutoGenerateColumns="False" 
+                      IsSynchronizedWithCurrentItem="True" 
+                      IsReadOnly="True">
+                
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Имя компании"
                                         Width="1*"
@@ -163,7 +169,7 @@
                                         Width="1*"
                                         Binding="{Binding OrderDetails.OrderStatuses.StatusName}"/>
 
-                    <DataGridTextColumn Header="Дата заказа"
+                    <DataGridTextColumn Header="Дата регистрации"
                                         Width="1*"
                                         Binding="{Binding OrderDetails.OrderDate}"/>
 

@@ -353,8 +353,12 @@ namespace IntershipProject.ViewModels
 
         private void cleanQueryClickHandler(object obj)
         {
+            IsCheckBoxChecked = false;
             IsConcreteClientChecked = false;
             IsConcreteCompanyChecked = false;
+            SelectedConcreteCompany = null;
+            SelectedConcreteCustomer = null;
+            Status = null;
         }
 
         #endregion

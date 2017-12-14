@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\admin\Desktop\SaM-Solutions-courses-project-master\IntershipProject\obj\Debug\
+D:\SamSolutions\SaM-Solutions-courses-project-master\IntershipProject\obj\Debug\
 IntershipProject
 none
 false
 DEBUG;TRACE
-C:\Users\admin\Desktop\SaM-Solutions-courses-project-master\IntershipProject\App.xaml
+D:\SamSolutions\SaM-Solutions-courses-project-master\IntershipProject\App.xaml
 16-258524062
 2-1954077499
-36-1505728922
-301219484526
+371924091372
+30-921096352
 Styles\EnterButtonStyle.xaml;Styles\RadioButtonStyle.xaml;Styles\DataGridCellStyle.xaml;Views\MainView.xaml;Styles\CheckBoxStyle.xaml;Styles\FlatComboBoxStyle.xaml;Styles\FlatTextBoxStyle.xaml;Styles\LabelStyle.xaml;Styles\MainWindowButtonsStyles.xaml;Styles\MainWindowStyle.xaml;Views\AppAuthorizationView.xaml;Views\CustomersView.xaml;Views\OrdersRegistrationView.xaml;Views\OrdersHistoryView.xaml;Views\OrdersQueueView.xaml;Views\OrdersSearchView.xaml;
 
 True
