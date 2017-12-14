@@ -21,11 +21,6 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontFamily" Value="MV Boli"/>
         <Setter Property="FontSize" Value="16"/>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="#FFEEAD22"/>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

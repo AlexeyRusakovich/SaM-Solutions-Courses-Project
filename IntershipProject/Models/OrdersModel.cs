@@ -33,6 +33,79 @@ namespace IntershipProject.Models
 
         #endregion
 
+        #region History orders queries
+
+        public static async Task<List<Orders>> getHistoryOrdersByCompanyNameAndUserId(string CompanyName)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            return await (ordersEntities.Orders
+                                        .Where(o => o.Customers.CompanyName.Equals(CompanyName)
+                                        && o.EmployeeId.Equals(MainViewModel.CurrentUserId)
+                                        && o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен") 
+                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен"))
+                                        .ToListAsync());
+        }
+
+        public static async Task<List<Orders>> getAllHistoryOrdersByCompanyName(string CompanyName)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            return await (ordersEntities.Orders
+                                        .Where(o => o.Customers.CompanyName.Equals(CompanyName)
+                                        && o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
+                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен"))
+                                        .ToListAsync());
+        }
+
+        public static async Task<List<Orders>> getHistoryOrdersByCustomerIdAndUserId(int customerId)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            return await (ordersEntities.Orders
+                                        .Where(o => o.EmployeeId.Equals(MainViewModel.CurrentUserId)
+                                        && o.Customers.Id.Equals(customerId)
+                                        && o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
+                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен"))
+                                        .ToListAsync());
+        }
+
+        public static async Task<List<Orders>> getAllHistoryOrdersByCustomerId(int customerId)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            return await (ordersEntities.Orders
+                                        .Where(o => o.Customers.Id.Equals(customerId)
+                                        && o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
+                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен"))
+                                        .ToListAsync());
+        }
+
+        public static async Task<List<Orders>> getAllHistoryOrdersByUserId()
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            return await (ordersEntities.Orders
+                                        .Where(o => o.EmployeeId.Equals(MainViewModel.CurrentUserId)
+                                        && o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
+                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен"))
+                                        .ToListAsync());
+        }
+
+        public static async Task<List<Orders>> getAllHistoryOrders()
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            return await (ordersEntities.Orders.Where(o =>  o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
+                                                         || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен"))
+                         .ToListAsync());
+        }
+
+
+
+        #endregion
+
+
         #region Orders queries
 
         public static async Task<List<Orders>> getOrdersByCompanyNameAndUserId(string CompanyName)

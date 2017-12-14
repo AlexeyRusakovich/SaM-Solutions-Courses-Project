@@ -7,7 +7,7 @@
       xmlns:vm ="clr-namespace:IntershipProject.ViewModels"
       xmlns:local="clr-namespace:IntershipProject.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="500" d:DesignWidth="500"
       Title="AppAuthorization">
     
     <Page.InputBindings>
@@ -16,7 +16,13 @@
                     Key="Enter"/>
     </Page.InputBindings>
 
-    <Grid Background="#2f3748">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush>
+                <GradientStop Color="#67B26F" Offset="0" />
+                <GradientStop Color="#4ca2cd" Offset="1" />
+            </LinearGradientBrush>
+        </Grid.Background>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -41,7 +47,7 @@
                         HorizontalAlignment="Center" 
                         Content="Login" 
                         FontSize="20" 
-                        Foreground="#17a2b8" 
+                        Foreground="#2f3748" 
                         FontFamily="Segoe UI"/>
                 
                 <TextBox Margin="0" 
@@ -55,7 +61,7 @@
                         Content="Password"
                         Height="40" 
                         FontSize="20" 
-                        Foreground="#17a2b8" 
+                        Foreground="#2f3748" 
                         FontFamily="Segoe UI"/>
                 
                 <PasswordBox Name="txtPassword" 
@@ -63,15 +69,37 @@
                              HorizontalContentAlignment="Center"
                              VerticalContentAlignment="Center"
                              Height="40"/>
-                
+
                 <Button Content="Enter" 
                         FontSize="18" 
                         Margin="0, 30, 0, 20" 
                         FontFamily="Segoe UI" 
                         Height="40" 
                         Command="{Binding LogInTheApp}" 
-                        CommandParameter="{Binding ElementName=txtPassword}"
-                        Style="{StaticResource EnterButtonStyle}"/>
+                        CommandParameter="{Binding ElementName=txtPassword}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Grid Background="#2f3748" x:Name="Grid">
+                                            <ContentPresenter Height="20" HorizontalAlignment="Center"/>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter Property="Background" TargetName="Grid" Value="#FF3780A2"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontFamily" Value="MV Boli"/>
+                            <Setter Property="FontSize" Value="16"/>
+                        </Style>
+                    </Button.Style>
+                    
+                </Button>          
 
             </StackPanel>
         </Grid>
@@ -85,6 +113,6 @@
         
         <Controls:ProgressRing Grid.Row="2" 
                                IsActive="{Binding IsConnectionChecking}"  
-                               Foreground="#17a2b8"/>
+                               Foreground="White"/>
     </Grid>
 </Page>

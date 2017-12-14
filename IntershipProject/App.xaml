@@ -15,7 +15,7 @@
                 <ResourceDictionary  Source="Styles/LabelStyle.xaml"/>
                 <ResourceDictionary  Source="Styles/RadioButtonStyle.xaml"/>
                 <ResourceDictionary  Source="Styles/EnterButtonStyle.xaml"/>
-                <ResourceDictionary  Source="Styles/DataGridCellStyle.xaml"/>
+                <ResourceDictionary  Source="Styles/DataGridStyle.xaml"/>
                 
             </ResourceDictionary.MergedDictionaries>
             

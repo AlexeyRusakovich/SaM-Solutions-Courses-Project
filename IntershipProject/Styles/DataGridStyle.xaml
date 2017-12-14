@@ -1,16 +1,16 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
                     xmlns:converters="clr-namespace:IntershipProject.Converters"
                     xmlns:local="clr-namespace:IntershipProject.Views">
 
-    <converters:DataGridCellStyleConverter x:Key="DataGridCellStyleConverter"/>    
+    <converters:DataGridCellStyleConverter x:Key="DataGridCellStyleConverter"/>
 
     <Style TargetType="DataGrid">
         <!-- Make the border and grid lines a little less imposing -->
         <Setter Property="BorderBrush" Value="#DDDDDD" />
         <Setter Property="HorizontalGridLinesBrush" Value="#DDDDDD" />
         <Setter Property="VerticalGridLinesBrush" Value="#DDDDDD" />
-
         <Setter Property="RowStyle">
             <Setter.Value>
                 <Style TargetType="DataGridRow">
@@ -64,7 +64,6 @@
         </Setter>
     </Style>
 
-
     <Style TargetType="DataGridCell" x:Key="OrdersDataGridCell">
         <!-- Add some padding around the contents of a cell -->
         <Style.Triggers>
@@ -72,6 +71,7 @@
                 <Setter Property="BorderBrush" Value="#ff66ccff"/>
             </Trigger>
         </Style.Triggers>
+
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Background" Value="{Binding OrderDetails.OrderStatuses.StatusName, Converter={StaticResource DataGridCellStyleConverter}}"/>
@@ -98,5 +98,46 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <DataTemplate x:Key="RowDetailTemplate">
+
+        <Border>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Offset="0.0" Color="#4CB8C4" />
+                        <GradientStop Offset="1.0" Color="#3CD3AD" />
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+
+
+                <Label  Grid.Row="0"
+                        HorizontalAlignment="Center"
+				        Margin="10"
+				        FontSize="18"
+				        FontWeight="SemiBold"
+                        Foreground="#2f3748"
+				        Content="Описание заказа" />
+
+                <TextBlock  Grid.Row="1"
+				            Margin="10, 0 , 10 , 10"
+                            FontSize="16"
+                             Foreground="#2f3748"
+				            HorizontalAlignment="Center"
+				            Text="{Binding OrderDetails.OrderDescription}"
+				            TextWrapping="WrapWithOverflow" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    
 
 </ResourceDictionary>

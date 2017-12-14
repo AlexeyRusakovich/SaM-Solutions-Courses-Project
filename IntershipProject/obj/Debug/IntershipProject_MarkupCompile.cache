@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\SamSolutions\SaM-Solutions-courses-project-master\IntershipProject\App.xaml
-16-258524062
+16-862009891
 2-1954077499
 33-1674678899
 30-921096352
-Styles\EnterButtonStyle.xaml;Styles\RadioButtonStyle.xaml;Styles\DataGridCellStyle.xaml;Views\MainView.xaml;Styles\CheckBoxStyle.xaml;Styles\FlatComboBoxStyle.xaml;Styles\FlatTextBoxStyle.xaml;Styles\LabelStyle.xaml;Styles\MainWindowButtonsStyles.xaml;Styles\MainWindowStyle.xaml;Views\AppAuthorizationView.xaml;Views\CustomersView.xaml;Views\OrdersRegistrationView.xaml;Views\OrdersHistoryView.xaml;Views\OrdersQueueView.xaml;Views\OrdersSearchView.xaml;
+Styles\EnterButtonStyle.xaml;Styles\RadioButtonStyle.xaml;Styles\DataGridStyle.xaml;Views\MainView.xaml;Styles\CheckBoxStyle.xaml;Styles\FlatComboBoxStyle.xaml;Styles\FlatTextBoxStyle.xaml;Styles\LabelStyle.xaml;Styles\MainWindowButtonsStyles.xaml;Styles\MainWindowStyle.xaml;Views\AppAuthorizationView.xaml;Views\CustomersView.xaml;Views\OrdersRegistrationView.xaml;Views\OrdersHistoryView.xaml;Views\OrdersQueueView.xaml;Views\OrdersSearchView.xaml;
 
 False
 

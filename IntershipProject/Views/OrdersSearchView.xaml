@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:converters="clr-namespace:IntershipProject.Converters"
       xmlns:local="clr-namespace:IntershipProject.Views"
       mc:Ignorable="d"
       Title="OrdersSearch" d:DesignWidth="484" d:DesignHeight="471">
@@ -58,9 +59,10 @@
                                     Content="Заказы конкретного клиентa"
                                     Margin="10,10,0,0"/>
 
-                    <ComboBox       Width="150" 
+                    <ComboBox       Width="200" 
                                     HorizontalAlignment="Left" 
-                                    Margin="30, 10, 0, 0"
+                                    Margin="20, 10, 0, 0"
+                                    Height="30"
                                     ItemsSource="{Binding ConctereCustomers}"
                                     SelectedItem="{Binding SelectedConcreteCustomer}"
                                     IsEnabled="{Binding Path=IsChecked,ElementName=Concrte_client}">
@@ -88,12 +90,13 @@
                                     Style="{StaticResource RadioButtonStyle}"
                                     Margin="10,10,0,0" />
 
-                    <ComboBox   Margin="30, 10 , 0, 0"
-                                Width="150"
+                    <ComboBox   Margin="20, 10 , 0, 0"
+                                Width="200"
+                                Height="30"
                                 FontSize="15"
                                 ItemsSource="{Binding ConctereCompanyGroup}"
                                 HorizontalAlignment="Left" 
-                                Text="{Binding SelectedConcreteCompanyCustomers}"
+                                Text="{Binding SelectedConcreteCompany}"
                                 IsEnabled="{Binding Path=IsChecked,ElementName=Company_group}"/>
                 </StackPanel>
 
@@ -106,7 +109,7 @@
                                   FontSize="17"
                                   SelectedItem="{Binding Status}"
                                   ItemsSource="{Binding Statuses}"
-                                  Height="27" 
+                                  Height="30" 
                                   Margin="10, 0, 0, 0"/>
                 
                 </StackPanel>
@@ -119,7 +122,7 @@
                         Orientation="Horizontal"
                         HorizontalAlignment="Left">
                 <Button Style="{StaticResource EnterButtonStyle}"
-                    Margin="40, 10, 0, 10"
+                    Margin="50, 10, 0, 10"
                     Width="170" 
                     Height="40" 
                     Command="{Binding SearchOrders}"
@@ -144,17 +147,17 @@
                                    VerticalAlignment="Center"/>
 
             <DataGrid Grid.Row="4" 
-                      ItemsSource="{Binding Orders}" 
+                      ItemsSource="{Binding Orders}"
+                      RowDetailsTemplate="{StaticResource RowDetailTemplate}"
                       CellStyle="{StaticResource OrdersDataGridCell}"
                       AutoGenerateColumns="False" 
                       IsSynchronizedWithCurrentItem="True" 
                       IsReadOnly="True">
-                
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Имя компании"
                                         Width="1*"
                                         Binding="{Binding Customers.CompanyName}"/>
-                
+
                     <DataGridTextColumn Header="Заказчик"
                                         Width="1*">
                         <DataGridTextColumn.Binding>
@@ -164,7 +167,7 @@
                             </MultiBinding>
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
-                
+
                     <DataGridTextColumn Header="Статус" 
                                         Width="1*"
                                         Binding="{Binding OrderDetails.OrderStatuses.StatusName}"/>

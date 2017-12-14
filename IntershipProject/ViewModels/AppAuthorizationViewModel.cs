@@ -22,13 +22,7 @@ namespace IntershipProject.ViewModels
         }
 
         #endregion Constructor
-
-        #region UnityContainer
-
-        protected IUnityContainer unityContainer;
-         
-        #endregion
-
+        
         #region App authorization props and handlers
 
         public delegate void AppEnterEventHandler();

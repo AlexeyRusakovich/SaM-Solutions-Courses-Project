@@ -1,11 +1,13 @@
 ﻿<Page x:Class="IntershipProject.Views.OrdersHistoryView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:IntershipProject.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="474.497" d:DesignWidth="540.268"
       Title="OrdersHistoryView">
 
     <Grid>
@@ -15,7 +17,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" 
+        <WrapPanel Grid.Row="0" >
+            <Label 
                    Content="История заказов" 
                    FontSize="25" 
                    Height="40" 
@@ -23,54 +26,162 @@
                    Foreground="#2f3748" 
                    FontWeight="Bold"/>
 
-        <WrapPanel x:Name="WrapPanel" Grid.Row="1" Margin="20, 0, 0 ,0">
-
-                <StackPanel Margin="10">
-
-                    <RadioButton    Content="Заказы моих клиентов"
-                            GroupName="Group1"
-                            Style="{StaticResource RadioButtonStyle}"
-                            Margin="10"/>
+            <Label Margin="20, 20, 0, 0" 
+                   Content="{Binding HistoryErrorStringContent}" 
+                   Visibility="{Binding HistoryErrorStringVisibility}"/>
+        </WrapPanel>
 
 
-                    <RadioButton    Content="Заказы всех клиентов"
-                            GroupName="Group1"
-                            Style="{StaticResource RadioButtonStyle}"
-                            Margin="10"/>
 
-                </StackPanel>
+        <StackPanel Grid.Row="1" Margin="20, 0, 0 ,0">
+
+            <CheckBox Style="{StaticResource CheckBoxStyle}" 
+                      IsChecked="{Binding IsHistoryCheckBoxChecked}"
+                      Grid.Row="1" 
+                      Margin="15, 10, 0, 0"  
+                      Content="Отображать историю всех клиентов" 
+                      FontSize="17">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Checked">
+                        <i:InvokeCommandAction Command="{Binding CheckBoxChecked}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Unchecked">
+                        <i:InvokeCommandAction Command="{Binding CheckBoxChecked}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </CheckBox>
+
+
+            <WrapPanel x:Name="WrapPanel" >
+
+                
 
                 <StackPanel Margin="10">
 
                     <RadioButton    Name="ClientCompanyRadioButton" 
-                                GroupName="Group1"
-                                Style="{StaticResource RadioButtonStyle}"
-                                Content="Заказы конкретного клиента"
-                                Margin="10,10,0,0"/>
+                                    GroupName="Group1"
+                                        IsChecked="{Binding IsHistoryConcreteClientChecked}"
+                                    Style="{StaticResource RadioButtonStyle}"
+                                    Content="Заказы конкретного клиента"
+                                    Margin="10,10,0,0"/>
 
                     <ComboBox       Width="150" 
-                                HorizontalAlignment="Left" 
-                                Margin="30, 10, 0, 0" 
-                                IsEnabled="{Binding Path=IsChecked,ElementName=ClientCompanyRadioButton}"/>
+                                    HorizontalAlignment="Left" 
+                                    ItemsSource="{Binding HistoryCustomers}"
+                                    Height="30"
+                                    Margin="20, 10, 0, 0" 
+                                    IsEnabled="{Binding Path=IsChecked,ElementName=ClientCompanyRadioButton}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Style="{x:Null}">
+                                    <AccessText FontSize="15">
+                                        <MultiBinding StringFormat=" {0} {1}">
+                                            <Binding Path="ContactFirstName"/>
+                                            <Binding Path="ContactLastName"/>
+                                        </MultiBinding>
+                                    </AccessText>
+                                </Label>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    
                 </StackPanel>
 
-            <StackPanel Margin="10">
+                <StackPanel Margin="10">
 
-                <RadioButton    Content="Заказы группы клиентов одной компании" 
-                                GroupName="Group1"
-                                Style="{StaticResource RadioButtonStyle}"
-                                Name="GroupCompanyRadioButton"
-                                Margin="10,10,0,0" />
+                    <RadioButton    Content="Заказы группы клиентов одной компании" 
+                                    GroupName="Group1"
+                                    IsChecked="{Binding IsHistoryConcreteCompanyChecked}"
+                                    Style="{StaticResource RadioButtonStyle}"
+                                    Name="GroupCompanyRadioButton"
+                                    Margin="10,10,0,0" />
 
-                <ComboBox   Margin="30, 10 , 0, 0"
+                    <ComboBox   Margin="20, 10 , 0, 0"
                                 Width="150" 
+                                Height="30"
+                                ItemsSource="{Binding HistoryCompanies}"
                                 HorizontalAlignment="Left" 
                                 IsEnabled="{Binding Path=IsChecked,ElementName=GroupCompanyRadioButton}"/>
+                </StackPanel>
+
+            </WrapPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0, 0, 0, 20">
+
+                <Button Style="{StaticResource EnterButtonStyle}" 
+                        Width="170" 
+                        Content="Найти в истории" 
+                        Height="40" 
+                        Margin="30, 10, 0, 0"
+                        Command="{Binding SearchOrders}"
+                        HorizontalAlignment="Left"/>
+
+                <Button Style="{StaticResource  EnterButtonStyle}" 
+                        Command="{Binding CleanQuery}"
+                    Width="170" 
+                    Content="Очистить запрос" 
+                    Height="40" 
+                    Margin="40, 10, 0, 0" 
+                    HorizontalAlignment="Left"/>
+
             </StackPanel>
 
-        </WrapPanel>
-        
-        <DataGrid Grid.Row="2" CellStyle="{StaticResource OrdersDataGridCell}"/>
+        </StackPanel>
+
+        <Controls:ProgressRing Grid.Row="2"  Panel.ZIndex="1"
+                                   IsActive="{Binding IsHistoryWaitingRingActive}" 
+                                   Visibility="{Binding HistoryWaitinRingVisibility}"
+                                   Opacity="0.5"
+                                   Foreground="#17a2b8" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/>
+
+
+        <DataGrid Grid.Row="2" 
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding Orders}"
+                  CellStyle="{StaticResource OrdersDataGridCell}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Имя компании"
+                                        Width="1*"
+                                        Binding="{Binding Customers.CompanyName}"/>
+
+                <DataGridTextColumn Header="Заказчик"
+                                        Width="1*">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat=" {0} {1}">
+                            <Binding Path = "Customers.ContactFirstName"/>
+                            <Binding Path = "Customers.ContactLastName" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Статус" 
+                                        Width="1*"
+                                        Binding="{Binding OrderDetails.OrderStatuses.StatusName}"/>
+
+                <DataGridTextColumn Header="Дата регистрации"
+                                        Width="1*"
+                                        Binding="{Binding OrderDetails.OrderDate}"/>
+
+                <DataGridTextColumn Header="Дата закрытия"
+                                        Width="1*"
+                                        Binding="{Binding OrderDetails.ClosingOrderDate}"/>
+
+                <DataGridTextColumn Header="Количество"
+                                        Width="1*"
+                                        Binding="{Binding OrderDetails.Quantity}"/>
+
+                <DataGridTextColumn Header="Стоимость, ед."
+                                        Width="1*"
+                                        Binding="{Binding OrderDetails.UnitPrice}"/>
+
+                <DataGridTextColumn Header="Скидка"
+                                        Width="1*"
+                                        Binding="{Binding OrderDetails.Discount}"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </Page>

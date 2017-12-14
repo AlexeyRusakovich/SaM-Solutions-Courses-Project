@@ -248,13 +248,13 @@ namespace IntershipProject.ViewModels
             IsWaitingRingActive = true;
             WaitingRingVisibility = Visibility.Visible;
 
-            if (IsChecked)
+            if (!IsChecked)
             {
 
                 ConctereCustomers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
                 ConctereCompanyGroup = new ObservableCollection<String>(await OrdersModel.getCompaniesByUserId());
             }
-            else if (!IsChecked)
+            else if (IsChecked)
             {
                 ConctereCustomers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomers());
                 ConctereCompanyGroup = new ObservableCollection<String>(await OrdersModel.getAllСompanies());
@@ -276,7 +276,6 @@ namespace IntershipProject.ViewModels
         #region Enter button commands & handlers
 
         private ICommand searchOrders;
-
         public ICommand SearchOrders
         {
             get
@@ -286,8 +285,6 @@ namespace IntershipProject.ViewModels
                 return searchOrders;
             }
         }
-
-
         private async void searchOrdsersClickHandler(object obj)
         {
             WaitingRingVisibility = Visibility.Visible;
@@ -340,7 +337,6 @@ namespace IntershipProject.ViewModels
 
 
         private ICommand cleanQuery;
-
         public ICommand CleanQuery
         {
             get
@@ -350,7 +346,6 @@ namespace IntershipProject.ViewModels
                 return cleanQuery;
             }
         }
-
         private void cleanQueryClickHandler(object obj)
         {
             IsCheckBoxChecked = false;
@@ -359,6 +354,31 @@ namespace IntershipProject.ViewModels
             SelectedConcreteCompany = null;
             SelectedConcreteCustomer = null;
             Status = null;
+        }
+
+        #endregion
+
+        #region DataGrid command & handlers
+
+        private ICommand hideDataGridRowDetails;
+
+        public ICommand HideDataGridRowDetails
+        {
+            get
+            {
+                if (hideDataGridRowDetails == null)
+                    hideDataGridRowDetails = new MyCommands(RowDetailsClickHanldler);
+                return hideDataGridRowDetails;
+            }
+        }
+
+        private void RowDetailsClickHanldler(object sender)
+        {
+            Border row = sender as Border;
+            if (row != null)
+            {
+                row.Visibility =  row.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            }
         }
 
         #endregion

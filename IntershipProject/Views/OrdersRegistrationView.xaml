@@ -44,9 +44,13 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" Grid.Column="0">
+                <Label Grid.Row="0" Grid.ColumnSpan="2" Content="(*) - поля обязательные для заполнения."/>
+
+
+                <StackPanel Grid.Row="1" Grid.Column="0">
 
                     <Label Content="Название компании заказчика" />
                     <Label Content="Имя заказчика*" />
@@ -59,7 +63,7 @@
 
                 </StackPanel>
 
-                <StackPanel  Grid.Row="0" Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <StackPanel  Grid.Row="1" Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding CustomerCompanyName}"/>
                     <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding CustomerFistName}"/>
                     <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding CustomerLastName}"/>
@@ -78,13 +82,13 @@
                 </StackPanel>
 
 
-                <StackPanel Grid.Row="1" Grid.Column="0">
+                <StackPanel Grid.Row="2" Grid.Column="0">
                     <Label Content="Стоимость выполнения заказа*"/>
                     <Label Content="Количество заказанных услуг*"/>
                     <Label Content="Скидка"/>
                 </StackPanel>
 
-                <StackPanel Grid.Row="1" Grid.Column="1">                   
+                <StackPanel Grid.Row="2" Grid.Column="1">                   
                     <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding ServieceCost}"/>
                     <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding ServieceCount}"/>
                     <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding Discount}"/>
@@ -93,18 +97,18 @@
             </Grid>
 
             <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition MaxWidth="1000"/>
-                </Grid.ColumnDefinitions>
 
-                <Button Style="{StaticResource EnterButtonStyle}" 
-                    Grid.Row="1"
+                <StackPanel>
+                    <Label Foreground="Red" FontSize="16" Content="SOME ERROR" HorizontalAlignment="Center"/>
+                    <Button Style="{StaticResource EnterButtonStyle}"
                     Margin="30" 
                     Width="170" 
                     Height="40" 
                     HorizontalAlignment="Center"
                     Content="Зарегистрировать"/>
-
+                </StackPanel>
+                
+                
             </Grid>            
 
         </Grid>

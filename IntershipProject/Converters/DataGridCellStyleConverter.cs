@@ -16,7 +16,7 @@ namespace IntershipProject.Converters
         {
             string status = (string)value;
             if (status.Equals("Выполняется"))
-                return new SolidColorBrush(Colors.Green);
+                return new SolidColorBrush(Color.FromRgb(0x3C, 0xA5, 0x5C));
             else if (status.Equals("Приостановлен"))
                 return new SolidColorBrush(Color.FromArgb(0xFF, 0xDE, 0x69, 0x18));
             else if (status.Equals("Выполнен"))

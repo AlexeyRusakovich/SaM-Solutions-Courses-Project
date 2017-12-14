@@ -12,6 +12,13 @@ namespace IntershipProject.ViewModels
 {
     class CustomersViewModel : DependencyObject
     {
+        #region Constructor
+        public CustomersViewModel()
+        {
+            AppAuthorizationViewModel.SuccessAuthorization += checkBoxCheckedHandlerObj;
+        }
+
+        #endregion
 
         #region Dependency properties
 
@@ -287,6 +294,11 @@ namespace IntershipProject.ViewModels
             WaitinRingVisibility = Visibility.Collapsed;
         }
 
+        private void checkBoxCheckedHandlerObj()
+        {
+            checkBoxCheckedHandler(null);
+        }
+
         #endregion
 
         #region Click search and clean buttons commands & handlers
@@ -407,6 +419,7 @@ namespace IntershipProject.ViewModels
         }
         private void selectDataGridCustomerHandler(object obj)
         {
+            if(SelectedGridCustomer != null)
             SelectedGridCustomerItemsVisibility = Visibility.Visible;
         }
 
