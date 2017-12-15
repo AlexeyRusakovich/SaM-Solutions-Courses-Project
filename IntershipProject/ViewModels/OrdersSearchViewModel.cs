@@ -320,7 +320,7 @@ namespace IntershipProject.ViewModels
                     }
                     else if (!IsConcreteClientChecked && !IsConcreteCompanyChecked)
                     {
-                        Orders = new ObservableCollection<Orders>(await OrdersModel.getAllOrdersByUserId());
+                        Orders = new ObservableCollection<Orders>(await OrdersModel.getOrdersByUserId());
                     }
                 }
             }

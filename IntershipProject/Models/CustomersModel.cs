@@ -19,7 +19,7 @@ namespace IntershipProject.Models
 
             return await (from o in ordersEntities.Orders
                           where o.EmployeeId.Equals(MainViewModel.CurrentUserId)
-                          select o.Customers).ToListAsync();
+                          select o.Customers).Distinct().ToListAsync();
         }
 
         public static async Task<List<Customers>> getAllCustomers()
@@ -27,6 +27,7 @@ namespace IntershipProject.Models
             OrdersEntities ordersEntities = new OrdersEntities();
 
             return await (from o in ordersEntities.Customers select o)
+                                .Distinct()
                                 .ToListAsync();
         }
 
@@ -39,6 +40,7 @@ namespace IntershipProject.Models
                           where o.EmployeeId.Equals(MainViewModel.CurrentUserId)
                           && o.CustomerId.Equals(CustomerId)
                           select o.Customers)
+                            .Distinct()
                            .ToListAsync();
         }
 
@@ -50,6 +52,7 @@ namespace IntershipProject.Models
                           where o.EmployeeId.Equals(MainViewModel.CurrentUserId)
                           && o.Customers.CompanyName.Equals(CompanyName)
                           select o.Customers)
+                           .Distinct()
                            .ToListAsync();
         }
 

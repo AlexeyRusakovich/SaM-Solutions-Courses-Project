@@ -197,6 +197,8 @@
                                    VerticalAlignment="Center"/>
 
             <DataGrid Grid.Row="5" 
+                      FontSize="17" 
+                      FontFamily="Myanmar Text"
                       Margin="0,20,0,0" 
                       SelectedItem="{Binding SelectedGridCustomer}"
                       CellStyle="{StaticResource CustomersDataGridCell}"
@@ -291,7 +293,9 @@
                 
                 <!--GRID ROW 1-->
 
-                <DataGrid Grid.Row="1" 
+                <DataGrid Grid.Row="1"
+                          FontSize="17" 
+                          FontFamily="Myanmar Text"
                           ItemsSource="{Binding SelectedGridCustomersOrders}" 
                           CellStyle="{StaticResource OrdersDataGridCell}"
                           IsReadOnly="True" 

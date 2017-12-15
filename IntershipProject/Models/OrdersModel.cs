@@ -146,7 +146,7 @@ namespace IntershipProject.Models
                                         .ToListAsync());
         }
 
-        public static async Task<List<Orders>> getAllOrdersByUserId()
+        public static async Task<List<Orders>> getOrdersByUserId()
         {
             OrdersEntities ordersEntities = new OrdersEntities();
 

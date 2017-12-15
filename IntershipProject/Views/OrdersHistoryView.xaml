@@ -138,6 +138,8 @@
 
 
         <DataGrid Grid.Row="2" 
+                  FontSize="17" 
+                  FontFamily="Myanmar Text" 
                   IsReadOnly="True"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding Orders}"

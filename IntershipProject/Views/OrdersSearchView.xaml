@@ -147,6 +147,8 @@
                                    VerticalAlignment="Center"/>
 
             <DataGrid Grid.Row="4" 
+                      FontSize="17" 
+                      FontFamily="Myanmar Text" 
                       ItemsSource="{Binding Orders}"
                       RowDetailsTemplate="{StaticResource RowDetailTemplate}"
                       CellStyle="{StaticResource OrdersDataGridCell}"
