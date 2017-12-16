@@ -343,3 +343,7 @@ D:\SaM-Solutions-courses-project\IntershipProject\obj\Debug\IntershipProject.csp
 D:\SaM-Solutions-courses-project\IntershipProject\obj\Debug\IntershipProject.exe
 D:\SaM-Solutions-courses-project\IntershipProject\obj\Debug\IntershipProject.pdb
 D:\SaM-Solutions-courses-project\IntershipProject\obj\Debug\Styles\TabItemStyle.baml
+D:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\obj\Debug\Styles\DataGridStyle.baml
+D:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\obj\Debug\Styles\TabItemStyle.baml
+D:\SamSolutions\SaM-Solutions-courses-project\IntershipProject\obj\Debug\Styles\ScrollViewerStyle.baml

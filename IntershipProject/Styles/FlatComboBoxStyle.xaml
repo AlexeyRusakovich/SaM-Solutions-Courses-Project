@@ -57,11 +57,12 @@
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">
-                    <Grid>
+                    <Border Name="ErrorBorder" Padding="2 2">
+                    <Grid x:Name="Grid">
                         <ToggleButton Name="ToggleButton" Grid.Column="2"
-                ClickMode="Press" Focusable="False"
-                IsChecked="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
-                Template="{StaticResource ComboBoxToggleButtonTemplate}"/>
+                    ClickMode="Press" Focusable="False"
+                    IsChecked="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                    Template="{StaticResource ComboBoxToggleButtonTemplate}"/>
 
                         <ContentPresenter Name="ContentSite" Margin="5, 3, 23, 3" IsHitTestVisible="False"
                               HorizontalAlignment="Left" VerticalAlignment="Center"                              
@@ -96,7 +97,11 @@
                             </Grid>
                         </Popup>
                     </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="Background" Value="Red" TargetName="ErrorBorder" />
+                        </Trigger>
                         <Trigger Property="ItemsControl.HasItems" Value="False">
                             <Setter Property="FrameworkElement.MinHeight" TargetName="DropDownBorder" Value="95"/>
                         </Trigger>
@@ -110,12 +115,13 @@
                             <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
                             <Setter Property="UIElement.Visibility" TargetName="PART_EditableTextBox" Value="Visible"/>
                             <Setter Property="UIElement.Visibility" TargetName="ContentSite" Value="Hidden"/>
-                        </Trigger>
+                        </Trigger>                        
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
     <!-- End of Flat ComboBox -->
+
 
 </ResourceDictionary>

@@ -9,226 +9,233 @@
       mc:Ignorable="d" 
       d:DesignHeight="1000" d:DesignWidth="1000"
       Title="Customers">
-    
 
     <Grid>
 
-        <ScrollViewer VerticalScrollBarVisibility="Hidden" Visibility="{Binding FirstGridVisibility}">        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer VerticalScrollBarVisibility="Hidden" Visibility="{Binding FirstGridVisibility}" Grid.Row="0">        
             
             <Grid>
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-
-            <!--GRID ROW 0-->
+                <!--GRID ROW 0-->
             
-            <WrapPanel Grid.Row="0" >
+                <WrapPanel Grid.Row="0" >
 
-                <Label 
-                       Content="Информация о клиентах" 
-                       FontSize="25" 
-                       Margin="35, 20, 0, 0"
-                       Height="40" 
-                       Foreground="#2f3748" 
-                       FontWeight="Bold"/>
+                    <Label 
+                           Content="Информация о клиентах" 
+                           FontSize="25" 
+                           Margin="35, 20, 0, 0"
+                           Height="40" 
+                           Foreground="#2f3748" 
+                           FontWeight="Bold"/>
 
-                <Label 
-                   Content="{Binding ErrorStringContent}" 
-                   Margin="35, 20, 0, 0" 
-                   Foreground="Red" 
-                   Visibility="{Binding ErrorStringVisibility}"/>
-
-            </WrapPanel>
-
-            <!--GRID ROW 1-->
-
-            <CheckBox Style="{StaticResource CheckBoxStyle}" 
-                  IsChecked="{Binding IsCheckBoxChecked}"
-                  Grid.Row="1" 
-                  Margin="35, 10 , 0, 0"  
-                  Content="Отображать клиентов всех пользователей" 
-                  FontSize="17">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Checked">
-                        <i:InvokeCommandAction Command="{Binding CheckBoxChecked}"/>
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="Unchecked">
-                        <i:InvokeCommandAction Command="{Binding CheckBoxChecked}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </CheckBox>
-
-            <!--GRTD ROW 2-->
-
-            <Grid   Grid.Row="2" 
-                    Margin=" 35, 10, 0, 0">
-
-                <StackPanel>
-
-                    <WrapPanel  Margin="5, -10, 0, 0"
-                                Orientation="Horizontal">
-
-
-                        <RadioButton    GroupName="Group2"
-                                        x:Name="Concrte_client" 
-                                        Margin="0, 20, 123, 0"
-                                        Style="{StaticResource RadioButtonStyle}"
-                                        IsChecked="{Binding IsConsreteClientChecked}"
-                                        Content="Конкретный клиент"/>
-
-
-                        <ComboBox Style="{StaticResource ComboBoxFlatStyle}" 
-                              IsEnabled="{Binding IsChecked, ElementName=Concrte_client}"
-                              SelectedItem="{Binding SelectedCustomer}"
-                              Width="200"
-                              HorizontalAlignment="Left" 
-                              Margin="10, 20, 0, 0"
-                              ItemsSource="{Binding ResultCustomers}">
-
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Label Style="{x:Null}">
-                                        <AccessText FontSize="15">
-                                            <MultiBinding StringFormat=" {0} {1}">
-                                                <Binding Path="ContactFirstName"/>
-                                                <Binding Path="ContactLastName"/>
-                                            </MultiBinding>
-                                        </AccessText>
-                                    </Label>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-
-
-
-                    </WrapPanel>
-
-                    <WrapPanel  Margin="0, 10, 0, 0"
-                                HorizontalAlignment="Stretch">
-                    
-
-
-                    <RadioButton    GroupName="Group2"
-                                    x:Name="Company_customers" 
-                                    Style="{StaticResource RadioButtonStyle}"
-                                    IsChecked="{Binding IsConcreteCompanyChecked}"
-                                    Content="Клиенты определенной компании"/>
-
-                    <ComboBox Style="{StaticResource ComboBoxFlatStyle}"
-                              IsEnabled="{Binding IsChecked, ElementName=Company_customers}"
-                              SelectedItem="{Binding SelectedCompany}"
-                              Width="200" 
-                              Height="30"
-                              FontSize="15"
-                              HorizontalAlignment="Left" 
-                              Margin="15, 20, 0, 0"
-                              ItemsSource="{Binding Companies}"/>
+                    <Label 
+                       Content="{Binding ErrorStringContent}" 
+                       Margin="35, 20, 0, 0" 
+                       Foreground="Red" 
+                       Visibility="{Binding ErrorStringVisibility}"/>
 
                 </WrapPanel>
 
+                <!--GRID ROW 1-->
+
+                <CheckBox Grid.Row="1" 
+                          Style="{StaticResource CheckBoxStyle}" 
+                          IsChecked="{Binding IsCheckBoxChecked}"                      
+                          Margin="35, 10 , 0, 0"  
+                          Content="Отображать клиентов всех пользователей" 
+                          FontSize="17">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding CheckBoxChecked}"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="Unchecked">
+                            <i:InvokeCommandAction Command="{Binding CheckBoxChecked}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </CheckBox>
+
+                <!--GRTD ROW 2-->
+
+                <Grid   Grid.Row="2" 
+                        Margin=" 35, 10, 0, 0">
+
+                    <StackPanel>
+
+                        <WrapPanel  Margin="5, -10, 0, 0"
+                                    Orientation="Horizontal">
+
+
+                            <RadioButton    GroupName="Group2"
+                                            x:Name="Concrte_client" 
+                                            Margin="0, 20, 123, 0"
+                                            Style="{StaticResource RadioButtonStyle}"
+                                            IsChecked="{Binding IsConsreteClientChecked}"
+                                            Content="Конкретный клиент"/>
+
+
+                            <ComboBox Style="{StaticResource ComboBoxFlatStyle}" 
+                                  IsEnabled="{Binding IsChecked, ElementName=Concrte_client}"
+                                  SelectedItem="{Binding SelectedCustomer}"
+                                  Width="200"
+                                  HorizontalAlignment="Left" 
+                                  Margin="10, 20, 0, 0"
+                                  ItemsSource="{Binding ResultCustomers}">
+
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label Style="{x:Null}">
+                                            <AccessText FontSize="15">
+                                                <MultiBinding StringFormat=" {0} {1}">
+                                                    <Binding Path="ContactFirstName"/>
+                                                    <Binding Path="ContactLastName"/>
+                                                </MultiBinding>
+                                            </AccessText>
+                                        </Label>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+
+
+                        </WrapPanel>
+
+                        <WrapPanel  Margin="0, 10, 0, 0"
+                                    HorizontalAlignment="Stretch">
+                    
+
+
+                        <RadioButton    GroupName="Group2"
+                                        x:Name="Company_customers" 
+                                        Style="{StaticResource RadioButtonStyle}"
+                                        IsChecked="{Binding IsConcreteCompanyChecked}"
+                                        Content="Клиенты определенной компании"/>
+
+                        <ComboBox Style="{StaticResource ComboBoxFlatStyle}"
+                                  IsEnabled="{Binding IsChecked, ElementName=Company_customers}"
+                                  SelectedItem="{Binding SelectedCompany}"
+                                  Width="200" 
+                                  Height="30"
+                                  FontSize="15"
+                                  HorizontalAlignment="Left" 
+                                  Margin="15, 20, 0, 0"
+                                  ItemsSource="{Binding Companies}"/>
+
+                    </WrapPanel>
+
+                    </StackPanel>
+
+                </Grid>
+
+                <!--GRID ROW 3-->
+            
+                <StackPanel Grid.Row="3" 
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left">
+
+                    <Button Style="{StaticResource EnterButtonStyle}"
+                        Margin="50, 20, 0, 10"
+                        Width="170" 
+                        Height="40" 
+                        Command="{Binding SearchCustomers}"
+                        Grid.Row="3"
+                        Content="Поиск"/>
+
+                    <Button Style="{StaticResource EnterButtonStyle}"
+                        Margin="20, 20, 0, 10"
+                        Width="170" 
+                        Height="40" 
+                        Command="{Binding CleanQuery}"
+                        Content="Очистить запрос"/>
+
                 </StackPanel>
 
+                <!--GRID ROW 4-->
+
+                <WrapPanel Grid.Row="4" Visibility="{Binding SelectedGridCustomerItemsVisibility}">
+                
+                    <Label Content="Выбранный клиент: " 
+                           Margin="40, 0, 0, 0"
+                           FontSize="17"/>
+                
+                    <Label>
+                        <AccessText FontSize="17">
+                        
+                            <MultiBinding StringFormat=" {0} {1}">
+                                <Binding Path="SelectedGridCustomer.ContactFirstName"/>
+                                <Binding Path="SelectedGridCustomer.ContactLastName"/>
+                            </MultiBinding>
+                        
+                        </AccessText>
+                    </Label>
+
+                    <Button Style="{StaticResource EnterButtonStyle}"
+                            Margin="45, 10, 0, 10"
+                            Width="250" 
+                            Height="40" 
+                            Command="{Binding GetOrders}"
+                            Content="Перейти к заказам клиента"/>
+                </WrapPanel>
+            
             </Grid>
-
-            <!--GRID ROW 3-->
-            
-            <StackPanel Grid.Row="3" 
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Left">
-
-                <Button Style="{StaticResource EnterButtonStyle}"
-                    Margin="50, 20, 0, 10"
-                    Width="170" 
-                    Height="40" 
-                    Command="{Binding SearchCustomers}"
-                    Grid.Row="3"
-                    Content="Поиск"/>
-
-                <Button Style="{StaticResource EnterButtonStyle}"
-                    Margin="20, 20, 0, 10"
-                    Width="170" 
-                    Height="40" 
-                    Command="{Binding CleanQuery}"
-                    Content="Очистить запрос"/>
-
-            </StackPanel>
-
-            <!--GRID ROW 4-->
-
-            <WrapPanel Grid.Row="4" Visibility="{Binding SelectedGridCustomerItemsVisibility}">
-                
-                <Label Content="Выбранный клиент: " 
-                       Margin="40, 0, 0, 0"
-                       FontSize="17"/>
-                
-                <Label>
-                    <AccessText FontSize="17">
-                        
-                        <MultiBinding StringFormat=" {0} {1}">
-                            <Binding Path="SelectedGridCustomer.ContactFirstName"/>
-                            <Binding Path="SelectedGridCustomer.ContactLastName"/>
-                        </MultiBinding>
-                        
-                    </AccessText>
-                </Label>
-
-                <Button Style="{StaticResource EnterButtonStyle}"
-                        Margin="45, 10, 0, 10"
-                        Width="250" 
-                        Height="40" 
-                        Command="{Binding GetOrders}"
-                        Content="Перейти к заказам клиента"/>
-            </WrapPanel>
-            
-            <!--GRID ROW 5-->
-
-            <Controls:ProgressRing Grid.Row="5"  Panel.ZIndex="1"
-                                   IsActive="{Binding IsWaitingRingActive}" 
-                                   Opacity="0.5"
-                                   Foreground="#17a2b8" 
-                                   HorizontalAlignment="Center" 
-                                   VerticalAlignment="Center"/>
-
-            <DataGrid Grid.Row="5" 
-                      FontSize="17" 
-                      FontFamily="Myanmar Text"
-                      Margin="0,20,0,0" 
-                      SelectedItem="{Binding SelectedGridCustomer}"
-                      CellStyle="{StaticResource CustomersDataGridCell}"
-                      ItemsSource="{Binding Customers}"
-                      AutoGenerateColumns="False"
-                      IsReadOnly="True"
-                      HorizontalContentAlignment="Center"
-                      VerticalContentAlignment="Center">
-
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseLeftButtonDown">
-                        <i:InvokeCommandAction Command="{Binding ChangeSelectedCustomerPanelVisibility}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Имя компании" Binding="{Binding CompanyName}" Width="1*"/>
-                    <DataGridTextColumn Header="Имя" Binding="{Binding ContactFirstName}" Width="1*"/>
-                    <DataGridTextColumn Header="Фамилия" Binding="{Binding ContactLastName}" Width="1*"/>
-                    <DataGridTextColumn Header="Телефон" Binding="{Binding ContactPhone}" Width="1*"/>
-                    <DataGridTextColumn Header="Адрес" Binding="{Binding ContactAdress}" Width="4*"/>                    
-                </DataGrid.Columns>
-            </DataGrid>
-
-
-        </Grid>
 
         </ScrollViewer>
 
-        <Grid Visibility="{Binding SecondGridVisibility}">
+        <DataGrid   Grid.Row="1" 
+                    Visibility="{Binding FirstGridVisibility}"
+                    ScrollViewer.CanContentScroll="True"
+                    HorizontalScrollBarVisibility="Hidden"
+                    VirtualizingPanel.ScrollUnit="Pixel"
+                    FontSize="17" 
+                    FontFamily="Myanmar Text"
+                    Margin="0,20,0,0" 
+                    SelectedItem="{Binding SelectedGridCustomer}"
+                    CellStyle="{StaticResource CustomersDataGridCell}"
+                    ItemsSource="{Binding Customers}"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding ChangeSelectedCustomerPanelVisibility}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Имя компании" Binding="{Binding CompanyName}" Width="1*"/>
+                <DataGridTextColumn Header="Имя" Binding="{Binding ContactFirstName}" Width="1*"/>
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding ContactLastName}" Width="1*"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding ContactPhone}" Width="1*"/>
+                <DataGridTextColumn Header="Адрес" Binding="{Binding ContactAdress}" Width="4*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Controls:ProgressRing  Grid.Row="1"  
+                                Panel.ZIndex="1"
+                                Visibility="{Binding WaitinRingVisibility}"
+                                IsActive="{Binding IsWaitingRingActive}" 
+                                Opacity="0.5"
+                                Foreground="#17a2b8" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"/>
+
+        <Grid Grid.Row="0"
+              Visibility="{Binding SecondGridVisibility}" 
+              Grid.RowSpan="2">
             
             <Grid>
                 <Grid.RowDefinitions>
@@ -294,8 +301,12 @@
                 <!--GRID ROW 1-->
 
                 <DataGrid Grid.Row="1"
-                          FontSize="17" 
+                          FontSize="17"
+                          ScrollViewer.CanContentScroll="True"
+                          VirtualizingPanel.ScrollUnit="Pixel"
+                          HorizontalScrollBarVisibility="Hidden"
                           FontFamily="Myanmar Text"
+                          RowDetailsTemplate="{StaticResource RowDetailTemplate}"
                           ItemsSource="{Binding SelectedGridCustomersOrders}" 
                           CellStyle="{StaticResource OrdersDataGridCell}"
                           IsReadOnly="True" 

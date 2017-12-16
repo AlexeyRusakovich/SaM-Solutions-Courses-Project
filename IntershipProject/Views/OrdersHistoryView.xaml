@@ -11,11 +11,14 @@
       Title="OrdersHistoryView">
 
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
+        <!--GRID ROW 0-->
 
         <WrapPanel Grid.Row="0" >
             <Label 
@@ -27,16 +30,16 @@
                    FontWeight="Bold"/>
 
             <Label Margin="20, 20, 0, 0" 
-                   Content="{Binding HistoryErrorStringContent}" 
-                   Visibility="{Binding HistoryErrorStringVisibility}"/>
+                   Content="{Binding ErrorStringContent}" 
+                   Visibility="{Binding ErrorStringVisibility}"/>
         </WrapPanel>
 
-
+        <!--GRID ROW 1-->
 
         <StackPanel Grid.Row="1" Margin="20, 0, 0 ,0">
 
             <CheckBox Style="{StaticResource CheckBoxStyle}" 
-                      IsChecked="{Binding IsHistoryCheckBoxChecked}"
+                      IsChecked="{Binding IsCheckBoxChecked}"
                       Grid.Row="1" 
                       Margin="15, 10, 0, 0"  
                       Content="Отображать историю всех клиентов" 
@@ -60,15 +63,17 @@
 
                     <RadioButton    Name="ClientCompanyRadioButton" 
                                     GroupName="Group1"
-                                        IsChecked="{Binding IsHistoryConcreteClientChecked}"
+                                    HorizontalContentAlignment="Center"
+                                    IsChecked="{Binding IsConcreteClientChecked}"
                                     Style="{StaticResource RadioButtonStyle}"
                                     Content="Заказы конкретного клиента"
                                     Margin="10,10,0,0"/>
 
-                    <ComboBox       Width="150" 
+                    <ComboBox       Width="200" 
                                     HorizontalAlignment="Left" 
-                                    ItemsSource="{Binding HistoryCustomers}"
-                                    Height="30"
+                                    Height="35"
+                                    ItemsSource="{Binding Customers}"
+                                    SelectedItem="{Binding SelectedConcreteCustomer}"
                                     Margin="20, 10, 0, 0" 
                                     IsEnabled="{Binding Path=IsChecked,ElementName=ClientCompanyRadioButton}">
                         <ComboBox.ItemTemplate>
@@ -91,17 +96,21 @@
 
                     <RadioButton    Content="Заказы группы клиентов одной компании" 
                                     GroupName="Group1"
-                                    IsChecked="{Binding IsHistoryConcreteCompanyChecked}"
+                                    IsChecked="{Binding IsConcreteCompanyChecked}"
                                     Style="{StaticResource RadioButtonStyle}"
                                     Name="GroupCompanyRadioButton"
                                     Margin="10,10,0,0" />
 
                     <ComboBox   Margin="20, 10 , 0, 0"
-                                Width="150" 
-                                Height="30"
-                                ItemsSource="{Binding HistoryCompanies}"
+                                Width="200" 
+                                Height="35"
+                                FontSize="15"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                ItemsSource="{Binding Companies}"
+                                SelectedItem="{Binding SelectedConcreteCompany}"
                                 HorizontalAlignment="Left" 
-                                IsEnabled="{Binding Path=IsChecked,ElementName=GroupCompanyRadioButton}"/>
+                                IsEnabled="{Binding Path=IsChecked, ElementName=GroupCompanyRadioButton}"/>
                 </StackPanel>
 
             </WrapPanel>
@@ -118,26 +127,30 @@
 
                 <Button Style="{StaticResource  EnterButtonStyle}" 
                         Command="{Binding CleanQuery}"
-                    Width="170" 
-                    Content="Очистить запрос" 
-                    Height="40" 
-                    Margin="40, 10, 0, 0" 
-                    HorizontalAlignment="Left"/>
+                        Width="170" 
+                        Content="Очистить запрос" 
+                        Height="40" 
+                        Margin="40, 10, 0, 0" 
+                        HorizontalAlignment="Left"/>
 
             </StackPanel>
 
         </StackPanel>
+        
+        <!--GRID ROW 2-->
 
         <Controls:ProgressRing Grid.Row="2"  Panel.ZIndex="1"
-                                   IsActive="{Binding IsHistoryWaitingRingActive}" 
-                                   Visibility="{Binding HistoryWaitinRingVisibility}"
+                                   IsActive="{Binding IsWaitingRingActive}" 
+                                   Visibility="{Binding WaitinRingVisibility}"
                                    Opacity="0.5"
                                    Foreground="#17a2b8" 
                                    HorizontalAlignment="Center" 
                                    VerticalAlignment="Center"/>
 
-
         <DataGrid Grid.Row="2" 
+                  ScrollViewer.CanContentScroll="True"
+                  VirtualizingPanel.ScrollUnit="Pixel"
+                  HorizontalScrollBarVisibility="Hidden"
                   FontSize="17" 
                   FontFamily="Myanmar Text" 
                   IsReadOnly="True"

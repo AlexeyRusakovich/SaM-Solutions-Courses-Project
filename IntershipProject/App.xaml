@@ -16,7 +16,8 @@
                 <ResourceDictionary  Source="Styles/RadioButtonStyle.xaml"/>
                 <ResourceDictionary  Source="Styles/EnterButtonStyle.xaml"/>
                 <ResourceDictionary  Source="Styles/DataGridStyle.xaml"/>
-                <ResourceDictionary  Source="Styles/TabItemStyle.xaml"/>                
+                <ResourceDictionary  Source="Styles/TabItemStyle.xaml"/>
+                <ResourceDictionary  Source="Styles/ScrollViewerStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
         </ResourceDictionary>   

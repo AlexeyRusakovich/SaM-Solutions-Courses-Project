@@ -14,6 +14,13 @@
         MinHeight="450"
         Style="{StaticResource WindowStyle}" ResizeMode="CanResize">
 
+    <Window.Background>
+        <LinearGradientBrush>
+            <GradientStop Color="#EAECC6" Offset="0" />
+            <GradientStop Color="#2BC0E4" Offset="1" />
+        </LinearGradientBrush>
+    </Window.Background>
+
 
     <Grid>
 
@@ -21,63 +28,8 @@
             <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
-        <Grid Grid.Row="1">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MaxWidth="200"/>
-                <ColumnDefinition Width="5*"/>
-            </Grid.ColumnDefinitions>
-
-
-            <HamburgerMenu:HamburgerMenu    HorizontalAlignment="Left" 
-                                            SelectionIndicatorColor="White" 
-                                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                            MenuIconColor="White" 
-                                            Visibility="{Binding MenuVisibility}"
-                                            Background="#FF48C0D3" 
-                                            MenuItemForeground="#2f3748"
-                                            Panel.ZIndex="2">
-
-                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/customer.png" 
-                                                     Text="Customers" 
-                                                     SelectionCommand="{Binding SetCustomerContent}"/>
-                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/order_add.png" 
-                                                     Text="Add orders" 
-                                                     SelectionCommand="{Binding SetAddOrderContent}"/>
-                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/order_search.png" 
-                                                     Text="Search orders" 
-                                                     SelectionCommand="{Binding SetSearchOrderContent}"/>
-                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/order_history.png" 
-                                                     Text="Orders history" 
-                                                     SelectionCommand="{Binding SetOrderHistoryContent}"/>
-                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/order_queue.png" 
-                                                     Text="Orders queue" 
-                                                     SelectionCommand="{Binding SetOrderQueueContent}"/>
-            </HamburgerMenu:HamburgerMenu>
-
-
-            <Grid Grid.Column="1">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-
-                <Frame  Grid.Row="1" 
-                        Content="{Binding MainContent}"
-                        NavigationUIVisibility="Hidden"/>
-
-
-                <Rectangle Grid.Row="0" Fill="#FF48C0D3"/>
-
-
-            </Grid>
-
-        </Grid>
-
-        <Rectangle  Fill="White" Grid.Row="0">
+        
+         <Rectangle  Fill="White" Grid.Row="0">
 
             <Rectangle.InputBindings>
                 <MouseBinding MouseAction="LeftDoubleClick"
@@ -93,7 +45,7 @@
         </Rectangle>
 
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10,0,0,0">
-            
+
             <Image Source="/Resources/order.png" Width="24" Height="24" />
             <Label Style="{x:Null}"  Content="BestOrders" FontFamily="Myanmar Text" FontSize="15" Foreground="#2f3748" FontWeight="Bold"/>
 
@@ -104,6 +56,7 @@
                         <Style TargetType="{x:Type Label}">
                             <Setter Property="FontFamily" Value="Myanmar Text"/>
                             <Setter Property="FontSize" Value="15"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
                             <Setter Property="Margin" Value="30, 0, 0, 0"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
@@ -136,7 +89,7 @@
                         </Style>
                     </Image.Style>
                 </Image>
-                
+
             </StackPanel>
         </StackPanel>
 
@@ -146,6 +99,61 @@
             <Button Width="20" Height="20" Margin="2,5" Style="{StaticResource CloseButtonStyle}" Command="{Binding CloseWindow}" />
 
         </StackPanel>
+
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MaxWidth="250"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <HamburgerMenu:HamburgerMenu    HorizontalAlignment="Left" 
+                                            SelectionIndicatorColor="White" 
+                                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                            MenuIconColor="White" 
+                                            Visibility="{Binding MenuVisibility}"
+                                            Background="#FF48C0D3" 
+                                            MenuItemForeground="#2f3748"
+                                            Panel.ZIndex="2">
+
+                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/customer.png" 
+                                                     Text="Клиенты" 
+                                                     SelectionCommand="{Binding SetCustomerContent}"/>
+                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/order_add.png" 
+                                                     Text="Управление заказами" 
+                                                     SelectionCommand="{Binding SetAddOrderContent}"/>
+                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/order_search.png" 
+                                                     Text="Поиск заказов" 
+                                                     SelectionCommand="{Binding SetSearchOrderContent}"/>
+                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/order_history.png" 
+                                                     Text="История заказов" 
+                                                     SelectionCommand="{Binding SetOrderHistoryContent}"/>
+                <HamburgerMenu:HamburgerMenuItem Icon="/Resources/order_queue.png" 
+                                                     Text="Очередность заказов" 
+                                                     SelectionCommand="{Binding SetOrderQueueContent}"/>
+            </HamburgerMenu:HamburgerMenu>
+
+
+            <Grid Grid.Column="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+
+                <Frame  Grid.Row="1" 
+                        Content="{Binding MainContent}"
+                        NavigationUIVisibility="Hidden"/>
+
+
+                <Rectangle Grid.Row="0" Fill="#FF48C0D3"/>
+
+
+            </Grid>
+
+        </Grid>
 
     </Grid>
 </Window>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using System.Windows.Input;
 
 namespace IntershipProject.ViewModels
 {
-    class OrdersRegistrationViewModel : DependencyObject
+    class OrdersRegistrationViewModel : DependencyObject, IDataErrorInfo
     {
 
         #region Constuctor
@@ -24,7 +25,73 @@ namespace IntershipProject.ViewModels
 
         #region Dependency properties
 
+        #region Waiting Rind Properties
+
+        public bool IsWaitingRingActive
+        {
+            get { return (bool)GetValue(IsWaitingRingActiveProperty); }
+            set { SetValue(IsWaitingRingActiveProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsWaitingRingActive.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsWaitingRingActiveProperty =
+            DependencyProperty.Register("IsWaitingRingActive", typeof(bool), typeof(OrdersRegistrationViewModel), new PropertyMetadata(false));
+
+
+
+        public Visibility WaitingRingVisibility
+        {
+            get { return (Visibility)GetValue(WaitingRingVisibilityProperty); }
+            set { SetValue(WaitingRingVisibilityProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for WaitingRingVisibility.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty WaitingRingVisibilityProperty =
+            DependencyProperty.Register("WaitingRingVisibility", typeof(Visibility), typeof(OrdersRegistrationViewModel), new PropertyMetadata(Visibility.Collapsed));
+
+
+        #endregion
+
+        #region Customer registration grid visibility properties
+
+        public Visibility SelectExistingCustomerGridVisibility
+        {
+            get { return (Visibility)GetValue(SelectExistingCustomerGridVisibilityProperty); }
+            set { SetValue(SelectExistingCustomerGridVisibilityProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SelectCurrentCustomerGridVisibility.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectExistingCustomerGridVisibilityProperty =
+            DependencyProperty.Register("SelectExistingCustomerGridVisibility", typeof(Visibility), typeof(OrdersRegistrationViewModel), new PropertyMetadata(Visibility.Visible));
+        
+
+
+        public Visibility SelectNewCustomerGridVisibility
+        {
+            get { return (Visibility)GetValue(SelectNewCustomerGridVisibilityProperty); }
+            set { SetValue(SelectNewCustomerGridVisibilityProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SelectNewCustomerGridVisibility.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectNewCustomerGridVisibilityProperty =
+            DependencyProperty.Register("SelectNewCustomerGridVisibility", typeof(Visibility), typeof(OrdersRegistrationViewModel), new PropertyMetadata(Visibility.Collapsed));
+
+
+        #endregion
+
         #region Order registration properties
+
+        public Customers SelectedCustomer
+        {
+            get { return (Customers)GetValue(SelectedCustomerProperty); }
+            set { SetValue(SelectedCustomerProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SelectedCustomer.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectedCustomerProperty =
+            DependencyProperty.Register("SelectedCustomer", typeof(Customers), typeof(OrdersRegistrationViewModel), new PropertyMetadata(null));
+
+
 
         public string CustomerCompanyName
         {
@@ -98,44 +165,43 @@ namespace IntershipProject.ViewModels
 
 
 
-        public int ServieceCost
+        public String ServieceCost
         {
-            get { return (int)GetValue(ServieceCostProperty); }
+            get { return (String)GetValue(ServieceCostProperty); }
             set { SetValue(ServieceCostProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ServieceCost.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ServieceCostProperty =
-            DependencyProperty.Register("ServieceCost", typeof(int), typeof(OrdersRegistrationViewModel), new PropertyMetadata(0));
+            DependencyProperty.Register("ServieceCost", typeof(String), typeof(OrdersRegistrationViewModel), new PropertyMetadata(null));
 
 
 
-        public int ServieceCount
+        public String ServieceCount
         {
-            get { return (int)GetValue(ServieceCountProperty); }
+            get { return (String)GetValue(ServieceCountProperty); }
             set { SetValue(ServieceCountProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ServieceCount.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ServieceCountProperty =
-            DependencyProperty.Register("ServieceCount", typeof(int), typeof(OrdersRegistrationViewModel), new PropertyMetadata(0));
+            DependencyProperty.Register("ServieceCount", typeof(String), typeof(OrdersRegistrationViewModel), new PropertyMetadata(null));
 
 
 
-        public int Discount
+        public String Discount
         {
-            get { return (int)GetValue(DiscountProperty); }
+            get { return (String)GetValue(DiscountProperty); }
             set { SetValue(DiscountProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Discount.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DiscountProperty =
-            DependencyProperty.Register("Discount", typeof(int), typeof(OrdersRegistrationViewModel), new PropertyMetadata(0));
+            DependencyProperty.Register("Discount", typeof(String), typeof(OrdersRegistrationViewModel), new PropertyMetadata(null));
 
         #endregion
 
         #region Order change properties
-        
 
         public Orders SelectedChangeDataGridItem
         {
@@ -162,15 +228,15 @@ namespace IntershipProject.ViewModels
 
 
 
-        public ObservableCollection<Customers> ChangeCustomers
+        public ObservableCollection<Customers> Customers
         {
-            get { return (ObservableCollection<Customers>)GetValue(ChangeCustomersProperty); }
-            set { SetValue(ChangeCustomersProperty, value); }
+            get { return (ObservableCollection<Customers>)GetValue(CustomersProperty); }
+            set { SetValue(CustomersProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ChangeCustomers.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ChangeCustomersProperty =
-            DependencyProperty.Register("ChangeCustomers", typeof(ObservableCollection<Customers>), typeof(OrdersRegistrationViewModel), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for Customers.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CustomersProperty =
+            DependencyProperty.Register("Customers", typeof(ObservableCollection<Customers>), typeof(OrdersRegistrationViewModel), new PropertyMetadata(null));
                
 
 
@@ -183,8 +249,6 @@ namespace IntershipProject.ViewModels
         // Using a DependencyProperty as the backing store for NewCustomer.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty NewCustomerProperty =
             DependencyProperty.Register("NewCustomer", typeof(Customers), typeof(OrdersRegistrationViewModel), new PropertyMetadata(null));
-
-
 
 
         public string NewCompanyAdress
@@ -223,45 +287,43 @@ namespace IntershipProject.ViewModels
 
 
 
-        public int NewServieceCost
+        public string NewServieceCost
         {
-            get { return (int)GetValue(NewServieceCostProperty); }
+            get { return (string)GetValue(NewServieceCostProperty); }
             set { SetValue(NewServieceCostProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ServieceCost.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty NewServieceCostProperty =
-            DependencyProperty.Register("NewServieceCost", typeof(int), typeof(OrdersRegistrationViewModel), new PropertyMetadata(0));
+            DependencyProperty.Register("NewServieceCost", typeof(string), typeof(OrdersRegistrationViewModel), new PropertyMetadata(null));
 
 
 
-        public int NewServieceCount
+        public string NewServieceCount
         {
-            get { return (int)GetValue(NewServieceCountProperty); }
+            get { return (string)GetValue(NewServieceCountProperty); }
             set { SetValue(NewServieceCountProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ServieceCount.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty NewServieceCountProperty =
-            DependencyProperty.Register("NewServieceCount", typeof(int), typeof(OrdersRegistrationViewModel), new PropertyMetadata(0));
+            DependencyProperty.Register("NewServieceCount", typeof(string), typeof(OrdersRegistrationViewModel), new PropertyMetadata(null));
 
 
 
-        public int NewDiscount
+        public string NewDiscount
         {
-            get { return (int)GetValue(NewDiscountProperty); }
+            get { return (string)GetValue(NewDiscountProperty); }
             set { SetValue(NewDiscountProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Discount.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty NewDiscountProperty =
-            DependencyProperty.Register("NewDiscount", typeof(int), typeof(OrdersRegistrationViewModel), new PropertyMetadata(0));
+            DependencyProperty.Register("NewDiscount", typeof(string), typeof(OrdersRegistrationViewModel), new PropertyMetadata(null));
 
         #endregion
 
         #region Enter buttons commands & handlers
-
-
 
         public string EditButtonContent
         {
@@ -313,6 +375,7 @@ namespace IntershipProject.ViewModels
 
         }
 
+
         private ICommand cancel;
         public ICommand Cancel
         {
@@ -329,6 +392,132 @@ namespace IntershipProject.ViewModels
 
             EditButtonContent = "Редактировать";
 
+        }
+
+
+        private ICommand selectExistingCustomer;
+        public ICommand SelectExistingCustomer
+        {
+            get
+            {
+                if (selectExistingCustomer == null)
+                    selectExistingCustomer = new MyCommands(selectExistingCustomerClickHandler);
+                return selectExistingCustomer;
+
+            }
+        }
+        private void selectExistingCustomerClickHandler(object obj)
+        {
+            SelectExistingCustomerGridVisibility = Visibility.Visible;
+            SelectNewCustomerGridVisibility = Visibility.Collapsed;
+        }
+
+
+        private ICommand selectNewCustomer;
+        public ICommand SelectNewCustomer
+        {
+            get
+            {
+                if (selectNewCustomer == null)
+                    selectNewCustomer = new MyCommands(selectNewCustomerClickHandler);
+                return selectNewCustomer;
+
+            }
+        }
+        private void selectNewCustomerClickHandler(object obj)
+        {
+            SelectExistingCustomerGridVisibility = Visibility.Collapsed;
+            SelectNewCustomerGridVisibility = Visibility.Visible;
+        }
+
+
+        private ICommand registerOrder;
+        public ICommand RegisterOrder
+        {
+            get
+            {
+                if (registerOrder == null)
+                    registerOrder = new MyCommands(registerOrderClickHandler);
+                return registerOrder;
+
+            }
+        }
+        private async void registerOrderClickHandler(object obj)
+        {
+            IsWaitingRingActive = true;
+            WaitingRingVisibility = Visibility.Visible;
+
+            if(SelectExistingCustomerGridVisibility == Visibility.Visible)
+            {
+                if (IsOrderValid())
+                {
+                    int Cost = 0;
+                    int.TryParse(ServieceCost, out Cost);
+                    int Count = 0;
+                    int.TryParse(ServieceCount, out Cost);
+                    int discount = 0;
+                    int.TryParse(Discount, out discount);
+
+                    await OrdersModel.AddOrder(
+
+                            SelectedCustomer.Id,
+                            CompanyAdress,
+                            PhoneNumber,
+                            OrderDescription,
+                            Cost,
+                            Count,
+                            discount
+
+                        );
+                }    
+            }
+            else if(SelectNewCustomerGridVisibility == Visibility.Visible)
+            {
+                if (IsNewOrderValid)
+                {
+
+                    int Cost = 0;
+                    int.TryParse(ServieceCost, out Cost);
+                    int Count = 0;
+                    int.TryParse(ServieceCount, out Cost);
+                    int discount = 0;
+                    int.TryParse(Discount, out discount);
+
+                    await OrdersModel.AddOrderWithNewCustomer(
+
+                            CustomerCompanyName,
+                            CustomerFistName,
+                            CustomerLastName,
+                            CompanyAdress,
+                            PhoneNumber,
+                            OrderDescription,
+                            Cost,
+                            Count,
+                            discount
+                        );
+                }
+            }
+
+            IsWaitingRingActive = false;
+            WaitingRingVisibility = Visibility.Collapsed;
+
+        }
+
+
+
+        private ICommand changeOrder;
+        public ICommand ChangeOrder
+        {
+            get
+            {
+                if (changeOrder == null)
+                    changeOrder = new MyCommands(changeOrderClickHandler);
+                return changeOrder;
+            }
+        }
+        private async void changeOrderClickHandler(object obj)
+        {
+            
         }
 
 
@@ -353,22 +542,174 @@ namespace IntershipProject.ViewModels
            if(SelectedChangeDataGridItem != null)
             {
                 NewCustomer = SelectedChangeDataGridItem.Customers;
-                NewCompanyAdress = SelectedChangeDataGridItem.Customers.ContactAdress;
-                NewDiscount = SelectedChangeDataGridItem.OrderDetails.Discount;
+                NewCompanyAdress = SelectedChangeDataGridItem.Customers.ContactAdress.Replace('\n', ' ');
+                NewDiscount = SelectedChangeDataGridItem.OrderDetails.Discount.ToString();
                 NewOrderDescription = SelectedChangeDataGridItem.OrderDetails.OrderDescription;
-                NewServieceCost = SelectedChangeDataGridItem.OrderDetails.UnitPrice;
-                NewServieceCount = SelectedChangeDataGridItem.OrderDetails.Quantity;
+                NewServieceCost = SelectedChangeDataGridItem.OrderDetails.UnitPrice.ToString();
+                NewServieceCount = SelectedChangeDataGridItem.OrderDetails.Quantity.ToString();
                 NewPhoneNumber = SelectedChangeDataGridItem.Customers.ContactPhone;
             }
         }
 
         private async void OnAuthorization()
         {
-            ChangeCustomers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
-            ChangeOrders = new ObservableCollection<Orders>(await OrdersModel.getOrdersByUserId());
+            Customers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
+            ChangeOrders = new ObservableCollection<Orders>(await OrdersModel.getChangeableOrdersByUserId());
         }
 
         #endregion
+
+        #endregion
+
+        #region Validating
+        
+        public bool IsNewOrderValid
+        {
+            get
+            {
+                foreach (string propery in ValidatesNewOrderProperties)
+                    if (GetValidationError(propery) != null)
+                        return false;
+
+                return true;
+            }
+        }
+
+        public bool IsOrderValid()
+        {
+            string error = null;
+                foreach (string propery in ValidatesOrderProperties)
+                    error += GetValidationError(propery);
+
+            if (error == null)
+                return true;
+            else
+                return false;
+        }
+
+        public bool IsChangeValid
+        {
+            get
+            {
+                foreach (string propery in ValidatesChangeOrderProperties)
+                    if (GetValidationError(propery) != null)
+                        return false;
+
+                return true;
+            }
+        }
+
+        public string Error
+        {
+            get { return null; }
+            
+        }
+
+        static readonly string[] ValidatesNewOrderProperties = {
+
+            "CustomerCompanyName",
+            "CustomerFistName",
+            "CustomerLastName",
+            "CompanyAdress",
+            "PhoneNumber",
+            "OrderDescription",
+            "ServieceCost",
+            "ServieceCount",
+            "Discount"
+        };
+
+        static readonly string[] ValidatesOrderProperties = {
+
+            "SelectedCustomer",
+            "NewOrderDescription",
+            "NewServieceCost",
+            "NewServieceCount",
+            "NewDiscount"
+        };
+
+        static readonly string[] ValidatesChangeOrderProperties = {
+
+            "NewCompanyAdress",
+            "PhoneNumber",
+            "NewOrderDescription",
+            "NewServieceCost",
+            "NewServieceCount",
+            "NewDiscount"
+        };
+
+        public string this[string propertyName]
+        {
+            get
+            {
+                return GetValidationError(propertyName);
+            }
+        }
+
+        private string GetValidationError(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case "SelectedCustomer":
+                    if (SelectedCustomer == null)
+                        return "Поле не должно быть пустым.";
+                    return null;
+
+                case "NewOrderDescription":
+                    if (string.IsNullOrWhiteSpace(NewOrderDescription))
+                        return "Описание не должно быть пустым.";
+                    return null;
+
+                case "NewServieceCost":
+                    return Validating.ValidateValue(NewServieceCost, 1, 100000);
+
+                case "CustomerCompanyName":
+                    return Validating.ValidateStandartString(CustomerCompanyName);
+
+                case "NewServieceCount":
+                    return Validating.ValidateValue(NewServieceCount, 1, 10000);
+
+                case "NewDiscount":
+                    return Validating.ValidateValue(NewDiscount, 0, 100);
+
+                case "CustomerFistName":
+                    return Validating.ValidateStandartString(CustomerFistName);
+
+                case "CustomerLastName":
+                    return Validating.ValidateStandartString(CustomerLastName);
+
+                case "NewCompanyAdress":
+                    if (string.IsNullOrWhiteSpace(NewCompanyAdress))
+                        return "Адресс не должен быть пустым.";
+                    return null;                   
+
+                case "CompanyAdress":
+                    if (string.IsNullOrWhiteSpace(CompanyAdress))
+                        return "Адресс не должен быть пустым.";
+                    return null;
+                    
+                case "NewPhoneNumber":
+                    return Validating.ValidatePhoneNumber(NewPhoneNumber);
+
+                case "PhoneNumber":
+                    return Validating.ValidatePhoneNumber(PhoneNumber);
+
+                case "OrderDescription":
+                    if (string.IsNullOrWhiteSpace(OrderDescription))
+                        return "Описание не должно быть пустым.";
+                    return null;
+
+                case "ServieceCost":
+                    return Validating.ValidateValue(ServieceCost, 1, 100000);
+
+                case "ServieceCount":
+                    return Validating.ValidateValue(ServieceCost, 1, 10000);
+
+                case "Discount":
+                    return Validating.ValidateValue(Discount, 0, 100);
+
+                default: return null;
+            }
+        }
 
         #endregion
 

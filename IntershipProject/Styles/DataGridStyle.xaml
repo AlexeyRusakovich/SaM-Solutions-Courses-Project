@@ -101,7 +101,7 @@
 
     <DataTemplate x:Key="RowDetailTemplate">
 
-        <Border>
+        <Border Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsPresenter}}, Path=ActualWidth}">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                     <LinearGradientBrush.GradientStops>
@@ -111,29 +111,36 @@
                 </LinearGradientBrush>
             </Border.Background>
 
-            <Grid>
+            <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
 
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    
+                    <StackPanel>
 
-                <Label  Grid.Row="0"
-                        HorizontalAlignment="Center"
-				        Margin="10"
-				        FontSize="18"
-				        FontWeight="SemiBold"
-                        Foreground="#2f3748"
-				        Content="Описание заказа" />
+                        <Label  Grid.Row="0"
+                                HorizontalAlignment="Center"
+				                Margin="10"
+				                FontSize="18"
+				                FontWeight="SemiBold"
+                                Foreground="#2f3748"
+				                Content="Описание заказа" />
 
-                <TextBlock  Grid.Row="1"
-				            Margin="10, 0 , 10 , 10"
-                            FontSize="16"
-                             Foreground="#2f3748"
-				            HorizontalAlignment="Center"
-				            Text="{Binding OrderDetails.OrderDescription}"
-				            TextWrapping="WrapWithOverflow" />
+                        <TextBlock  Grid.Row="1"
+				                    Margin="30, 0 , 30 , 10"
+                                    FontSize="16"
+                                    HorizontalAlignment="Center"
+                                    Foreground="#2f3748"
+				                    Text="{Binding OrderDetails.OrderDescription}"
+				                    TextWrapping="Wrap" />
+                    </StackPanel>
+                    
+                </ScrollViewer>
+
             </Grid>
         </Border>
     </DataTemplate>

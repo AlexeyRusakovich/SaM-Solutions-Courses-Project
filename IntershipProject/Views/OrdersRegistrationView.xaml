@@ -3,13 +3,16 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:IntershipProject.Views"
+      xmlns:v="clr-namespace:IntershipProject.ViewModels"
+      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
       mc:Ignorable="d"
       Title="OrderRegistration" d:DesignWidth="819.5" d:DesignHeight="921.5">
 
-    <TabControl>
-        <TabItem Header="Регистриция заказов" 
+    <TabControl Background="Transparent">
+       
+        <TabItem Header="Регистриция заказов"
                  FontSize="17"
                  FontFamily="Myanmar Text" 
                  Style="{StaticResource TabItemControl}">
@@ -22,7 +25,12 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
+                    
+                    <!--GRID ROW 0-->
 
                     <WrapPanel Grid.Row="0" >
 
@@ -35,14 +43,86 @@
                            FontWeight="Bold"/>
 
                         <Label 
-                           Content="{Binding ErrorStringContent}" 
-                           Margin="35, 20, 0, 0" 
-                           Foreground="Red" 
-                           Visibility="{Binding ErrorStringVisibility}"/>
+                           Content="{Binding ErrorStringContent}"
+                           Margin="35, 20, 0, 0"
+                           Visibility="{Binding ErrorStringVisibility}"
+                           Foreground="Red"/>
 
                     </WrapPanel>
+                    
+                    <!--GRID ROW 1-->
 
-                    <Grid Grid.Row="1">
+                    <WrapPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
+                        
+                        <Button Style="{StaticResource EnterButtonStyle}"
+                        Margin="10" 
+                        Width="280" 
+                        Height="40" 
+                        Command="{Binding SelectExistingCustomer}"
+                        HorizontalAlignment="Center"
+                        Content="Выбрать существующего клиента"/>
+                        
+                        <Button Style="{StaticResource EnterButtonStyle}"
+                        Margin="10" 
+                        Width="280" 
+                        Height="40" 
+                        Command="{Binding SelectNewCustomer}"
+                        HorizontalAlignment="Center"
+                        Content="Зарегистрировать нового клиента"/>
+                        
+                    </WrapPanel>
+
+                    <!--GRID ROW 2-->
+                    
+                    <Label Grid.Row="2"
+                           Grid.ColumnSpan="2"
+                           Content="(*) - поля обязательные для заполнения." 
+                           FontStyle="Italic"/>
+                    
+                    <!--GRID ROW 3-->
+
+                    <Grid Grid.Row="3" Visibility="{Binding SelectExistingCustomerGridVisibility}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="300" MaxWidth="400"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Заказчик*" 
+                               Grid.Column="0" 
+                               Grid.Row="0" />
+
+                        <ComboBox Grid.Column="1"
+                                  SelectedItem="{Binding SelectedCustomer, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                                  ToolTip="{Binding RelativeSource={x:Static RelativeSource.Self},  Path=(Validation.Errors)[0].ErrorContent}"
+                                  ItemsSource="{Binding Customers}"
+                                  Style="{StaticResource ComboBoxFlatStyle}"                                  
+                                  Height="35" 
+                                  Width="200" 
+                                  HorizontalAlignment="Left" 
+                                  Margin="10">
+                            
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Style="{x:Null}">
+                                        <AccessText FontSize="15">
+                                            <MultiBinding StringFormat=" {0} {1}">
+                                                <Binding Path="ContactFirstName"/>
+                                                <Binding Path="ContactLastName"/>
+                                            </MultiBinding>
+                                        </AccessText>
+                                    </Label>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                            
+                        </ComboBox>
+
+                        
+
+                    </Grid>
+
+                    <!--GRID ROW 4-->
+
+                    <Grid Grid.Row="4">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition MinWidth="300" MaxWidth="400"/>
@@ -52,57 +132,106 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <Label Grid.Row="0" Grid.ColumnSpan="2" Content="(*) - поля обязательные для заполнения." FontStyle="Italic"/>
 
-
-                        <StackPanel Grid.Row="1" Grid.Column="0">
+                        <StackPanel Grid.Row="1" 
+                                    Grid.Column="0"
+                                    Visibility="{Binding SelectNewCustomerGridVisibility}">
 
                             <Label Content="Название компании заказчика" />
                             <Label Content="Имя заказчика*" />
                             <Label Content="Фамилия заказчика*" />
                             <Label Content="Контактный адрес*" />
                             <Label Content="Контактный телефон*" />
-                            <Label Content="Описание заказа"/>
 
 
                         </StackPanel>
+                        
 
-                        <StackPanel  Grid.Row="1" Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding CustomerCompanyName}"/>
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding CustomerFistName}"/>
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding CustomerLastName}"/>
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding CompanyAdress}"/>
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding PhoneNumber}"/>
+                        <Label Content="Описание заказа" 
+                               Grid.Row="2" 
+                               Grid.Column="0"/>
 
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding OrderDescription}" TextWrapping="Wrap"/>
 
+                        <StackPanel  Grid.Row="1"
+                                     Grid.Column="1"
+                                     Visibility="{Binding SelectNewCustomerGridVisibility}">
+                            
+                            <TextBox Style="{StaticResource TextBoxBaseStyle}" 
+                                     Text="{Binding CustomerCompanyName, ValidatesOnDataErrors=True}"/>
+                            
+                            <TextBox Style="{StaticResource TextBoxBaseStyle}" 
+                                     
+                                     Text="{Binding CustomerFistName, ValidatesOnDataErrors=True}"/>
+                            
+                            <TextBox Style="{StaticResource TextBoxBaseStyle}" 
+                                     Text="{Binding CustomerLastName, ValidatesOnDataErrors=True}"/>
+                            
+                            <TextBox Style="{StaticResource TextBoxBaseStyle}" 
+                                     Text="{Binding CompanyAdress, ValidatesOnDataErrors=True}"/>
+                            
+                            <TextBox Style="{StaticResource TextBoxBaseStyle}" 
+                                     Text="{Binding PhoneNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                            
                         </StackPanel>
 
 
-                        <StackPanel Grid.Row="2" Grid.Column="0">
+                        <TextBox Style="{StaticResource TextBoxBaseStyle}" 
+                                 Text="{Binding OrderDescription, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                                 TextWrapping="Wrap"
+                                 Grid.Row="2"
+                                 Grid.Column="1"/>
+
+                        <StackPanel Grid.Row="3" 
+                                    Grid.Column="0">
+                            
                             <Label Content="Стоимость выполнения заказа*"/>
                             <Label Content="Количество заказанных услуг*"/>
                             <Label Content="Скидка"/>
+                            
                         </StackPanel>
 
-                        <StackPanel Grid.Row="2" Grid.Column="1">
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding ServieceCost}"/>
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding ServieceCount}"/>
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}" Text="{Binding Discount}"/>
+                        <StackPanel Grid.Row="3" Grid.Column="1">
+                            
+                            <TextBox Style="{StaticResource TextBoxBaseStyle}" 
+                                     x:Name="ErrorTextBox"
+                                     Text="{Binding ServieceCost, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                            
+                            <TextBox Style="{StaticResource TextBoxBaseStyle}" 
+                                     Text="{Binding ServieceCount, ValidatesOnDataErrors=True}"/>
+                            
+                            <TextBox Style="{StaticResource TextBoxBaseStyle}" 
+                                     Text="{Binding Discount, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                            
                         </StackPanel>
 
                     </Grid>
 
-                    <Grid Grid.Row="2">
+                    <!--GRID ROW 5-->
 
-                        <Button Style="{StaticResource EnterButtonStyle}"
-                        Margin="0, 20, 0, 0" 
-                        Width="170" 
-                        Height="40" 
-                        HorizontalAlignment="Center"
-                        Content="Зарегистрировать"/>
+                    <Grid Grid.Row="5">
+
+                        <StackPanel>
+
+                            <Controls:ProgressRing Panel.ZIndex="1"
+                                                   IsActive="{Binding IsWaitingRingActive}" 
+                                                   Visibility="{Binding WaitinRingVisibility}"
+                                                   Opacity="0.5"
+                                                   Foreground="#17a2b8" 
+                                                   HorizontalAlignment="Center" 
+                                                   VerticalAlignment="Center"/>
+
+                            <Button Style="{StaticResource EnterButtonStyle}"
+                                Command="{Binding RegisterOrder}"
+                                Margin="0, 20, 0, 0" 
+                                Width="170" 
+                                Height="40" 
+                                HorizontalAlignment="Center"
+                                Content="Зарегистрировать"/>
+
+                        </StackPanel>
 
                     </Grid>
 
@@ -116,210 +245,229 @@
                  FontSize="17" 
                  FontFamily="Myanmar Text" 
                  Style="{StaticResource TabItemControl}">
-            
-            <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden">
 
-                <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-                    <Grid  Margin="25, 10, 0, 0">
+                <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden">
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                    <Grid>
 
-                    <WrapPanel Grid.Row="0" >
-
-                        <Label 
-                       Content="Изменение заказов" 
-                       FontSize="25" 
-                       Margin="10, 10, 0, 0"
-                       Height="40" 
-                       Foreground="#2f3748" 
-                       FontWeight="Bold"/>
-
-                        <Label 
-                           Content="{Binding ErrorStringContent}" 
-                           Margin="35, 20, 0, 0" 
-                           Foreground="Red" 
-                           Visibility="{Binding ErrorStringVisibility}"/>
-
-                    </WrapPanel>
-
-                    <Grid Grid.Row="1" Margin="0, 20, 0, 0">
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition MinWidth="300" MaxWidth="400"/>
-                            <ColumnDefinition MaxWidth="600"/>
-                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <StackPanel Grid.Row="1" Grid.Column="0">
-                            <Label Content="Заказчик" />
-                            <Label Content="Контактный адрес" />
-                            <Label Content="Контактный телефон" />
+                        <!--GRID ROW 0-->
+
+                        <WrapPanel Grid.Row="0" >
+
+                            <Label Content="Изменение заказов" 
+                        FontSize="25" 
+                        Margin="10, 10, 0, 0"
+                        Height="40" 
+                        Foreground="#2f3748" 
+                        FontWeight="Bold"/>
+
+                            <Label 
+                        Content="{Binding ErrorStringContent}" 
+                        Margin="35, 20, 0, 0" 
+                        Foreground="Red" 
+                        Visibility="{Binding ErrorStringVisibility}"/>
+
+                        </WrapPanel>
+
+                        <!--GRID ROW 1-->
+
+                        <Label Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            Content="(*) - поля обязательные для заполнения." 
+                            FontStyle="Italic"/>
+
+                        <!--GRID ROW 2-->
+
+                        <Grid Grid.Row="2">
+
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition MinWidth="300" 
+                                              MaxWidth="400"/>
+
+                                <ColumnDefinition MaxWidth="600"/>
+
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="1" 
+                                    Grid.Column="0">
+                                <Label Content="Контактный адрес*" />
+                                <Label Content="Контактный телефон*" />
+
+
+                            </StackPanel>
+
                             <Label Content="Описание заказа" 
-                                   Margin="10, 5, 10, 10"/>
+                               Grid.Row="2" 
+                               Grid.Column="0"/>
 
 
-                        </StackPanel>
+                            <StackPanel  Grid.Row="1" Grid.Column="1">
 
-                        <StackPanel  Grid.Row="1" 
-                                     Grid.Column="1" 
-                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                <TextBox Style="{StaticResource TextBoxBaseStyle}" 
+                                     Text="{Binding NewCompanyAdress, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
-                            <ComboBox Style="{StaticResource ComboBoxFlatStyle}" 
-                                      Width="200" HorizontalAlignment="Left"
-                                      ItemsSource="{Binding ChangeCustomers}"
-                                      SelectedItem="{Binding NewCustomer}"
-                                      Margin="10, 10, 0, 10"
-                                      Height="33">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Label Style="{x:Null}">
-                                            <AccessText FontSize="15">
-                                                <MultiBinding StringFormat=" {0} {1}">
-                                                    <Binding Path="ContactFirstName"/>
-                                                    <Binding Path="ContactLastName"/>
-                                                </MultiBinding>
-                                            </AccessText>
-                                        </Label>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
+                                <TextBox Style="{StaticResource TextBoxBaseStyle}"
+                                     Text="{Binding NewPhoneNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}"
-                                     Text="{Binding NewCompanyAdress}"/>
-                            
+                            </StackPanel>
+
+
                             <TextBox Style="{StaticResource TextBoxBaseStyle}" 
-                                     Text="{Binding NewPhoneNumber}"/>
+                                 Text="{Binding NewOrderDescription, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                                 TextWrapping="Wrap"
+                                 Grid.Row="2"
+                                 Grid.Column="1"/>
 
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}"
-                                     Text="{Binding NewOrderDescription}" 
-                                     TextWrapping="Wrap"/>
+                            <StackPanel Grid.Row="3" Grid.Column="0">
 
-                        </StackPanel>
+                                <Label Content="Стоимость выполнения заказа*"/>
+                                <Label Content="Количество заказанных услуг*"/>
+                                <Label Content="Скидка"/>
 
+                            </StackPanel>
 
-                        <StackPanel Grid.Row="2" Grid.Column="0">
-                            <Label Content="Стоимость выполнения заказа" Margin="10, 0, 0, 0"/>
-                            <Label Content="Количество заказанных услуг"/>
-                            <Label Content="Скидка"/>
-                        </StackPanel>
+                            <StackPanel Grid.Row="3" Grid.Column="1">
 
-                        <StackPanel Grid.Row="2" Grid.Column="1">
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}" 
-                                     Margin="10, 0, 10, 10"
-                                     Text="{Binding NewServieceCost}"/>
-                            
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}" 
-                                     Text="{Binding NewServieceCount}"/>
-                            
-                            <TextBox Style="{StaticResource TextBoxBaseStyle}" 
-                                     Text="{Binding NewDiscount}"/>
-                        </StackPanel>
+                                <TextBox Style="{StaticResource TextBoxBaseStyle}"
+                                     Text="{Binding NewServieceCost, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    </Grid>
+                                <TextBox Style="{StaticResource TextBoxBaseStyle}" 
+                                     Text="{Binding NewServieceCount, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <Grid Grid.Row="2">
+                                <TextBox Style="{StaticResource TextBoxBaseStyle}"
+                                     Text="{Binding NewDiscount, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <StackPanel>
-                            
-                            <Button Style="{StaticResource EnterButtonStyle}"
-                                Margin="0, 10, 0, 0" 
-                                Width="170" 
-                                Height="40" 
-                                HorizontalAlignment="Center"
-                                Command="{Binding Edit}"
-                                Content="{Binding EditButtonContent}"/>
+                            </StackPanel>
 
-                            <Button Style="{StaticResource EnterButtonStyle}"
-                                    Visibility="{Binding CancelButtonVisibility}"
-                                    Command="{Binding Cancel}"
+                        </Grid>
+
+                        <!--GRID ROW 3-->
+
+                        <Grid Grid.Row="3" Grid.ColumnSpan="2">
+
+                            <StackPanel>
+
+                                <Button Style="{StaticResource EnterButtonStyle}"
                                     Margin="0, 10, 0, 0" 
                                     Width="170" 
                                     Height="40" 
                                     HorizontalAlignment="Center"
-                                    Content="Отмена"/>
+                                    Command="{Binding Edit}"
+                                    Content="{Binding EditButtonContent}"/>
 
-                        </StackPanel>
+                                <Button Style="{StaticResource EnterButtonStyle}"
+                            Visibility="{Binding CancelButtonVisibility}"
+                            Command="{Binding Cancel}"
+                            Margin="0, 10, 0, 0" 
+                            Width="170" 
+                            Height="40" 
+                            HorizontalAlignment="Center"
+                            Content="Отмена"/>
+
+                            </StackPanel>
+
+                        </Grid>
 
                     </Grid>
 
-                   
+                </ScrollViewer>
 
-                </Grid>
-                    
-                    <Grid>
-                        <DataGrid Grid.Row="3" 
-                                  
-                                  VerticalAlignment="Top"
-                                  Margin="0, 10, 0, 0"
-                                  ItemsSource="{Binding ChangeOrders}"
-                                  RowDetailsTemplate="{StaticResource RowDetailTemplate}"
-                                  CellStyle="{StaticResource OrdersDataGridCell}"
-                                  AutoGenerateColumns="False" 
-                                  IsSynchronizedWithCurrentItem="True" 
-                                  IsReadOnly="True">
+                <Controls:ProgressRing Grid.Row="1"  Panel.ZIndex="1"
+                                   IsActive="{Binding IsWaitingRingActive}" 
+                                   Visibility="{Binding WaitinRingVisibility}"
+                                   Opacity="0.5"
+                                   Foreground="#17a2b8" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/>
 
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Selected">
-                                    <i:InvokeCommandAction Command="{Binding FillFields}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
+                <DataGrid   Grid.Row="1"
+                            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                            ScrollViewer.CanContentScroll="True"
+                            VirtualizingPanel.ScrollUnit="Pixel"
+                            Margin="0, 20, 0, 0"                            
+                            SelectedItem="{Binding SelectedChangeDataGridItem}"
+                            ItemsSource="{Binding ChangeOrders}"
+                            RowDetailsTemplate="{StaticResource RowDetailTemplate}"
+                            CellStyle="{StaticResource OrdersDataGridCell}"
+                            AutoGenerateColumns="False" 
+                            IsSynchronizedWithCurrentItem="True" 
+                            IsReadOnly="True">
 
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Имя компании"
-                                        Width="1*"
-                                        Binding="{Binding Customers.CompanyName}"/>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <i:InvokeCommandAction Command="{Binding FillFields}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
 
-                                <DataGridTextColumn Header="Заказчик"
-                                        Width="1*">
-                                    <DataGridTextColumn.Binding>
-                                        <MultiBinding StringFormat=" {0} {1}">
-                                            <Binding Path = "Customers.ContactFirstName"/>
-                                            <Binding Path = "Customers.ContactLastName" />
-                                        </MultiBinding>
-                                    </DataGridTextColumn.Binding>
-                                </DataGridTextColumn>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Имя компании"
+                                Width="1*"
+                                Binding="{Binding Customers.CompanyName}"/>
 
-                                <DataGridTextColumn Header="Статус" 
-                                        Width="1*"
-                                        Binding="{Binding OrderDetails.OrderStatuses.StatusName}"/>
+                        <DataGridTextColumn Header="Заказчик"
+                                Width="1*">
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding StringFormat=" {0} {1}">
+                                    <Binding Path = "Customers.ContactFirstName"/>
+                                    <Binding Path = "Customers.ContactLastName" />
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
 
-                                <DataGridTextColumn Header="Дата регистрации"
-                                        Width="1*"
-                                        Binding="{Binding OrderDetails.OrderDate}"/>
+                        <DataGridTextColumn Header="Статус" 
+                                Width="1*"
+                                Binding="{Binding OrderDetails.OrderStatuses.StatusName}"/>
 
-                                <DataGridTextColumn Header="Дата закрытия"
-                                        Width="1*"
-                                        Binding="{Binding OrderDetails.ClosingOrderDate}"/>
+                        <DataGridTextColumn Header="Дата регистрации"
+                                Width="1*"
+                                Binding="{Binding OrderDetails.OrderDate}"/>
 
-                                <DataGridTextColumn Header="Количество"
-                                        Width="1*"
-                                        Binding="{Binding OrderDetails.Quantity}"/>
+                        <DataGridTextColumn Header="Дата закрытия"
+                                Width="1*"
+                                Binding="{Binding OrderDetails.ClosingOrderDate}"/>
 
-                                <DataGridTextColumn Header="Стоимость, ед."
-                                        Width="1*"
-                                        Binding="{Binding OrderDetails.UnitPrice}"/>
+                        <DataGridTextColumn Header="Количество"
+                                Width="1*"
+                                Binding="{Binding OrderDetails.Quantity}"/>
 
-                                <DataGridTextColumn Header="Скидка"
-                                        Width="1*"
-                                        Binding="{Binding OrderDetails.Discount}"/>
-                            </DataGrid.Columns>
+                        <DataGridTextColumn Header="Стоимость, ед."
+                                Width="1*"
+                                Binding="{Binding OrderDetails.UnitPrice}"/>
 
-                        </DataGrid>
-                    </Grid>
-                    
-                </StackPanel>
-            </ScrollViewer>        
+                        <DataGridTextColumn Header="Скидка"
+                                Width="1*"
+                                Binding="{Binding OrderDetails.Discount}"/>
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+            </Grid>           
+
         </TabItem>
+        
     </TabControl>
     
-
 </Page>

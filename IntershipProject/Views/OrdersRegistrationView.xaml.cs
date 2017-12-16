@@ -24,5 +24,6 @@ namespace IntershipProject.Views
         {
             InitializeComponent();
         }
+        
     }
 }

@@ -42,8 +42,8 @@ namespace IntershipProject.Models
             return await (ordersEntities.Orders
                                         .Where(o => o.Customers.CompanyName.Equals(CompanyName)
                                         && o.EmployeeId.Equals(MainViewModel.CurrentUserId)
-                                        && o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен") 
-                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен"))
+                                        && (o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен") 
+                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен")))
                                         .ToListAsync());
         }
 
@@ -53,8 +53,8 @@ namespace IntershipProject.Models
 
             return await (ordersEntities.Orders
                                         .Where(o => o.Customers.CompanyName.Equals(CompanyName)
-                                        && o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
-                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен"))
+                                        && (o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
+                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен")))
                                         .ToListAsync());
         }
 
@@ -65,8 +65,8 @@ namespace IntershipProject.Models
             return await (ordersEntities.Orders
                                         .Where(o => o.EmployeeId.Equals(MainViewModel.CurrentUserId)
                                         && o.Customers.Id.Equals(customerId)
-                                        && o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
-                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен"))
+                                        && (o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
+                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен")))
                                         .ToListAsync());
         }
 
@@ -76,19 +76,19 @@ namespace IntershipProject.Models
 
             return await (ordersEntities.Orders
                                         .Where(o => o.Customers.Id.Equals(customerId)
-                                        && o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
-                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен"))
+                                        && (o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
+                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен")))
                                         .ToListAsync());
         }
 
-        public static async Task<List<Orders>> getAllHistoryOrdersByUserId()
+        public static async Task<List<Orders>> getHistoryOrdersByUserId()
         {
             OrdersEntities ordersEntities = new OrdersEntities();
 
             return await (ordersEntities.Orders
                                         .Where(o => o.EmployeeId.Equals(MainViewModel.CurrentUserId)
-                                        && o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
-                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен"))
+                                        && (o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
+                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен")))
                                         .ToListAsync());
         }
 
@@ -96,8 +96,8 @@ namespace IntershipProject.Models
         {
             OrdersEntities ordersEntities = new OrdersEntities();
 
-            return await (ordersEntities.Orders.Where(o =>  o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
-                                                         || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен"))
+            return await (ordersEntities.Orders.Where(o =>  (o.OrderDetails.OrderStatuses.StatusName.Equals("Отменен")
+                                                         || o.OrderDetails.OrderStatuses.StatusName.Equals("Выполнен")))
                          .ToListAsync());
         }
 
@@ -105,8 +105,78 @@ namespace IntershipProject.Models
 
         #endregion
 
-
         #region Orders queries
+
+
+        public static async Task<bool> AddOrder(    
+                                                    int CustomerId,
+                                                    string CompanyAdress,
+                                                    string PhoneNumber,
+                                                    string OrderDescription,
+                                                    int ServieceCost,
+                                                    int ServieceCount,
+                                                    int Discount  
+            
+                                               )
+        {
+            using (OrdersEntities orderEntities = new OrdersEntities())
+            {
+                using (var transaction = orderEntities.Database.BeginTransaction())
+                {
+                    try
+                    {
+
+
+
+
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
+                }
+            }
+        }
+
+        public static async Task<bool> AddOrderWithNewCustomer(
+            
+                                                    string CustomerCompanyName,
+                                                    string CustomerFistName,
+                                                    string CustomerLastName,
+                                                    string CompanyAdress,
+                                                    string PhoneNumber,
+                                                    string OrderDescription,
+                                                    int ServieceCost,
+                                                    int ServieceCount,
+                                                    int Discount   
+                                                )
+        {
+        using (OrdersEntities orderEntities = new OrdersEntities())
+        {
+            using (var transaction = orderEntities.Database.BeginTransaction())
+            {
+                try
+                {
+
+
+
+                        
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
+        }
+
+        }
+
 
         public static async Task<List<Orders>> getOrdersByCompanyNameAndUserId(string CompanyName)
         {
@@ -152,6 +222,17 @@ namespace IntershipProject.Models
 
             return await (ordersEntities.Orders
                                         .Where(o => o.EmployeeId.Equals(MainViewModel.CurrentUserId))
+                                        .ToListAsync());
+        }
+
+        public static async Task<List<Orders>> getChangeableOrdersByUserId()
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            return await (ordersEntities.Orders.Where( o =>
+                                        o.EmployeeId.Equals(MainViewModel.CurrentUserId)
+                                        && (o.OrderDetails.OrderStatuses.StatusName.Equals("Выполняется")
+                                        || o.OrderDetails.OrderStatuses.StatusName.Equals("Приостановлен")))
                                         .ToListAsync());
         }
 

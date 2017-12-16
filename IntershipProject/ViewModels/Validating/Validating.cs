@@ -11,46 +11,44 @@ namespace IntershipProject.ViewModels
     public class Validating
     {
         
-        private static string ValidateStandartString(string standartString, int maxLength = 50, int minLength = 3)
+        public static string ValidateStandartString(string standartString, int maxLength = 50, int minLength = 3)
         {
             if (string.IsNullOrEmpty(standartString))
                 return "Строка " + standartString + " не должна быть пустой.";
             else if (standartString.Length < minLength || standartString.Length > maxLength)
                 return "Длина строки " + standartString + " должна быть в пределе от " + minLength + " до " + maxLength + " символов.";
-            else if (OnlyRussianOneWord(standartString.ToLower()))
-                return "Допустимы символы только русского алфавита.";
+            else if (OnlyRussianOrEnglishWord(standartString.ToLower()))
+                return "Допустимы символы только русского и английского алфавитов.";
             return null;
         }
 
         public static string ValidateLogin(string login, int minLength = 3, int maxLength = 50)
         {
-            Regex loginRE = new Regex("^[a-z]+$");
-
             if (string.IsNullOrWhiteSpace(login))
                 return "Поле не должно быть пустым.";
-            else if (!loginRE.IsMatch(login))
-                return "Некорректный логин.";
             else if (login.Length < minLength || login.Length > maxLength)
                 return "Допустимая длина от " + minLength + " до " + maxLength + " символов.";
             return null;
         }
 
-        private static bool OnlyRussianOneWord(string russianWord)
+        private static bool OnlyRussianOrEnglishWord(string russianOrEnglishWord)
         {
-            Regex regex = new Regex("^[а-я]+$");
-            if (!regex.IsMatch(russianWord))
+            Regex regex = new Regex("^[а-я a-z]+$");
+            if (!regex.IsMatch(russianOrEnglishWord))
                 return true;
             return false;
         }  
         
         public static string ValidatePhoneNumber(string phoneNumber)
         {
-            Regex VelcomNumbers = new Regex(@" ^(8029[13469]|80447|37529[13469]|375447|37529[13469]| 75447)\d{ 6 }$ ");
-            Regex MTCNumbers = new Regex(@" ^(8029[2578]|80336|37529[2578]|375336|37529[2578]|375336)\d{6}$ ");
-            Regex LifeNumbers = new Regex(@" ^(8025|37525)\d{7}$ ");
-            Regex Beltelecom = new Regex(@" ^(801[567]|802[1234])\d{7}$ ");
+            Regex VelcomNumbers = new Regex(@"^(8029[13469]|80447|37529[13469]|375447|37529[13469])\d{6}$");
+            Regex MTCNumbers = new Regex(@"^(8029[2578]|80336|37529[2578]|375336|37529[2578]|375336)\d{6}$");
+            Regex LifeNumbers = new Regex(@"^(8025|37525)\d{7}$");
+            Regex Beltelecom = new Regex(@"^(801[567]|802[1234])\d{7}$");
 
-            if (VelcomNumbers.IsMatch(phoneNumber))
+            if (string.IsNullOrWhiteSpace(phoneNumber))
+                return "Поле не должно быть пустым.";
+            else if (VelcomNumbers.IsMatch(phoneNumber))
                 return null;
             else if (MTCNumbers.IsMatch(phoneNumber))
                 return null;
@@ -58,6 +56,7 @@ namespace IntershipProject.ViewModels
                 return null;
             else if (Beltelecom.IsMatch(phoneNumber))
                 return null;
+
             return "Допустимы номера только белорусских операторов";
         }
 

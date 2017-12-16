@@ -18,6 +18,7 @@ namespace IntershipProject.ViewModels
         public OrdersHistoryViewModel()
         {
             AppAuthorizationViewModel.SuccessAuthorization += CheckBoxCheckedHandlerObj;
+
         }
 
         #endregion
@@ -26,166 +27,157 @@ namespace IntershipProject.ViewModels
 
         #region Error string properties
 
-        public Visibility HistoryErrorStringVisibility
+        public Visibility ErrorStringVisibility
         {
-            get { return (Visibility)GetValue(HistoryErrorStringVisibilityProperty); }
-            set { SetValue(HistoryErrorStringVisibilityProperty, value); }
+            get { return (Visibility)GetValue(ErrorStringVisibilityProperty); }
+            set { SetValue(ErrorStringVisibilityProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ErrorStringVisibility.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HistoryErrorStringVisibilityProperty =
-            DependencyProperty.Register("HistoryErrorStringVisibility", typeof(Visibility), typeof(OrdersSearchViewModel), new PropertyMetadata(Visibility.Collapsed));
+        public static readonly DependencyProperty ErrorStringVisibilityProperty =
+            DependencyProperty.Register("ErrorStringVisibility", typeof(Visibility), typeof(OrdersHistoryViewModel), new PropertyMetadata(Visibility.Collapsed));
 
 
 
-        public string HistoryErrorStringContent
+        public string ErrorStringContent
         {
-            get { return (string)GetValue(HistoryErrorStringContentProperty); }
-            set { SetValue(HistoryErrorStringContentProperty, value); }
+            get { return (string)GetValue(ErrorStringContentProperty); }
+            set { SetValue(ErrorStringContentProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ErrorStringContent.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HistoryErrorStringContentProperty =
-            DependencyProperty.Register("HistoryErrorStringContent", typeof(string), typeof(OrdersSearchViewModel), new PropertyMetadata(null));
+        public static readonly DependencyProperty ErrorStringContentProperty =
+            DependencyProperty.Register("ErrorStringContent", typeof(string), typeof(OrdersHistoryViewModel), new PropertyMetadata(null));
 
 
         #endregion
 
         #region Waiting Rind Properties
 
-        public bool IsHistoryWaitingRingActive
+        public bool IsWaitingRingActive
         {
-            get { return (bool)GetValue(IsHistoryWaitingRingActiveProperty); }
-            set { SetValue(IsHistoryWaitingRingActiveProperty, value); }
+            get { return (bool)GetValue(IsWaitingRingActiveProperty); }
+            set { SetValue(IsWaitingRingActiveProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for IsWaitingRingActive.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsHistoryWaitingRingActiveProperty =
-            DependencyProperty.Register("IsHistoryWaitingRingActive", typeof(bool), typeof(OrdersSearchViewModel), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsWaitingRingActiveProperty =
+            DependencyProperty.Register("IsWaitingRingActive", typeof(bool), typeof(OrdersHistoryViewModel), new PropertyMetadata(false));
 
 
 
-        public Visibility HistoryWaitingRingVisibility
+        public Visibility WaitingRingVisibility
         {
-            get { return (Visibility)GetValue(HistoryWaitingRingVisibilityProperty); }
-            set { SetValue(HistoryWaitingRingVisibilityProperty, value); }
+            get { return (Visibility)GetValue(WaitingRingVisibilityProperty); }
+            set { SetValue(WaitingRingVisibilityProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for WaitingRingVisibility.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HistoryWaitingRingVisibilityProperty =
-            DependencyProperty.Register("HistoryWaitingRingVisibility", typeof(Visibility), typeof(OrdersSearchViewModel), new PropertyMetadata(Visibility.Collapsed));
+        public static readonly DependencyProperty WaitingRingVisibilityProperty =
+            DependencyProperty.Register("WaitingRingVisibility", typeof(Visibility), typeof(OrdersHistoryViewModel), new PropertyMetadata(Visibility.Collapsed));
 
 
         #endregion
 
         #region Selected items
 
-        public Customers HistorySelectedConcreteCustomer
+        public Customers SelectedConcreteCustomer
         {
-            get { return (Customers)GetValue(HistorySelectedConcreteCustomerProperty); }
-            set { SetValue(HistorySelectedConcreteCustomerProperty, value); }
+            get { return (Customers)GetValue(SelectedConcreteCustomerProperty); }
+            set { SetValue(SelectedConcreteCustomerProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for SelectedCustomer.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HistorySelectedConcreteCustomerProperty =
-            DependencyProperty.Register("HistorySelectedConcreteCustomer", typeof(Customers), typeof(OrdersSearchViewModel), new PropertyMetadata(null));
+        public static readonly DependencyProperty SelectedConcreteCustomerProperty =
+            DependencyProperty.Register("SelectedConcreteCustomer", typeof(Customers), typeof(OrdersHistoryViewModel), new PropertyMetadata(null));
 
 
-        public String HistorySelectedConcreteCompany
+        public String SelectedConcreteCompany
         {
-            get { return (String)GetValue(HistorySelectedConcreteCompanyProperty); }
-            set { SetValue(HistorySelectedConcreteCompanyProperty, value); }
+            get { return (String)GetValue(SelectedConcreteCompanyProperty); }
+            set { SetValue(SelectedConcreteCompanyProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for SelectedConcreteCompany.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HistorySelectedConcreteCompanyProperty =
-            DependencyProperty.Register("HistorySelectedConcreteCompany", typeof(String), typeof(OrdersSearchViewModel), new PropertyMetadata(null));
+        public static readonly DependencyProperty SelectedConcreteCompanyProperty =
+            DependencyProperty.Register("SelectedConcreteCompany", typeof(String), typeof(OrdersHistoryViewModel), new PropertyMetadata(null));
 
 
         #endregion
 
         #region Radio buttons properties
 
-        public bool IsHistoryCheckBoxChecked
+        public bool IsCheckBoxChecked
         {
-            get { return (bool )GetValue(IsHistoryCheckBoxCheckedProperty); }
-            set { SetValue(IsHistoryCheckBoxCheckedProperty, value); }
+            get { return (bool )GetValue(IsCheckBoxCheckedProperty); }
+            set { SetValue(IsCheckBoxCheckedProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for IsCheckBoxChecked.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsHistoryCheckBoxCheckedProperty =
-            DependencyProperty.Register("IsHistoryCheckBoxChecked", typeof(bool ), typeof(OrdersHistoryViewModel), new PropertyMetadata(null));
+        public static readonly DependencyProperty IsCheckBoxCheckedProperty =
+            DependencyProperty.Register("IsCheckBoxChecked", typeof(bool ), typeof(OrdersHistoryViewModel), new PropertyMetadata(null));
 
-        public bool IsHistoryConcreteClientChecked
+        public bool IsConcreteClientChecked
         {
-            get { return (bool)GetValue(IsHistoryConcreteClientCheckedProperty); }
-            set { SetValue(IsHistoryConcreteClientCheckedProperty, value); }
+            get { return (bool)GetValue(IsConcreteClientCheckedProperty); }
+            set { SetValue(IsConcreteClientCheckedProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for IsConcreteClientChecked.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsHistoryConcreteClientCheckedProperty =
-            DependencyProperty.Register("IsHistoryConcreteClientChecked", typeof(bool), typeof(OrdersSearchViewModel), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsConcreteClientCheckedProperty =
+            DependencyProperty.Register("IsConcreteClientChecked", typeof(bool), typeof(OrdersHistoryViewModel), new PropertyMetadata(false));
 
 
 
-        public bool IsHistoryConcreteCompanyChecked
+        public bool IsConcreteCompanyChecked
         {
-            get { return (bool)GetValue(IsHistoryConcreteCompanyCheckedProperty); }
-            set { SetValue(IsHistoryConcreteCompanyCheckedProperty, value); }
+            get { return (bool)GetValue(IsConcreteCompanyCheckedProperty); }
+            set { SetValue(IsConcreteCompanyCheckedProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for IsConcreteCompanyChecked.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsHistoryConcreteCompanyCheckedProperty =
-            DependencyProperty.Register("IsHistoryConcreteCompanyChecked", typeof(bool), typeof(OrdersSearchViewModel), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsConcreteCompanyCheckedProperty =
+            DependencyProperty.Register("IsConcreteCompanyChecked", typeof(bool), typeof(OrdersHistoryViewModel), new PropertyMetadata(false));
 
         #endregion
 
         #region Collection properties
         
 
-        public ObservableCollection<Orders> HistoryOrders
+        public ObservableCollection<Orders> Orders
         {
-            get { return (ObservableCollection<Orders>)GetValue(HistoryOrdersProperty); }
-            set { SetValue(HistoryOrdersProperty, value); }
+            get { return (ObservableCollection<Orders>)GetValue(OrdersProperty); }
+            set { SetValue(OrdersProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Orders.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HistoryOrdersProperty =
-            DependencyProperty.Register("HistoryOrders", typeof(ObservableCollection<Orders>), typeof(OrdersHistoryViewModel), new PropertyMetadata(null));
+        public static readonly DependencyProperty OrdersProperty =
+            DependencyProperty.Register("Orders", typeof(ObservableCollection<Orders>), typeof(OrdersHistoryViewModel), new PropertyMetadata(null));
         
 
 
-        public ObservableCollection<Customers> HistoryCustomers
+        public ObservableCollection<Customers> Customers
         {
-            get { return (ObservableCollection<Customers>)GetValue(HistoryCustomersProperty); }
-            set { SetValue(HistoryCustomersProperty, value); }
+            get { return (ObservableCollection<Customers>)GetValue(CustomersProperty); }
+            set { SetValue(CustomersProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Customers.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HistoryCustomersProperty =
-            DependencyProperty.Register("HistoryCustomers", typeof(ObservableCollection<Customers>), typeof(OrdersHistoryViewModel), new PropertyMetadata(null));
+        public static readonly DependencyProperty CustomersProperty =
+            DependencyProperty.Register("Customers", typeof(ObservableCollection<Customers>), typeof(OrdersHistoryViewModel), new PropertyMetadata(null));
 
 
 
-        public ObservableCollection<String> HistoryCompanies
+        public ObservableCollection<String> Companies
         {
-            get { return (ObservableCollection<String>)GetValue(HistoryCompaniesProperty); }
-            set { SetValue(HistoryCompaniesProperty, value); }
+            get { return (ObservableCollection<String>)GetValue(CompaniesProperty); }
+            set { SetValue(CompaniesProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Companies.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HistoryCompaniesProperty =
-            DependencyProperty.Register("HistoryCompanies", typeof(ObservableCollection<String>), typeof(OrdersHistoryViewModel), new PropertyMetadata(null));
-
-
-
-
-
-
-
-
-
-
+        public static readonly DependencyProperty CompaniesProperty =
+            DependencyProperty.Register("Companies", typeof(ObservableCollection<String>), typeof(OrdersHistoryViewModel), new PropertyMetadata(null));
+        
 
         #endregion
 
@@ -209,29 +201,34 @@ namespace IntershipProject.ViewModels
 
         private async void CheckBoxCheckedHandler(object obj)
         {
-            IsHistoryWaitingRingActive = true;
-            HistoryWaitingRingVisibility = Visibility.Visible;
+            IsWaitingRingActive = true;
+            WaitingRingVisibility = Visibility.Visible;
 
-            if (!IsHistoryCheckBoxChecked)
+            if (!IsCheckBoxChecked)
             {
 
-                HistoryCustomers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
-                HistoryCompanies = new ObservableCollection<String>(await OrdersModel.getCompaniesByUserId());
+                Customers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
+                Companies = new ObservableCollection<String>(await OrdersModel.getCompaniesByUserId());
             }
-            else if (IsHistoryCheckBoxChecked)
+            else if (IsCheckBoxChecked)
             {
-                HistoryCustomers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomers());
-                HistoryCompanies = new ObservableCollection<String>(await OrdersModel.getAllСompanies());
+                Customers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomers());
+                Companies = new ObservableCollection<String>(await OrdersModel.getAllСompanies());
             }
 
+            if (Customers.Count() != 0)
+                foreach (var c in Customers)
+                    c.ContactAdress = c.ContactAdress.Replace('\n', ' ');
 
-            IsHistoryWaitingRingActive = false;
-            HistoryWaitingRingVisibility = Visibility.Collapsed;
+
+            IsWaitingRingActive = false;
+            WaitingRingVisibility = Visibility.Collapsed;
         }
 
         private void CheckBoxCheckedHandlerObj()
         {
             CheckBoxCheckedHandler(null);
+            searchOrdsersClickHandler(null);
         }
 
         #endregion
@@ -250,51 +247,55 @@ namespace IntershipProject.ViewModels
         }
         private async void searchOrdsersClickHandler(object obj)
         {
-            HistoryWaitingRingVisibility = Visibility.Visible;
-            IsHistoryWaitingRingActive = true;
-            HistoryErrorStringVisibility = Visibility.Collapsed;
+            WaitingRingVisibility = Visibility.Visible;
+            IsWaitingRingActive = true;
+            ErrorStringVisibility = Visibility.Collapsed;
 
             if (await DatabaseConnectionChecker.IsConnected())
             {
-                if (IsHistoryCheckBoxChecked)
+                if (IsCheckBoxChecked)
                 {
-                    if (IsHistoryConcreteClientChecked)
+                    if (IsConcreteClientChecked && SelectedConcreteCustomer != null)
                     {
-                        HistoryOrders = new ObservableCollection<Orders>(await OrdersModel.getAllHistoryOrdersByCustomerId(HistorySelectedConcreteCustomer.Id));
+                        Orders = new ObservableCollection<Orders>(await OrdersModel.getAllHistoryOrdersByCustomerId(SelectedConcreteCustomer.Id));
                     }
-                    else if (IsHistoryConcreteCompanyChecked)
+                    else if (IsConcreteCompanyChecked && SelectedConcreteCompany != null)
                     {
-                        HistoryOrders = new ObservableCollection<Orders>(await OrdersModel.getAllHistoryOrdersByCompanyName(HistorySelectedConcreteCompany));
+                        Orders = new ObservableCollection<Orders>(await OrdersModel.getAllHistoryOrdersByCompanyName(SelectedConcreteCompany));
                     }
-                    else if (!IsHistoryConcreteClientChecked && !IsHistoryConcreteCompanyChecked)
+                    else if (!IsConcreteClientChecked && !IsConcreteCompanyChecked)
                     {
-                        HistoryOrders = new ObservableCollection<Orders>(await OrdersModel.getAllHistoryOrders());
+                        Orders = new ObservableCollection<Orders>(await OrdersModel.getAllHistoryOrders());
                     }
+                    else
+                        Orders = new ObservableCollection<Orders>(await OrdersModel.getAllHistoryOrders());
                 }
-                else if (!IsHistoryCheckBoxChecked)
+                else if (!IsCheckBoxChecked)
                 {
-                    if (IsHistoryConcreteClientChecked)
+                    if (IsConcreteClientChecked && SelectedConcreteCustomer != null)
                     {
-                        HistoryOrders = new ObservableCollection<Orders>(await OrdersModel.getHistoryOrdersByCustomerIdAndUserId(HistorySelectedConcreteCustomer.Id));
+                        Orders = new ObservableCollection<Orders>(await OrdersModel.getHistoryOrdersByCustomerIdAndUserId(SelectedConcreteCustomer.Id));
                     }
-                    else if (IsHistoryConcreteCompanyChecked)
+                    else if (IsConcreteCompanyChecked && SelectedConcreteCompany != null)
                     {
-                        HistoryOrders = new ObservableCollection<Orders>(await OrdersModel.getHistoryOrdersByCompanyNameAndUserId(HistorySelectedConcreteCompany));
+                        Orders = new ObservableCollection<Orders>(await OrdersModel.getHistoryOrdersByCompanyNameAndUserId(SelectedConcreteCompany));
                     }
-                    else if (!IsHistoryConcreteClientChecked && !IsHistoryConcreteCompanyChecked)
+                    else if (!IsConcreteClientChecked && !IsConcreteCompanyChecked)
                     {
-                        HistoryOrders = new ObservableCollection<Orders>(await OrdersModel.getAllHistoryOrdersByUserId());
+                        Orders = new ObservableCollection<Orders>(await OrdersModel.getHistoryOrdersByUserId());
                     }
+                    else
+                        Orders = new ObservableCollection<Orders>(await OrdersModel.getHistoryOrdersByUserId());
                 }
             }
             else
             {
-                HistoryErrorStringContent = "Отсутствует подключение к БД.";
-                HistoryErrorStringVisibility = Visibility.Visible;
+                ErrorStringContent = "Отсутствует подключение к БД.";
+                ErrorStringVisibility = Visibility.Visible;
             }
 
-            HistoryWaitingRingVisibility = Visibility.Collapsed;
-            IsHistoryWaitingRingActive = false;
+            WaitingRingVisibility = Visibility.Collapsed;
+            IsWaitingRingActive = false;
 
         }
 
@@ -311,11 +312,11 @@ namespace IntershipProject.ViewModels
         }
         private void cleanQueryClickHandler(object obj)
         {
-            IsHistoryCheckBoxChecked = false;
-            IsHistoryConcreteClientChecked = false;
-            IsHistoryConcreteCompanyChecked = false;
-            HistorySelectedConcreteCompany = null;
-            HistorySelectedConcreteCustomer = null;
+            IsCheckBoxChecked = false;
+            IsConcreteClientChecked = false;
+            IsConcreteCompanyChecked = false;
+            SelectedConcreteCompany = null;
+            SelectedConcreteCustomer = null;
         }
 
         #endregion

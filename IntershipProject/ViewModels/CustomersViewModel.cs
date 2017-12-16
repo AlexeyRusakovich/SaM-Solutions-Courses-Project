@@ -297,6 +297,7 @@ namespace IntershipProject.ViewModels
         private void checkBoxCheckedHandlerObj()
         {
             checkBoxCheckedHandler(null);
+            searchCustomersClickHandler(null);
         }
 
         #endregion

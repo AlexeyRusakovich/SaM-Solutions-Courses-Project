@@ -172,10 +172,28 @@
             </Setter.Value>
         </Setter>
         <Setter Property="Template" Value="{StaticResource TextBoxTemplateBase}"/>
+
+        <Style.Triggers>
+
+            <Trigger Property="Validation.HasError" Value="true">
+
+                <Setter Property="ToolTip"  Value="{Binding RelativeSource={x:Static RelativeSource.Self},  Path=(Validation.Errors)[0].ErrorContent}"/>
+                <Setter Property="BorderBrush" Value="Red"/>
+                <Setter Property="BorderThickness" Value="2"/>
+
+            </Trigger>
+
+        </Style.Triggers>
     </Style>
 
     <!-- and if you want to all TextBox `es to use this style, you have to add this line of code: -->
-    <Style x:Key="{x:Type TextBox}" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBaseStyle}" />
+    <Style x:Key="{x:Type TextBox}" 
+           TargetType="{x:Type TextBox}" 
+           BasedOn="{StaticResource TextBoxBaseStyle}" />
 
+    <Style TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
+        <Setter Property="Foreground" Value="Red" />
+        <Setter Property="FontSize" Value="15"/>
+    </Style>
 
 </ResourceDictionary>

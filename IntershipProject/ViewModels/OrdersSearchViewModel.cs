@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace IntershipProject.ViewModels
 {
-    public class OrdersSearchViewModel : DependencyObject, IDataErrorInfo
+    public class OrdersSearchViewModel : DependencyObject
     {
         #region Constuctor
 
@@ -269,6 +269,7 @@ namespace IntershipProject.ViewModels
         private void checkBoxCheckedHandlerObject()
         {
             checkBoxCheckedHandler(null);
+            searchOrdsersClickHandler(null);
         }
 
         #endregion
@@ -385,43 +386,6 @@ namespace IntershipProject.ViewModels
 
         #endregion
 
-        #region Validating
-
-
-        public bool IsValid
-        {
-            get
-            {
-                foreach (string propery in ValidatesProperties)
-                    if (GetValidationError(propery) != null)
-                        return false;
-
-                return true;
-            }
-        }
-        public string Error => null;
-
-        static readonly string[] ValidatesProperties = {
-
-        };
-
-        public string this[string propertyName]
-        {
-            get
-            {
-                return GetValidationError(propertyName);
-            }
-        }
-
-        private string GetValidationError(string propertyName)
-        {
-            switch (propertyName)
-            {
-
-                default: return null;
-            }
-        }
-
-        #endregion
+        
     }
 }
