@@ -43,8 +43,9 @@
 
                     <Label 
                        Content="{Binding ErrorStringContent}" 
-                       Margin="35, 20, 0, 0" 
+                       Margin="35, 30, 0, 0" 
                        Foreground="Red" 
+                       FontSize="20"
                        Visibility="{Binding ErrorStringVisibility}"/>
 
                 </WrapPanel>
@@ -227,9 +228,8 @@
         <Controls:ProgressRing  Grid.Row="1"  
                                 Panel.ZIndex="1"
                                 Visibility="{Binding WaitinRingVisibility}"
-                                IsActive="{Binding IsWaitingRingActive}" 
-                                Opacity="0.5"
-                                Foreground="#17a2b8" 
+                                IsActive="{Binding IsWaitingRingActive}"
+                                Foreground="#2f3748" 
                                 HorizontalAlignment="Center" 
                                 VerticalAlignment="Center"/>
 
@@ -278,7 +278,7 @@
                                Height="40" 
                                Foreground="#2f3748"
                                FontWeight="Bold">
-                        
+
                             <Label.Content>
                                 <AccessText FontSize="20">
                                     <MultiBinding StringFormat="Заказы клиента {0} {1}">
@@ -288,10 +288,11 @@
                                 </AccessText>
                             </Label.Content>
                         </Label>
-
+                        
                         <Label Content="{Binding ErrorStringContent}" 
                                Margin="10, 20, 0, 0" 
-                               Foreground="Red" 
+                               Foreground="Red"
+                               FontSize="20"
                                Visibility="{Binding ErrorStringVisibility}"/>
 
                     </WrapPanel>

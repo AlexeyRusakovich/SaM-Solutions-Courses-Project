@@ -32,7 +32,8 @@
 
                         <Label 
                                Content="{Binding ErrorStringContent}" 
-                               Margin="35, 20, 0, 0" 
+                               Margin="35, 30, 0, 0" 
+                                FontSize="20"
                                Foreground="Red" 
                                Visibility="{Binding ErrorStringVisibility}"/>
 
@@ -61,7 +62,6 @@
                             <ComboBox       Width="200" 
                                             HorizontalAlignment="Left" 
                                             Margin="20, 10, 0, 0"
-                                            Height="30"
                                             ItemsSource="{Binding ConctereCustomers}"
                                             SelectedItem="{Binding SelectedConcreteCustomer}"
                                             IsEnabled="{Binding Path=IsChecked,ElementName=Concrte_client}">
@@ -80,42 +80,27 @@
                             </ComboBox>
                         </StackPanel>
 
-                        <StackPanel Margin="10">
+                    <StackPanel Margin="10">
 
-                            <RadioButton    Content="Заказы группы клиентов одной компании" 
+                        <RadioButton    Content="Заказы группы клиентов одной компании" 
                                             GroupName="Group1"
                                             x:Name="Company_group"
                                             IsChecked="{Binding IsConcreteCompanyChecked}"
                                             Style="{StaticResource RadioButtonStyle}"
                                             Margin="10,10,0,0" />
 
-                            <ComboBox   Margin="20, 10 , 0, 0"
+                        <ComboBox   Margin="20, 10 , 0, 0"
                                         Width="200"
-                                        Height="30"
                                         FontSize="15"
                                         ItemsSource="{Binding ConctereCompanyGroup}"
                                         HorizontalAlignment="Left" 
                                         Text="{Binding SelectedConcreteCompany}"
                                         IsEnabled="{Binding Path=IsChecked,ElementName=Company_group}"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Horizontal" 
-                                    VerticalAlignment="Top"
-                                    Margin="15">
-
-                            <Label Content="Статус заказа" Margin="0" />
-                            <ComboBox Width="150" 
-                                            FontSize="17"
-                                            SelectedItem="{Binding Status}"
-                                            ItemsSource="{Binding Statuses}"
-                                            Height="30" 
-                                            Margin="10, 0, 0, 0"/>
-
-                        </StackPanel>
+                    </StackPanel>
 
 
 
-                    </WrapPanel>
+                </WrapPanel>
 
                     <StackPanel Grid.Row="3" 
                                     Orientation="Horizontal"
@@ -144,8 +129,7 @@
             <Controls:ProgressRing Grid.Row="1"  Panel.ZIndex="1"
                                    IsActive="{Binding IsWaitingRingActive}" 
                                    Visibility="{Binding WaitinRingVisibility}"
-                                   Opacity="0.5"
-                                   Foreground="#17a2b8" 
+                                   Foreground="White" 
                                    HorizontalAlignment="Center" 
                                    VerticalAlignment="Center"/>
 
@@ -160,6 +144,7 @@
                       AutoGenerateColumns="False" 
                       IsSynchronizedWithCurrentItem="True" 
                       IsReadOnly="True">
+                
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Имя компании"
                                         Width="1*"

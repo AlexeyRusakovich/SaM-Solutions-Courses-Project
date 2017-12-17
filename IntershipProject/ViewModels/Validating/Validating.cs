@@ -41,6 +41,7 @@ namespace IntershipProject.ViewModels
         
         public static string ValidatePhoneNumber(string phoneNumber)
         {
+
             Regex VelcomNumbers = new Regex(@"^(8029[13469]|80447|37529[13469]|375447|37529[13469])\d{6}$");
             Regex MTCNumbers = new Regex(@"^(8029[2578]|80336|37529[2578]|375336|37529[2578]|375336)\d{6}$");
             Regex LifeNumbers = new Regex(@"^(8025|37525)\d{7}$");

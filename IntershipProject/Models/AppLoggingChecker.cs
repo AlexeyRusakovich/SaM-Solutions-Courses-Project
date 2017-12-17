@@ -46,10 +46,10 @@ namespace IntershipProject.Models
                     return null;
                 }
                 else
-                    return "Пользователя с таким логином и паролем не существует.";
+                    return "Неверное имя или пароль";
             }
             else
-                return "Отсутствует подключение к БД.";
+                return "Ошибка. Нет соединения с БД.";
         }
 
         public static string GetMd5Hash(MD5 md5Hash, string input)

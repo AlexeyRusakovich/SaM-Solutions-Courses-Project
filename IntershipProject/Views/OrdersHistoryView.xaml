@@ -29,7 +29,9 @@
                    Foreground="#2f3748" 
                    FontWeight="Bold"/>
 
-            <Label Margin="20, 20, 0, 0" 
+            <Label Margin="20, 30, 0, 0" 
+                   Foreground="Red"
+                   FontSize="20"
                    Content="{Binding ErrorStringContent}" 
                    Visibility="{Binding ErrorStringVisibility}"/>
         </WrapPanel>
@@ -142,8 +144,7 @@
         <Controls:ProgressRing Grid.Row="2"  Panel.ZIndex="1"
                                    IsActive="{Binding IsWaitingRingActive}" 
                                    Visibility="{Binding WaitinRingVisibility}"
-                                   Opacity="0.5"
-                                   Foreground="#17a2b8" 
+                                   Foreground="White" 
                                    HorizontalAlignment="Center" 
                                    VerticalAlignment="Center"/>
 

@@ -19,6 +19,7 @@ namespace IntershipProject.ViewModels
         public OrdersSearchViewModel()
         {
             AppAuthorizationViewModel.SuccessAuthorization += checkBoxCheckedHandlerObject;
+            OrdersModel.DatabaseChanged += checkBoxCheckedHandlerObject;
         }
 
         #endregion
@@ -245,22 +246,34 @@ namespace IntershipProject.ViewModels
         {
             bool IsChecked = (obj == null) ? false : (bool)obj;
 
-            IsWaitingRingActive = true;
-            WaitingRingVisibility = Visibility.Visible;
-
-            if (!IsChecked)
+            try
             {
+                IsWaitingRingActive = true;
+                WaitingRingVisibility = Visibility.Visible;
+                ErrorStringVisibility = Visibility.Collapsed;
 
-                ConctereCustomers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
-                ConctereCompanyGroup = new ObservableCollection<String>(await OrdersModel.getCompaniesByUserId());
+                if(await DatabaseConnectionChecker.IsConnected())
+                {
+                    if (!IsChecked)
+                    {
+
+                        ConctereCustomers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
+                        ConctereCompanyGroup = new ObservableCollection<String>(await OrdersModel.getCompaniesByUserId());
+                    }
+                    else if (IsChecked)
+                    {
+                        ConctereCustomers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomers());
+                        ConctereCompanyGroup = new ObservableCollection<String>(await OrdersModel.getAllСompanies());
+                    }
+
+                    Statuses = new ObservableCollection<String>(await OrdersModel.getStatuses());
+                }
             }
-            else if (IsChecked)
+            catch
             {
-                ConctereCustomers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomers());
-                ConctereCompanyGroup = new ObservableCollection<String>(await OrdersModel.getAllСompanies());
+                ErrorStringContent = "Ошибка. Нет соединения с БД.";
+                ErrorStringVisibility = Visibility.Visible;
             }
-
-            Statuses = new ObservableCollection<String>(await OrdersModel.getStatuses());
 
             IsWaitingRingActive = false;
             WaitingRingVisibility = Visibility.Collapsed;
@@ -288,46 +301,49 @@ namespace IntershipProject.ViewModels
         }
         private async void searchOrdsersClickHandler(object obj)
         {
-            WaitingRingVisibility = Visibility.Visible;
-            IsWaitingRingActive = true;
-            ErrorStringVisibility = Visibility.Collapsed;
-
-            if (await DatabaseConnectionChecker.IsConnected())
+            try
             {
-                if (IsCheckBoxChecked)
+                WaitingRingVisibility = Visibility.Visible;
+                IsWaitingRingActive = true;
+                ErrorStringVisibility = Visibility.Collapsed;
+
+                if (await DatabaseConnectionChecker.IsConnected())
                 {
-                    if (IsConcreteClientChecked)
+                    if (IsCheckBoxChecked)
                     {
-                        Orders = new ObservableCollection<Orders>(await OrdersModel.getAllOrdersByCustomerId(SelectedConcreteCustomer.Id));
+                        if (IsConcreteClientChecked)
+                        {
+                            Orders = new ObservableCollection<Orders>(await OrdersModel.getAllOrdersByCustomerId(SelectedConcreteCustomer.Id));
+                        }
+                        else if (IsConcreteCompanyChecked)
+                        {
+                            Orders = new ObservableCollection<Orders>(await OrdersModel.getAllOrdersByCompanyName(SelectedConcreteCompany));
+                        }
+                        else if (!IsConcreteClientChecked && !IsConcreteCompanyChecked)
+                        {
+                            Orders = new ObservableCollection<Orders>(await OrdersModel.getAllOrders());
+                        }
                     }
-                    else if (IsConcreteCompanyChecked)
+                    else if (!IsCheckBoxChecked)
                     {
-                        Orders = new ObservableCollection<Orders>(await OrdersModel.getAllOrdersByCompanyName(SelectedConcreteCompany));
-                    }
-                    else if (!IsConcreteClientChecked && !IsConcreteCompanyChecked)
-                    {
-                        Orders = new ObservableCollection<Orders>(await OrdersModel.getAllOrders());
-                    }
-                }
-                else if (!IsCheckBoxChecked)
-                {
-                    if (IsConcreteClientChecked)
-                    {
-                        Orders = new ObservableCollection<Orders>(await OrdersModel.getOrdersByCustomerIdAndUserId(SelectedConcreteCustomer.Id));
-                    }
-                    else if (IsConcreteCompanyChecked)
-                    {
-                        Orders = new ObservableCollection<Orders>(await OrdersModel.getOrdersByCompanyNameAndUserId(SelectedConcreteCompany));
-                    }
-                    else if (!IsConcreteClientChecked && !IsConcreteCompanyChecked)
-                    {
-                        Orders = new ObservableCollection<Orders>(await OrdersModel.getOrdersByUserId());
+                        if (IsConcreteClientChecked)
+                        {
+                            Orders = new ObservableCollection<Orders>(await OrdersModel.getOrdersByCustomerIdAndUserId(SelectedConcreteCustomer.Id));
+                        }
+                        else if (IsConcreteCompanyChecked)
+                        {
+                            Orders = new ObservableCollection<Orders>(await OrdersModel.getOrdersByCompanyNameAndUserId(SelectedConcreteCompany));
+                        }
+                        else if (!IsConcreteClientChecked && !IsConcreteCompanyChecked)
+                        {
+                            Orders = new ObservableCollection<Orders>(await OrdersModel.getOrdersByUserId());
+                        }
                     }
                 }
             }
-            else
+            catch
             {
-                ErrorStringContent = "Отсутствует подключение к БД.";
+                ErrorStringContent = "Ошибка. Нет соединения с БД.";
                 ErrorStringVisibility = Visibility.Visible;
             }
 
@@ -355,31 +371,6 @@ namespace IntershipProject.ViewModels
             SelectedConcreteCompany = null;
             SelectedConcreteCustomer = null;
             Status = null;
-        }
-
-        #endregion
-
-        #region DataGrid command & handlers
-
-        private ICommand hideDataGridRowDetails;
-
-        public ICommand HideDataGridRowDetails
-        {
-            get
-            {
-                if (hideDataGridRowDetails == null)
-                    hideDataGridRowDetails = new MyCommands(RowDetailsClickHanldler);
-                return hideDataGridRowDetails;
-            }
-        }
-
-        private void RowDetailsClickHanldler(object sender)
-        {
-            Border row = sender as Border;
-            if (row != null)
-            {
-                row.Visibility =  row.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-            }
         }
 
         #endregion

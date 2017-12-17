@@ -19,11 +19,62 @@ namespace IntershipProject.ViewModels
         public OrdersRegistrationViewModel()
         {
             AppAuthorizationViewModel.SuccessAuthorization += OnAuthorization;
+            OrdersModel.DatabaseChanged += OnAuthorization;
         }
 
         #endregion
 
         #region Dependency properties
+
+        #region Error string properties
+
+        public Visibility AddErrorStringVisibility
+        {
+            get { return (Visibility)GetValue(AddErrorStringVisibilityProperty); }
+            set { SetValue(AddErrorStringVisibilityProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ErrorStringVisibility.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty AddErrorStringVisibilityProperty =
+            DependencyProperty.Register("AddErrorStringVisibility", typeof(Visibility), typeof(OrdersRegistrationViewModel), new PropertyMetadata(Visibility.Collapsed));
+
+
+
+        public string AddErrorStringContent
+        {
+            get { return (string)GetValue(AddErrorStringContentProperty); }
+            set { SetValue(AddErrorStringContentProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ErrorStringContent.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty AddErrorStringContentProperty =
+            DependencyProperty.Register("AddErrorStringContent", typeof(string), typeof(OrdersRegistrationViewModel), new PropertyMetadata(null));
+
+
+        public Visibility ChangeErrorStringVisibility
+        {
+            get { return (Visibility)GetValue(ChangeErrorStringVisibilityProperty); }
+            set { SetValue(ChangeErrorStringVisibilityProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ErrorStringVisibility.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ChangeErrorStringVisibilityProperty =
+            DependencyProperty.Register("ChangeErrorStringVisibility", typeof(Visibility), typeof(OrdersRegistrationViewModel), new PropertyMetadata(Visibility.Collapsed));
+
+
+
+        public string ChangeErrorStringContent
+        {
+            get { return (string)GetValue(ChangeErrorStringContentProperty); }
+            set { SetValue(ChangeErrorStringContentProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ErrorStringContent.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ChangeErrorStringContentProperty =
+            DependencyProperty.Register("ChangeErrorStringContent", typeof(string), typeof(OrdersRegistrationViewModel), new PropertyMetadata(null));
+
+
+        #endregion
 
         #region Waiting Rind Properties
 
@@ -359,19 +410,90 @@ namespace IntershipProject.ViewModels
                 return edit;
             }
         }
-        private void editClickHandler(object obj)
+        private async void editClickHandler(object obj)
         {
-            if(EditButtonContent == "Редактировать")
+            try
             {
-                CancelButtonVisibility = Visibility.Visible;
-                EditButtonContent = "Сохранить";
+                ChangeErrorStringContent = null;
+                ChangeErrorStringVisibility = Visibility.Collapsed;
+                IsWaitingRingActive = true;
+                WaitingRingVisibility = Visibility.Visible;
+
+                if(await DatabaseConnectionChecker.IsConnected())
+                { 
+                    int Cost = 0;
+                    int.TryParse(NewServieceCost, out Cost);
+                    int Count = 0;
+                    int.TryParse(NewServieceCount, out Count);
+                    int discount = 0;
+                    int.TryParse(NewDiscount, out discount);
+
+
+                    if (EditButtonContent == "Редактировать")
+                    {
+                        if (IsChangeOrderValid())
+                        {
+
+
+                            if (await OrdersModel.IsOrderAndCustomerExist(
+
+                                    SelectedChangeDataGridItem.Id,
+                                    SelectedChangeDataGridItem.CustomerId,
+                                    SelectedChangeDataGridItem.OrderDetailsId,
+                                    NewCompanyAdress,
+                                    NewPhoneNumber,
+                                    NewOrderDescription,
+                                    Cost,
+                                    Count,
+                                    discount
+                                ))
+                            {
+                                CancelButtonVisibility = Visibility.Visible;
+                                EditButtonContent = "Сохранить";
+                            }
+                            else
+                            {
+                                ChangeErrorStringContent = "Изменяемого заказа не существует.";
+                                ChangeErrorStringVisibility = Visibility.Visible;
+                            }
+                        }
+                    }
+                    else if (EditButtonContent == "Сохранить")
+                    {
+                        if (IsChangeOrderValid())
+                        {
+                            if (await OrdersModel.UpdateOrder(
+                                     SelectedChangeDataGridItem.OrderDetailsId,
+                                     SelectedChangeDataGridItem.CustomerId,
+                                     NewCompanyAdress,
+                                     NewPhoneNumber,
+                                     NewOrderDescription,
+                                     Cost,
+                                     Count,
+                                     discount
+                                 ))
+                            {
+                                EditButtonContent = "Редактировать";
+                                CancelButtonVisibility = Visibility.Collapsed;
+                            }
+                            else
+                            {
+                                ChangeErrorStringContent = "Произошла ошибка изменения заказа.";
+                                ChangeErrorStringVisibility = Visibility.Visible;
+                            }
+
+                        }
+                    }
+                }
             }
-            else if(EditButtonContent == "Сохранить")
+            catch
             {
-                EditButtonContent = "Редактировать";
-                CancelButtonVisibility = Visibility.Collapsed;
-                // database query
+                ChangeErrorStringContent = "Ошибка. Нет соединения с БД.";
+                ChangeErrorStringVisibility = Visibility.Visible;
             }
+
+            IsWaitingRingActive = false;
+            WaitingRingVisibility = Visibility.Collapsed;
 
         }
 
@@ -444,58 +566,74 @@ namespace IntershipProject.ViewModels
         }
         private async void registerOrderClickHandler(object obj)
         {
-            IsWaitingRingActive = true;
-            WaitingRingVisibility = Visibility.Visible;
-
-            if(SelectExistingCustomerGridVisibility == Visibility.Visible)
+            try
             {
-                if (IsOrderValid())
+                IsWaitingRingActive = true;
+                WaitingRingVisibility = Visibility.Visible;
+                AddErrorStringVisibility = Visibility.Collapsed;
+
+                if(await DatabaseConnectionChecker.IsConnected())
                 {
-                    int Cost = 0;
-                    int.TryParse(ServieceCost, out Cost);
-                    int Count = 0;
-                    int.TryParse(ServieceCount, out Cost);
-                    int discount = 0;
-                    int.TryParse(Discount, out discount);
+                    if (SelectExistingCustomerGridVisibility == Visibility.Visible)
+                    {
+                        if (IsOrderValid)
+                        {
+                            int Cost = 0;
+                            int.TryParse(ServieceCost, out Cost);
+                            int Count = 0;
+                            int.TryParse(ServieceCount, out Count);
+                            int discount = 0;
+                            int.TryParse(Discount, out discount);
 
-                    await OrdersModel.AddOrder(
+                            if (await OrdersModel.AddOrder(
 
-                            SelectedCustomer.Id,
-                            CompanyAdress,
-                            PhoneNumber,
-                            OrderDescription,
-                            Cost,
-                            Count,
-                            discount
+                                    SelectedCustomer.Id,
+                                    OrderDescription,
+                                    Cost,
+                                    Count,
+                                    discount
 
-                        );
-                }    
-            }
-            else if(SelectNewCustomerGridVisibility == Visibility.Visible)
-            {
-                if (IsNewOrderValid)
-                {
+                                ))
+                                MessageBox.Show("Заказ успешно добавлен!");
+                            else
+                                MessageBox.Show("Произошла ошибка добавления заказа.");
+                        }
+                    }
+                    else if (SelectNewCustomerGridVisibility == Visibility.Visible)
+                    {
+                        if (IsNewOrderValid)
+                        {
 
-                    int Cost = 0;
-                    int.TryParse(ServieceCost, out Cost);
-                    int Count = 0;
-                    int.TryParse(ServieceCount, out Cost);
-                    int discount = 0;
-                    int.TryParse(Discount, out discount);
+                            int Cost = 0;
+                            int.TryParse(ServieceCost, out Cost);
+                            int Count = 0;
+                            int.TryParse(ServieceCount, out Cost);
+                            int discount = 0;
+                            int.TryParse(Discount, out discount);
 
-                    await OrdersModel.AddOrderWithNewCustomer(
+                            if (await OrdersModel.AddOrderWithNewCustomer(
 
-                            CustomerCompanyName,
-                            CustomerFistName,
-                            CustomerLastName,
-                            CompanyAdress,
-                            PhoneNumber,
-                            OrderDescription,
-                            Cost,
-                            Count,
-                            discount
-                        );
+                                    CustomerCompanyName,
+                                    CustomerFistName,
+                                    CustomerLastName,
+                                    CompanyAdress,
+                                    PhoneNumber,
+                                    OrderDescription,
+                                    Cost,
+                                    Count,
+                                    discount
+                                ))
+                                MessageBox.Show("Заказ успешно добавлен!");
+                            else
+                                MessageBox.Show("Произошла ошибка добавления заказа.");
+                        }
+                    }
                 }
+            }
+            catch
+            {
+                AddErrorStringContent = "Ошибка. Нет соединения с БД.";
+                AddErrorStringVisibility = Visibility.Visible;
             }
 
             IsWaitingRingActive = false;
@@ -517,7 +655,50 @@ namespace IntershipProject.ViewModels
         }
         private async void changeOrderClickHandler(object obj)
         {
-            
+            try
+            {
+                IsWaitingRingActive = true;
+                WaitingRingVisibility = Visibility.Visible;
+                ChangeErrorStringVisibility = Visibility.Collapsed;
+
+                if (await DatabaseConnectionChecker.IsConnected())
+                {
+
+                    if (IsChangeOrderValid())
+                    {
+                        int Cost = 0;
+                        int.TryParse(NewServieceCost, out Cost);
+                        int Count = 0;
+                        int.TryParse(NewServieceCount, out Count);
+                        int discount = 0;
+                        int.TryParse(NewDiscount, out discount);
+
+                        if (await OrdersModel.UpdateOrder(
+
+                                SelectedChangeDataGridItem.Id,
+                                SelectedChangeDataGridItem.CustomerId,
+                                NewCompanyAdress,
+                                NewPhoneNumber,
+                                NewOrderDescription,
+                                Cost,
+                                Count,
+                                discount
+
+                            ))
+                            MessageBox.Show("Заказ успешно изменен!");
+                        else
+                            MessageBox.Show("Произошла ошибка при изменении заказа.");
+                    }
+                }
+            }
+            catch
+            {
+                ChangeErrorStringContent = "Ошибка. Нет соединения с БД.";
+                ChangeErrorStringVisibility = Visibility.Visible;
+            }
+
+            IsWaitingRingActive = false;
+            WaitingRingVisibility = Visibility.Collapsed;
         }
 
 
@@ -553,8 +734,30 @@ namespace IntershipProject.ViewModels
 
         private async void OnAuthorization()
         {
-            Customers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
-            ChangeOrders = new ObservableCollection<Orders>(await OrdersModel.getChangeableOrdersByUserId());
+            AddErrorStringVisibility = Visibility.Collapsed;
+            ChangeErrorStringVisibility = Visibility.Collapsed;
+            IsWaitingRingActive = true;
+            WaitingRingVisibility = Visibility.Visible;
+
+            try
+            {
+                if(await DatabaseConnectionChecker.IsConnected())
+                { 
+                    Customers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
+                    ChangeOrders = new ObservableCollection<Orders>(await OrdersModel.getChangeableOrdersByUserId());
+                }
+            }
+            catch
+            {
+                AddErrorStringContent = "Ошибка. Нет соединения с БД.";
+                AddErrorStringVisibility = Visibility.Visible;
+                ChangeErrorStringContent = "Ошибка. Нет соединения с БД.";
+                ChangeErrorStringVisibility = Visibility.Visible;
+            }
+
+            IsWaitingRingActive = false;
+            WaitingRingVisibility = Visibility.Collapsed;
+
         }
 
         #endregion
@@ -575,28 +778,28 @@ namespace IntershipProject.ViewModels
             }
         }
 
-        public bool IsOrderValid()
-        {
-            string error = null;
-                foreach (string propery in ValidatesOrderProperties)
-                    error += GetValidationError(propery);
-
-            if (error == null)
-                return true;
-            else
-                return false;
-        }
-
-        public bool IsChangeValid
+        public bool IsOrderValid
         {
             get
             {
+
+                foreach (string propery in ValidatesOrderProperties)
+                    if (GetValidationError(propery) != null)
+                        return false;
+
+                return true;
+
+            }
+            
+        }
+
+        public bool IsChangeOrderValid()
+        {
                 foreach (string propery in ValidatesChangeOrderProperties)
                     if (GetValidationError(propery) != null)
                         return false;
 
                 return true;
-            }
         }
 
         public string Error
@@ -621,16 +824,17 @@ namespace IntershipProject.ViewModels
         static readonly string[] ValidatesOrderProperties = {
 
             "SelectedCustomer",
-            "NewOrderDescription",
-            "NewServieceCost",
-            "NewServieceCount",
-            "NewDiscount"
+            "OrderDescription",
+            "ServieceCost",
+            "ServieceCount",
+            "Discount"
         };
 
         static readonly string[] ValidatesChangeOrderProperties = {
 
+            "SelectedChangeDataGridItem",
             "NewCompanyAdress",
-            "PhoneNumber",
+            "NewPhoneNumber",
             "NewOrderDescription",
             "NewServieceCost",
             "NewServieceCount",
@@ -653,6 +857,12 @@ namespace IntershipProject.ViewModels
                     if (SelectedCustomer == null)
                         return "Поле не должно быть пустым.";
                     return null;
+
+                case "SelectedChangeDataGridItem":
+                    if (SelectedChangeDataGridItem == null)
+                        return "Поле не должно быть пустым.";
+                    return null;
+
 
                 case "NewOrderDescription":
                     if (string.IsNullOrWhiteSpace(NewOrderDescription))

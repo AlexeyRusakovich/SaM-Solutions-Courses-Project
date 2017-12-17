@@ -150,6 +150,7 @@
     <Compile Include="Models\CustomersModel.cs" />
     <Compile Include="Models\DatabaseConnectionChecker.cs" />
     <Compile Include="Models\OrdersModel.cs" />
+    <Compile Include="Converters\DataGridCellStyleConverter.cs" />
     <Compile Include="OrderDetails.cs">
       <DependentUpon>Orders.tt</DependentUpon>
     </Compile>
@@ -174,7 +175,6 @@
     <Compile Include="OrderStatuses.cs">
       <DependentUpon>Orders.tt</DependentUpon>
     </Compile>
-    <Compile Include="Converters\DataGridCellStyleConverter.cs" />
     <Compile Include="ViewModels\AppAuthorizationViewModel.cs" />
     <Compile Include="ViewModels\CustomersViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -332,7 +332,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Orders.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -344,6 +343,8 @@
       <DependentUpon>Orders.edmx</DependentUpon>
       <LastGenOutput>Orders1.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Resources\go_back.png" />
     <Resource Include="Resources\go_back_mouse_over.png" />
   </ItemGroup>

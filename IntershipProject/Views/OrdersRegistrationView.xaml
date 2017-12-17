@@ -42,11 +42,11 @@
                            Foreground="#2f3748" 
                            FontWeight="Bold"/>
 
-                        <Label 
-                           Content="{Binding ErrorStringContent}"
-                           Margin="35, 20, 0, 0"
-                           Visibility="{Binding ErrorStringVisibility}"
-                           Foreground="Red"/>
+                        <Label Content="{Binding AddErrorStringContent}"
+                               Margin="35, 20, 0, 0"
+                                FontSize="20"
+                               Visibility="{Binding AddErrorStringVisibility}"
+                               Foreground="Red"/>
 
                     </WrapPanel>
                     
@@ -95,8 +95,7 @@
                                   SelectedItem="{Binding SelectedCustomer, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                                   ToolTip="{Binding RelativeSource={x:Static RelativeSource.Self},  Path=(Validation.Errors)[0].ErrorContent}"
                                   ItemsSource="{Binding Customers}"
-                                  Style="{StaticResource ComboBoxFlatStyle}"                                  
-                                  Height="35" 
+                                  Style="{StaticResource ComboBoxFlatStyle}"
                                   Width="200" 
                                   HorizontalAlignment="Left" 
                                   Margin="10">
@@ -215,21 +214,20 @@
 
                         <StackPanel>
 
-                            <Controls:ProgressRing Panel.ZIndex="1"
-                                                   IsActive="{Binding IsWaitingRingActive}" 
-                                                   Visibility="{Binding WaitinRingVisibility}"
-                                                   Opacity="0.5"
-                                                   Foreground="#17a2b8" 
-                                                   HorizontalAlignment="Center" 
-                                                   VerticalAlignment="Center"/>
-
                             <Button Style="{StaticResource EnterButtonStyle}"
                                 Command="{Binding RegisterOrder}"
-                                Margin="0, 20, 0, 0" 
+                                Margin="0, 10, 0, 0" 
                                 Width="170" 
                                 Height="40" 
                                 HorizontalAlignment="Center"
                                 Content="Зарегистрировать"/>
+
+                            <Controls:ProgressRing IsActive="{Binding IsWaitingRingActive}" 
+                                                   Visibility="{Binding WaitinRingVisibility}"
+                                                   Margin="10"
+                                                   Foreground="White" 
+                                                   HorizontalAlignment="Center" 
+                                                   VerticalAlignment="Center"/>
 
                         </StackPanel>
 
@@ -242,11 +240,11 @@
         </TabItem>
 
         <TabItem Header="Изменение заказов" 
-                 FontSize="17" 
+                 FontSize="17"
                  FontFamily="Myanmar Text" 
                  Style="{StaticResource TabItemControl}">
 
-            <Grid>
+            <Grid  Margin="25, 10, 0, 0">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -268,17 +266,18 @@
                         <WrapPanel Grid.Row="0" >
 
                             <Label Content="Изменение заказов" 
-                        FontSize="25" 
-                        Margin="10, 10, 0, 0"
-                        Height="40" 
-                        Foreground="#2f3748" 
-                        FontWeight="Bold"/>
+                                    FontSize="25" 
+                                    Margin="10, 10, 0, 0"
+                                    Height="40" 
+                                    Foreground="#2f3748" 
+                                    FontWeight="Bold"/>
 
                             <Label 
-                        Content="{Binding ErrorStringContent}" 
-                        Margin="35, 20, 0, 0" 
-                        Foreground="Red" 
-                        Visibility="{Binding ErrorStringVisibility}"/>
+                                Content="{Binding ChangeErrorStringContent}" 
+                                Margin="35, 20, 0, 0" 
+                                FontSize="20"
+                                Foreground="Red" 
+                                Visibility="{Binding ChangeErrorStringVisibility}"/>  
 
                         </WrapPanel>
 
@@ -368,7 +367,7 @@
 
                         <Grid Grid.Row="3" Grid.ColumnSpan="2">
 
-                            <StackPanel>
+                            <StackPanel>                                
 
                                 <Button Style="{StaticResource EnterButtonStyle}"
                                     Margin="0, 10, 0, 0" 
@@ -379,13 +378,13 @@
                                     Content="{Binding EditButtonContent}"/>
 
                                 <Button Style="{StaticResource EnterButtonStyle}"
-                            Visibility="{Binding CancelButtonVisibility}"
-                            Command="{Binding Cancel}"
-                            Margin="0, 10, 0, 0" 
-                            Width="170" 
-                            Height="40" 
-                            HorizontalAlignment="Center"
-                            Content="Отмена"/>
+                                    Visibility="{Binding CancelButtonVisibility}"
+                                    Command="{Binding Cancel}"
+                                    Margin="0, 10, 0, 0" 
+                                    Width="170" 
+                                    Height="40" 
+                                    HorizontalAlignment="Center"
+                                    Content="Отмена"/>
 
                             </StackPanel>
 
@@ -398,8 +397,7 @@
                 <Controls:ProgressRing Grid.Row="1"  Panel.ZIndex="1"
                                    IsActive="{Binding IsWaitingRingActive}" 
                                    Visibility="{Binding WaitinRingVisibility}"
-                                   Opacity="0.5"
-                                   Foreground="#17a2b8" 
+                                   Foreground="White" 
                                    HorizontalAlignment="Center" 
                                    VerticalAlignment="Center"/>
 

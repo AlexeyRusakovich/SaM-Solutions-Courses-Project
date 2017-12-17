@@ -107,7 +107,7 @@
         <Label Grid.Row="1"
                Content="{Binding ConnectionErrorStringContent}" 
                Margin="0" 
-               Foreground="Red" 
+               Foreground="White" 
                HorizontalAlignment="Center" 
                Visibility="{Binding ConnectionErrorStringVisibility}"/>
         

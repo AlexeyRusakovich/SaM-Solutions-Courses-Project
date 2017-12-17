@@ -19,6 +19,7 @@ namespace IntershipProject.ViewModels
 
         public AppAuthorizationViewModel()
         {
+
         }
 
         #endregion Constructor
@@ -119,25 +120,35 @@ namespace IntershipProject.ViewModels
 
         private async void logInTheAppHandler(object parameter)
         {
-            IsConnectionChecking = true;
-            ConnectionErrorStringVisibility = Visibility.Collapsed;          
-            
-
-            var passwordBox = parameter as PasswordBox;
-            var password = passwordBox.Password;
-           
-            ConnectionErrorStringContent = await AppLoggingChecker.IsUserExist(Login, password);
-
-            if (ConnectionErrorStringContent == null)
+            try
             {
+                IsConnectionChecking = true;
+                ConnectionErrorStringVisibility = Visibility.Collapsed;
 
-                SuccessAuthorization?.Invoke();
+                if (await DatabaseConnectionChecker.IsConnected())
+                { 
+
+                    var passwordBox = parameter as PasswordBox;
+                    var password = passwordBox.Password;
            
+                    ConnectionErrorStringContent = await AppLoggingChecker.IsUserExist(Login, password);
+
+                    if (ConnectionErrorStringContent == null)
+                    {
+
+                        SuccessAuthorization?.Invoke();
+           
+                    }
+                    else
+                        ConnectionErrorStringVisibility = Visibility.Visible;                   
+                }
+
             }
-            else
+            catch
+            {
                 ConnectionErrorStringVisibility = Visibility.Visible;
-
-
+                ConnectionErrorStringContent = "Ошибка. Нет соединения с БД.";
+            }
             IsConnectionChecking = false;
         }
 

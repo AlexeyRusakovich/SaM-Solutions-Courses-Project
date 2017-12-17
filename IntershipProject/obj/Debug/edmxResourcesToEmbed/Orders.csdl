@@ -30,7 +30,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="OrderDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Priority" Type="Int32" Nullable="false" />
     <Property Name="Status" Type="Int32" Nullable="false" />
@@ -46,7 +46,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="OrderDetailsId" Type="Int32" Nullable="false" />
     <Property Name="EmployeeId" Type="Int32" Nullable="false" />
     <Property Name="CustomerId" Type="Int32" Nullable="false" />

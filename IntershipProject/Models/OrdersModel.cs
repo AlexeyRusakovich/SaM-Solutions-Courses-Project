@@ -3,14 +3,25 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace IntershipProject.Models
 {
     class OrdersModel
     {
+
+        #region Event properties
+
+        public delegate void AddChangesHandler();
+
+        public static event AddChangesHandler DatabaseChanged;
+        
+
+        #endregion
 
         #region Companies queries
 
@@ -110,8 +121,6 @@ namespace IntershipProject.Models
 
         public static async Task<bool> AddOrder(    
                                                     int CustomerId,
-                                                    string CompanyAdress,
-                                                    string PhoneNumber,
                                                     string OrderDescription,
                                                     int ServieceCost,
                                                     int ServieceCount,
@@ -125,14 +134,58 @@ namespace IntershipProject.Models
                 {
                     try
                     {
+                        List<int> PriorityList = await (from o in orderEntities.Orders
+                                       where o.CustomerId.Equals(CustomerId)
+                                       select o.OrderDetails.Priority).ToListAsync();
+
+                        int priority = 1;
+
+                        if (PriorityList.Count() != 0)
+                            priority = PriorityList.Max() + 1;
 
 
+                        int StatusId = orderEntities.OrderStatuses.Where(s => s.StatusName.Equals("Выполняется")).First().Id;
 
 
-                        transaction.Commit();
-                        return true;
+                        orderEntities.OrderDetails.Add(new OrderDetails() {
+
+                            OrderDescription = OrderDescription,
+                            Priority = priority,
+                            Status = StatusId,
+                            OrderDate = DateTime.Now.ToString(),
+                            Quantity = ServieceCount,
+                            UnitPrice = ServieceCost,
+                            Discount = Discount
+
+                        });
+
+                        if(await orderEntities.SaveChangesAsync() != 0)
+                        {
+                            int orderDetailsId = await orderEntities.OrderDetails.Select(o => o.Id).MaxAsync();
+
+                            orderEntities.Orders.Add(new Orders()
+                            {
+
+                                CustomerId = CustomerId,
+                                EmployeeId = MainViewModel.CurrentUserId,
+                                OrderDetailsId = orderDetailsId
+
+                            });
+
+                            if (await orderEntities.SaveChangesAsync() != 0)
+                            {
+                                DatabaseChanged();
+                                transaction.Commit();
+                                return true;
+                            }
+
+                        }
+
+
+                        transaction.Rollback();
+                        return false;
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         transaction.Rollback();
                         return false;
@@ -161,22 +214,141 @@ namespace IntershipProject.Models
                 try
                 {
 
+                        orderEntities.Customers.Add(new Customers()
+                        {
+                            CompanyName = CustomerCompanyName,
+                            ContactFirstName = CustomerFistName,
+                            ContactLastName = CustomerLastName,
+                            ContactAdress = CompanyAdress,
+                            ContactPhone = PhoneNumber
+                        });
 
+                        await orderEntities.SaveChangesAsync();
 
+                        int customerId = orderEntities.Customers.Select(c => c.Id).Max();
+
+                        int StatusId = orderEntities.OrderStatuses.Where(s => s.StatusName.Equals("Выполняется")).First().Id;
+
+                        orderEntities.OrderDetails.Add(new OrderDetails()
+                        {
+
+                            OrderDescription = OrderDescription,
+                            Priority = 1,
+                            Status = StatusId,
+                            OrderDate = DateTime.Now.ToString(),
+                            Quantity = ServieceCount,
+                            UnitPrice = ServieceCost,
+                            Discount = Discount
+
+                        });
+
+                        await orderEntities.SaveChangesAsync();
                         
-                    transaction.Commit();
-                    return true;
+                        int orderDetailsId = await orderEntities.OrderDetails.Select(o => o.Id).MaxAsync();
+
+                        orderEntities.Orders.Add(new Orders()
+                        {
+
+                            CustomerId = customerId,
+                            EmployeeId = MainViewModel.CurrentUserId,
+                            OrderDetailsId = orderDetailsId
+
+                        });
+
+                        await orderEntities.SaveChangesAsync();
+
+                        DatabaseChanged();
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
                 }
-                catch (Exception ex)
+        }
+
+        }
+
+
+        public static async Task<bool> UpdateOrder(
+                                                    int OrderDetailsId,
+                                                    int CustomerId,
+                                                    string NewCompanyAdress,
+                                                    string NewPhoneNumber,
+                                                    string NewOrderDescription,
+                                                    int NewServieceCost,
+                                                    int NewServieceCount,
+                                                    int NewDiscount
+            )
+        {
+            using (OrdersEntities orderEntities = new OrdersEntities())
+            {
+                using (var transaction = orderEntities.Database.BeginTransaction())
                 {
-                    transaction.Rollback();
-                    return false;
+                    try
+                    {
+
+                        Customers customer = await orderEntities.Customers.Where(c => c.Id.Equals(CustomerId)).FirstAsync();
+
+                        customer.ContactAdress = NewCompanyAdress;
+                        customer.ContactPhone = NewPhoneNumber;
+
+                        OrderDetails orderDetails = await orderEntities.OrderDetails.Where(o => o.Id.Equals(OrderDetailsId)).FirstAsync();
+
+                        orderDetails.OrderDescription = NewOrderDescription;
+                        orderDetails.UnitPrice = NewServieceCost;
+                        orderDetails.Quantity = NewServieceCount;
+                        orderDetails.Discount = NewDiscount;
+
+                        await orderEntities.SaveChangesAsync();
+
+                        MessageBox.Show("Заказ успешно изменен");
+                        DatabaseChanged();
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        
+                        transaction.Rollback();
+                        return false;
+                    }
                 }
             }
         }
 
-        }
 
+        public static async Task<bool> IsOrderAndCustomerExist(
+
+                                                    int OrderId,
+                                                    int CustomerId,
+                                                    int OrderDetailsId,
+                                                    string NewCompanyAdress,
+                                                    string NewPhoneNumber,
+                                                    string NewOrderDescription,
+                                                    int NewServieceCost,
+                                                    int NewServieceCount,
+                                                    int NewDiscount
+            )
+        {
+
+            OrdersEntities orderEntities = new OrdersEntities();
+
+            if (await orderEntities.Orders.Where(o => o.Id.Equals(OrderId)
+                                        && o.OrderDetailsId.Equals(OrderDetailsId)
+                                        && o.CustomerId.Equals(CustomerId)
+                                        && o.Customers.ContactAdress.Equals(NewCompanyAdress)
+                                        && o.Customers.ContactPhone.Equals(NewPhoneNumber)
+                                        && o.OrderDetails.OrderDescription.Equals(NewOrderDescription)
+                                        && o.OrderDetails.UnitPrice.Equals(NewServieceCost)
+                                        && o.OrderDetails.Quantity.Equals(NewServieceCount)
+                                        && o.OrderDetails.Discount.Equals(NewDiscount)).CountAsync() != 0)
+                return true;
+            else
+                return false;
+        }
 
         public static async Task<List<Orders>> getOrdersByCompanyNameAndUserId(string CompanyName)
         {

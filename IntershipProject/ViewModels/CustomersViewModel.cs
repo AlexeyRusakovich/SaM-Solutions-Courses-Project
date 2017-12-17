@@ -16,6 +16,7 @@ namespace IntershipProject.ViewModels
         public CustomersViewModel()
         {
             AppAuthorizationViewModel.SuccessAuthorization += checkBoxCheckedHandlerObj;
+            OrdersModel.DatabaseChanged += checkBoxCheckedHandlerObj;
         }
 
         #endregion
@@ -276,18 +277,30 @@ namespace IntershipProject.ViewModels
         }
         private async void checkBoxCheckedHandler(object param)
         {
-            IsWaitingRingActive = true;
-            WaitinRingVisibility = Visibility.Visible;
+            try
+            {
+                IsWaitingRingActive = true;
+                WaitinRingVisibility = Visibility.Visible;
+                ErrorStringVisibility = Visibility.Collapsed;
 
-            if (IsCheckBoxChecked)
-            {
-                ResultCustomers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomers());
-                Companies = new ObservableCollection<String>(await OrdersModel.getAllСompanies());
+                if(await DatabaseConnectionChecker.IsConnected())
+                { 
+                    if (IsCheckBoxChecked)
+                    {
+                        ResultCustomers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomers());
+                        Companies = new ObservableCollection<String>(await OrdersModel.getAllСompanies());
+                    }
+                    else if (!IsCheckBoxChecked)
+                    {
+                        ResultCustomers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
+                        Companies = new ObservableCollection<string>(await OrdersModel.getCompaniesByUserId());
+                    }
+                }
             }
-            else if (!IsCheckBoxChecked)
+            catch
             {
-                ResultCustomers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
-                Companies = new ObservableCollection<string>(await OrdersModel.getCompaniesByUserId());
+                ErrorStringContent = "Ошибка. Нет соединения с БД.";
+                ErrorStringVisibility = Visibility.Visible;
             }
 
             IsWaitingRingActive = false;
@@ -317,44 +330,59 @@ namespace IntershipProject.ViewModels
         }
         private async void searchCustomersClickHandler(object param)
         {
+
+            ErrorStringVisibility = Visibility.Collapsed;
             SelectedGridCustomerItemsVisibility = Visibility.Collapsed;
             IsWaitingRingActive = true;
             WaitinRingVisibility = Visibility.Visible;
 
-            if (IsCheckBoxChecked)
-            {
-                if (IsConsreteClientChecked && SelectedCustomer != null)
-                {
-                    Customers = new ObservableCollection<Customers>(await CustomersModel.getCustomerById(SelectedCustomer.Id));
-                }
-                else if (IsConcreteCompanyChecked && SelectedCompany != null)
-                {
-                    Customers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomersByCompany(SelectedCompany));
-                }
-                else
-                {
-                    Customers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomers());
-                }
-            }
-            else if (!IsCheckBoxChecked)
-            {
-                if (IsConsreteClientChecked && SelectedCustomer != null)
-                {
-                    Customers = new ObservableCollection<Customers>(await CustomersModel.getCustomerByIdAndUserId(SelectedCustomer.Id));
-                }
-                else if (IsConcreteCompanyChecked && SelectedCompany != null)
-                {
-                    Customers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomersByCompanyAndUserId(SelectedCompany));
-                }
-                else
-                {
-                    Customers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
-                }
-            }
+            try
+            {           
+                if(await DatabaseConnectionChecker.IsConnected())
+                {              
 
-            if (Customers.Count() != 0)
-                foreach (var c in Customers)
-                    c.ContactAdress = c.ContactAdress.Replace('\n', ' ');
+                    if (IsCheckBoxChecked)
+                    {
+                        if (IsConsreteClientChecked && SelectedCustomer != null)
+                        {
+                            Customers = new ObservableCollection<Customers>(await CustomersModel.getCustomerById(SelectedCustomer.Id));
+                        }
+                        else if (IsConcreteCompanyChecked && SelectedCompany != null)
+                        {
+                            Customers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomersByCompany(SelectedCompany));
+                        }
+                        else
+                        {
+                            Customers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomers());
+                        }
+                    }
+                    else if (!IsCheckBoxChecked)
+                    {
+                        if (IsConsreteClientChecked && SelectedCustomer != null)
+                        {
+                            Customers = new ObservableCollection<Customers>(await CustomersModel.getCustomerByIdAndUserId(SelectedCustomer.Id));
+                        }
+                        else if (IsConcreteCompanyChecked && SelectedCompany != null)
+                        {
+                            Customers = new ObservableCollection<Customers>(await CustomersModel.getAllCustomersByCompanyAndUserId(SelectedCompany));
+                        }
+                        else
+                        {
+                            Customers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
+                        }
+                    }
+
+                    if (Customers.Count() != 0)
+                        foreach (var c in Customers)
+                            c.ContactAdress = c.ContactAdress.Replace('\n', ' ');
+                }
+
+            }
+            catch
+            {
+                ErrorStringContent = "Ошибка. Нет соединения с БД.";
+                ErrorStringVisibility = Visibility.Visible;
+            }
 
             IsWaitingRingActive = false;
             WaitinRingVisibility = Visibility.Collapsed;
@@ -421,7 +449,7 @@ namespace IntershipProject.ViewModels
         private void selectDataGridCustomerHandler(object obj)
         {
             if(SelectedGridCustomer != null)
-            SelectedGridCustomerItemsVisibility = Visibility.Visible;
+                SelectedGridCustomerItemsVisibility = Visibility.Visible;
         }
 
 
@@ -438,15 +466,28 @@ namespace IntershipProject.ViewModels
         }
         private async void getOrdersButtonClickHandler(object obj)
         {
+            try
+            {
+                ErrorStringVisibility = Visibility.Collapsed;
+                FirstGridVisibility = Visibility.Collapsed;
+                SecondGridVisibility = Visibility.Visible;
+                IsWaitingRingActive = true;
+                WaitinRingVisibility = Visibility.Visible;
+
+                if(await DatabaseConnectionChecker.IsConnected())
+                    SelectedGridCustomersOrders = new ObservableCollection<Orders>(await OrdersModel.getAllOrdersByCustomerId(SelectedGridCustomer.Id));
+
+            }
+            catch
+            {
+                ErrorStringContent = "Ошибка. Нет соединения с БД.";
+                ErrorStringVisibility = Visibility.Visible;
+            }
+
+            IsWaitingRingActive = false;
+            WaitinRingVisibility = Visibility.Collapsed;
             FirstGridVisibility = Visibility.Collapsed;
             SecondGridVisibility = Visibility.Visible;
-
-            SelectedGridCustomersOrders = new ObservableCollection<Orders>(await OrdersModel.getAllOrdersByCustomerId(SelectedGridCustomer.Id));
-
-            // TODO :   обеpнуть все методы в try catch
-            //          доделать 2-ой datagrid в customerView
-            //          валидация
-
         }
 
         #endregion

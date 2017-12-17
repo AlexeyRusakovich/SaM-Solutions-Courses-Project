@@ -13,19 +13,12 @@ namespace IntershipProject.Models
     {
         public async static Task<bool> IsConnected()
         {
-                try
-                {
-                    SqlConnection cn;
-                System.String connectionString = "data source = localhost; initial catalog = Orders; integrated security = True;";
-                    cn = new SqlConnection(connectionString);
-                    if (cn.State == System.Data.ConnectionState.Closed)
-                        await cn.OpenAsync();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+            SqlConnection cn;
+            System.String connectionString = "data source = localhost; initial catalog = Orders; integrated security = True;";
+            cn = new SqlConnection(connectionString);
+            if (cn.State == System.Data.ConnectionState.Closed)
+                await cn.OpenAsync();
+            return true;
         }
     }
 }

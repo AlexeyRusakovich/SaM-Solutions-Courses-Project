@@ -28,7 +28,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="OrderDescription" Type="nvarchar" MaxLength="500" Nullable="false" />
     <Property Name="Priority" Type="int" Nullable="false" />
     <Property Name="Status" Type="int" Nullable="false" />
@@ -42,7 +42,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="OrderDetailsId" Type="int" Nullable="false" />
     <Property Name="EmployeeId" Type="int" Nullable="false" />
     <Property Name="CustomerId" Type="int" Nullable="false" />
