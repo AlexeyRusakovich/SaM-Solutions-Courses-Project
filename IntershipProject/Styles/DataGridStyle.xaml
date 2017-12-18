@@ -72,6 +72,8 @@
             </Trigger>
         </Style.Triggers>
 
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Background" Value="{Binding OrderDetails.OrderStatuses.StatusName, Converter={StaticResource DataGridCellStyleConverter}}"/>
@@ -99,6 +101,15 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}">
+    <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="true">
+            <Setter Property="Foreground" Value="Black" />
+        </Trigger>
+    </Style.Triggers>
+    </Style>
+
+
     <DataTemplate x:Key="RowDetailTemplate">
 
         <Border Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsPresenter}}, Path=ActualWidth}">
@@ -111,7 +122,7 @@
                 </LinearGradientBrush>
             </Border.Background>
 
-            <Grid >
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -119,7 +130,7 @@
 
 
                 <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                    
+
                     <StackPanel>
 
                         <Label  Grid.Row="0"
@@ -138,13 +149,14 @@
 				                    Text="{Binding OrderDetails.OrderDescription}"
 				                    TextWrapping="Wrap" />
                     </StackPanel>
-                    
+
                 </ScrollViewer>
 
             </Grid>
         </Border>
     </DataTemplate>
 
-    
+
+
 
 </ResourceDictionary>

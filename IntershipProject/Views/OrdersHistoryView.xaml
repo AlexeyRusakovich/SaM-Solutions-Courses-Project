@@ -157,6 +157,7 @@
                   IsReadOnly="True"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding Orders}"
+                  RowDetailsTemplate="{StaticResource RowDetailTemplate}"
                   CellStyle="{StaticResource OrdersDataGridCell}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя компании"

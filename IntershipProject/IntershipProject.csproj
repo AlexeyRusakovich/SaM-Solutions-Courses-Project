@@ -343,6 +343,16 @@
       <DependentUpon>Orders.edmx</DependentUpon>
       <LastGenOutput>Orders1.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\clock.png" />
+    <Resource Include="Resources\clock_hower.png" />
+    <Resource Include="Resources\cancel.png" />
+    <Resource Include="Resources\cancel_hower.png" />
+    <Resource Include="Resources\check.png" />
+    <Resource Include="Resources\check_hower.png" />
+    <Resource Include="Resources\down.png" />
+    <Resource Include="Resources\down_hower.png" />
+    <Resource Include="Resources\up.png" />
+    <Resource Include="Resources\up_hower.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\go_back.png" />

@@ -14,12 +14,264 @@ namespace IntershipProject.Models
     class OrdersModel
     {
 
+        #region Orders Priority queries
+
+        public static async Task<bool> fromActiveToEndedOrder(int OrderId)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            Orders order = await ordersEntities.Orders.Where(o => o.Id.Equals(OrderId)).FirstAsync();
+
+            int CurrentPriority = await getPriorityById(OrderId);
+
+            foreach (var o in await (from o in ordersEntities.Orders
+                                     where o.OrderDetails.Priority > CurrentPriority
+                                     select o).ToArrayAsync())
+            {
+                o.OrderDetails.Priority = o.OrderDetails.Priority - 1;
+                ordersEntities.Entry(o).State = EntityState.Modified;
+            }
+
+
+            order.OrderDetails.Priority = -1;
+            order.OrderDetails.Status = await getStatusIdByStatusName("Выполнен");   
+            ordersEntities.SaveChanges();
+            DatabaseChanged();
+            return true;
+        }
+
+        public static async Task<bool> fromActiveToCanceledOrder(int OrderId)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            Orders order = await ordersEntities.Orders.Where(o => o.Id.Equals(OrderId)).FirstAsync();
+
+            int CurrentPriority = await getPriorityById(OrderId);
+
+            foreach (var o in await (from o in ordersEntities.Orders
+                                     where o.OrderDetails.Priority > CurrentPriority
+                                     select o).ToArrayAsync())
+            {
+                o.OrderDetails.Priority = o.OrderDetails.Priority - 1;
+                ordersEntities.Entry(o).State = EntityState.Modified;
+            }
+
+            order.OrderDetails.Priority = -1;
+            order.OrderDetails.Status = await getStatusIdByStatusName("Отменен");
+            ordersEntities.SaveChanges();
+            DatabaseChanged();
+            return true;
+        }
+
+        public static async Task<bool> fromActiveToSuspendedOrder(int OrderId)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            Orders order = await ordersEntities.Orders.Where(o => o.Id.Equals(OrderId)).FirstAsync();
+
+            int CurrentPriority = await getPriorityById(OrderId);
+
+            foreach (var o in await (from o in ordersEntities.Orders
+                                     where o.OrderDetails.Priority > CurrentPriority
+                                     select o).ToArrayAsync())
+            {
+                o.OrderDetails.Priority = o.OrderDetails.Priority - 1;
+                ordersEntities.Entry(o).State = EntityState.Modified;
+            }
+
+
+            order.OrderDetails.Priority = -1;
+            order.OrderDetails.Status = await getStatusIdByStatusName("Приостановлен");
+
+            ordersEntities.SaveChanges();
+            DatabaseChanged();
+            return true;
+        }
+
+        public static async Task<bool> fromSuspendedToActiveOrder(int OrderId)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            Orders order = await ordersEntities.Orders.Where(o => o.Id.Equals(OrderId)).FirstAsync();
+            order.OrderDetails.Priority = await getMaxPriority() + 1;
+            order.OrderDetails.Status = await getStatusIdByStatusName("Выполняется");
+            ordersEntities.SaveChanges();
+            DatabaseChanged();
+            return true;
+        }
+
+        public static async Task<bool> fromSuspendedToCanceledOrder(int OrderId)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            Orders order = await ordersEntities.Orders.Where(o => o.Id.Equals(OrderId)).FirstAsync();
+            order.OrderDetails.Priority = -1;
+            order.OrderDetails.Status = await getStatusIdByStatusName("Отменен");
+            ordersEntities.SaveChanges();
+            DatabaseChanged();
+            return true;
+        }
+
+        public static async Task<int> getStatusIdByStatusName(string StatusName)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            switch (StatusName)
+            {
+                case "Выполняется":
+                    return await (from o in ordersEntities.OrderStatuses
+                                 where o.StatusName.Equals(StatusName) select o.Id).FirstAsync();
+                case "Выполнен":
+                    return await (from o in ordersEntities.OrderStatuses
+                                  where o.StatusName.Equals(StatusName)
+                                  select o.Id).FirstAsync();
+                case "Отменен":
+                    return await (from o in ordersEntities.OrderStatuses
+                                  where o.StatusName.Equals(StatusName)
+                                  select o.Id).FirstAsync();
+                case "Приостановлен":
+                    return await (from o in ordersEntities.OrderStatuses
+                                  where o.StatusName.Equals(StatusName)
+                                  select o.Id).FirstAsync();
+
+                default: return -1;
+            }
+
+        }        
+
+        public static async Task<bool> increasePriority(int OrderId)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            int OrderPriority = await getPriorityById(OrderId);
+
+            if ((await getMaxPriority()).Equals(OrderPriority))
+                return true;
+            else
+            {
+                Orders nextOrder = await (from o in ordersEntities.Orders
+                                          where o.EmployeeId.Equals(MainViewModel.CurrentUserId)
+                                          && o.OrderDetails.Priority.Equals(OrderPriority + 1)
+                                          select o).FirstAsync();
+
+                Orders order = (await ordersEntities.Orders.Where(o => o.Id.Equals(OrderId)).FirstAsync());
+
+                int o2Priority = nextOrder.OrderDetails.Priority;
+                nextOrder.OrderDetails.Priority = order.OrderDetails.Priority;
+                order.OrderDetails.Priority = o2Priority;
+                
+                await ordersEntities.SaveChangesAsync();
+                DatabaseChanged();
+                return true;
+            }
+        }
+
+        public static async Task<bool> decreasePriority(int OrderId)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            int OrderPriority = await getPriorityById(OrderId);
+
+            if ((await getMinPriority()).Equals(OrderPriority))
+                return true;
+            else
+            {
+                Orders nextOrder = await (from o in ordersEntities.Orders
+                                          where o.EmployeeId.Equals(MainViewModel.CurrentUserId)
+                                          && o.OrderDetails.Priority.Equals(OrderPriority - 1)
+                                          select o).FirstAsync();
+
+                Orders order = (await ordersEntities.Orders.Where(o => o.Id.Equals(OrderId)).FirstAsync());
+
+                int o2Priority = nextOrder.OrderDetails.Priority;
+                nextOrder.OrderDetails.Priority = order.OrderDetails.Priority;
+                order.OrderDetails.Priority = o2Priority;
+
+                ordersEntities.SaveChanges();
+                DatabaseChanged();
+                return true;
+            }
+        }
+
+        public static async Task<int> getMaxPriority()
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            return await (from o in ordersEntities.Orders
+                          where o.EmployeeId.Equals(MainViewModel.CurrentUserId)
+                          select o.OrderDetails.Priority).MaxAsync();
+        }
+
+        public static async Task<int> getPriorityById(int OrderId)
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            return (await (ordersEntities.Orders.Where(o => o.Id.Equals(OrderId)).FirstAsync())).OrderDetails.Priority;
+        }
+
+        public static async Task<int> getMinPriority()
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            return await (from o in ordersEntities.Orders
+                          where o.EmployeeId.Equals(MainViewModel.CurrentUserId)
+                          select o.OrderDetails.Priority).MinAsync();
+        }        
+
+        #endregion
+
+        #region Queue orders queries
+
+        public static async Task<List<Orders>> getActiveOrdersByUserId()
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            return await ordersEntities.Orders
+                                       .Where(o => o.EmployeeId.Equals(MainViewModel.CurrentUserId)
+                                                 && (o.OrderDetails
+                                                    .OrderStatuses
+                                                    .StatusName.Equals("Выполняется")))
+
+                                                    .ToListAsync();
+        }
+
+
+        public static async Task<List<Orders>> getSuspendedOrdersByUserId()
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            return await ordersEntities.Orders
+                                       .Where(o => o.EmployeeId.Equals(MainViewModel.CurrentUserId)
+                                                 && o.OrderDetails
+                                                    .OrderStatuses
+                                                    .StatusName.Equals("Приостановлен"))
+                                                    .ToListAsync();
+        }
+
+        public static async Task<List<Orders>> getEndedOrdersByUserId()
+        {
+            OrdersEntities ordersEntities = new OrdersEntities();
+
+            return await ordersEntities.Orders
+                                       .Where(o => o.EmployeeId.Equals(MainViewModel.CurrentUserId)
+                                                 && 
+                                                 (o.OrderDetails
+                                                    .OrderStatuses
+                                                    .StatusName.Equals("Выполнен")
+                                                ||  o.OrderDetails
+                                                    .OrderStatuses
+                                                    .StatusName.Equals("Отменен")))
+                                                    .ToListAsync();
+        }
+
+
+        #endregion
+
         #region Event properties
 
         public delegate void AddChangesHandler();
 
-        public static event AddChangesHandler DatabaseChanged;
-        
+        public static event AddChangesHandler DatabaseChanged;        
 
         #endregion
 
