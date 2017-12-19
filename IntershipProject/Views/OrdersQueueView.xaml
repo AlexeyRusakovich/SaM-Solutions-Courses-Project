@@ -8,7 +8,8 @@
       xmlns:v="clr-namespace:IntershipProject.ViewModels"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
-      Title="OrdersQueue">
+      Title="OrdersQueue" Background="White">
+   
     
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -33,182 +34,191 @@
                 BorderBrush="White" 
                 BorderThickness="2">
 
-            <StackPanel>
+            <Grid>
 
-                <Label Content="Активные заказы" Margin="10, 10, 0, 0"/>
-                <DataGrid   FontSize="17"
-                            Background="White"
-                            ScrollViewer.CanContentScroll="True"
-                            VirtualizingPanel.ScrollUnit="Pixel"
-                            HorizontalScrollBarVisibility="Hidden"
-                            FontFamily="Myanmar Text"
-                            RowDetailsTemplate="{StaticResource RowDetailTemplate}"
-                            ItemsSource="{Binding ActiveOrders}" 
-                            CellStyle="{StaticResource OrdersDataGridCell}"
-                            IsReadOnly="True" 
-                            AutoGenerateColumns="False">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
-                    <DataGrid.Columns>
+                <Label FontWeight="Bold" Grid.Row="0"  Content="Активные заказы" Margin="10, 10, 0, 0"/>
 
-                        <DataGridTextColumn Header="Имя компании"
-                                                    Width="1.3*"
-                                                    Binding="{Binding Customers.CompanyName}"/>
+                <ScrollViewer Grid.Row="1">                
+                
+                    <DataGrid   FontSize="17"                                
+                                Background="White"
+                                ScrollViewer.CanContentScroll="True"
+                                VirtualizingPanel.ScrollUnit="Pixel"
+                                HorizontalScrollBarVisibility="Hidden"
+                                FontFamily="Myanmar Text"
+                                RowDetailsTemplate="{StaticResource RowDetailTemplate}"
+                                ItemsSource="{Binding ActiveOrders}" 
+                                CellStyle="{StaticResource OrdersDataGridCell}"
+                                IsReadOnly="True" 
+                                AutoGenerateColumns="False">
 
-                        <DataGridTextColumn Header="Заказчик"
-                                                    Width="1.5*">
-                            <DataGridTextColumn.Binding>
-                                <MultiBinding StringFormat=" {0} {1}">
-                                    <Binding Path = "Customers.ContactFirstName"/>
-                                    <Binding Path = "Customers.ContactLastName" />
-                                </MultiBinding>
-                            </DataGridTextColumn.Binding>
-                        </DataGridTextColumn>
+                        <DataGrid.Columns>
 
-                        <DataGridTextColumn Header="Статус" 
-                                                    Width="1*"
-                                                    Binding="{Binding OrderDetails.OrderStatuses.StatusName}"/>
+                            <DataGridTextColumn Header="Имя компании"
+                                                        Width="1.3*"
+                                                        Binding="{Binding Customers.CompanyName}"/>
 
-                        <DataGridTextColumn Header="Дата регистрации"
-                                        Width="1.2*"
-                                        Binding="{Binding OrderDetails.OrderDate}"/>
+                            <DataGridTextColumn Header="Заказчик"
+                                                        Width="1.5*">
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding StringFormat=" {0} {1}">
+                                        <Binding Path = "Customers.ContactFirstName"/>
+                                        <Binding Path = "Customers.ContactLastName" />
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
 
-                        <DataGridTextColumn Header="Приоритет"
-                                            Width="1*"
-                                            Binding="{Binding OrderDetails.Priority}"/>
+                            <DataGridTextColumn Header="Статус" 
+                                                        Width="1*"
+                                                        Binding="{Binding OrderDetails.OrderStatuses.StatusName}"/>
 
-                        <DataGridTemplateColumn>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
+                            <DataGridTextColumn Header="Дата регистрации"
+                                            Width="1.2*"
+                                            Binding="{Binding OrderDetails.OrderDate}"/>
 
-                                        <Image  Width="24"
-                                                Height="24" 
-                                                HorizontalAlignment="Center" 
-                                                VerticalAlignment="Center">
-                                            <Image.Style>
-                                                <Style TargetType="{x:Type Image}">
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Source" Value="/Resources/down_hower.png"/>
-                                                        </Trigger>
-                                                        <Trigger Property="IsMouseOver" Value="False">
-                                                            <Setter Property="Source" Value="/Resources/down.png"/>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding DataContext.IncreasePriority, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
-                                                                           CommandParameter="{Binding}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </Image>
+                            <DataGridTextColumn Header="Приоритет"
+                                                Width="1*"
+                                                Binding="{Binding OrderDetails.Priority}"/>
 
-                                        <Image  Width="24"
-                                                Height="24"  
-                                                HorizontalAlignment="Center" 
-                                                VerticalAlignment="Center">
-                                            <Image.Style>
-                                                <Style TargetType="{x:Type Image}">
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Source" Value="/Resources/up_hower.png"/>
-                                                        </Trigger>
-                                                        <Trigger Property="IsMouseOver" Value="False">
-                                                            <Setter Property="Source" Value="/Resources/up.png"/>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding DataContext.DecreasePriority, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
-                                                                           CommandParameter="{Binding}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </Image>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
 
-                                        <Image  Width="24"
-                                                Height="24"  
-                                                HorizontalAlignment="Center" 
-                                                VerticalAlignment="Center">
-                                            <Image.Style>
-                                                <Style TargetType="{x:Type Image}">
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Source" Value="/Resources/clock_hower.png"/>
-                                                        </Trigger>
-                                                        <Trigger Property="IsMouseOver" Value="False">
-                                                            <Setter Property="Source" Value="/Resources/clock.png"/>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding DataContext.FromActiveToSuspendedOrder, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
-                                                                           CommandParameter="{Binding}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </Image>
+                                            <Image  Width="24"
+                                                    Height="24" 
+                                                    HorizontalAlignment="Center" 
+                                                    VerticalAlignment="Center">
+                                                <Image.Style>
+                                                    <Style TargetType="{x:Type Image}">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Source" Value="/Resources/down_hower.png"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="False">
+                                                                <Setter Property="Source" Value="/Resources/down.png"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.IncreasePriority, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
+                                                                               CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Image>
 
-                                        <Image  Width="24"
-                                                Height="24"  
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center">
-                                            <Image.Style>
-                                                <Style TargetType="{x:Type Image}">
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Source" Value="/Resources/check_hower.png"/>
-                                                        </Trigger>
-                                                        <Trigger Property="IsMouseOver" Value="False">
-                                                            <Setter Property="Source" Value="/Resources/check.png"/>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding DataContext.FromActiveToEndedOrder, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
-                                                                           CommandParameter="{Binding}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </Image>
+                                            <Image  Width="24"
+                                                    Height="24"  
+                                                    HorizontalAlignment="Center" 
+                                                    VerticalAlignment="Center">
+                                                <Image.Style>
+                                                    <Style TargetType="{x:Type Image}">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Source" Value="/Resources/up_hower.png"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="False">
+                                                                <Setter Property="Source" Value="/Resources/up.png"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.DecreasePriority, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
+                                                                               CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Image>
 
-                                        <Image  Width="24"
-                                                Height="24" 
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center">
-                                            <Image.Style>
-                                                <Style TargetType="{x:Type Image}">
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Source" Value="/Resources/cancel_hower.png"/>
-                                                        </Trigger>
-                                                        <Trigger Property="IsMouseOver" Value="False">
-                                                            <Setter Property="Source" Value="/Resources/cancel.png"/>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding DataContext.FromActiveToCanceledOrder, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
-                                                                           CommandParameter="{Binding}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </Image>
+                                            <Image  Width="24"
+                                                    Height="24"  
+                                                    HorizontalAlignment="Center" 
+                                                    VerticalAlignment="Center">
+                                                <Image.Style>
+                                                    <Style TargetType="{x:Type Image}">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Source" Value="/Resources/clock_hower.png"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="False">
+                                                                <Setter Property="Source" Value="/Resources/clock.png"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.FromActiveToSuspendedOrder, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
+                                                                               CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Image>
 
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                                            <Image  Width="24"
+                                                    Height="24"  
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center">
+                                                <Image.Style>
+                                                    <Style TargetType="{x:Type Image}">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Source" Value="/Resources/check_hower.png"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="False">
+                                                                <Setter Property="Source" Value="/Resources/check.png"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.FromActiveToEndedOrder, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
+                                                                               CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Image>
 
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
+                                            <Image  Width="24"
+                                                    Height="24" 
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center">
+                                                <Image.Style>
+                                                    <Style TargetType="{x:Type Image}">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Source" Value="/Resources/cancel_hower.png"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="False">
+                                                                <Setter Property="Source" Value="/Resources/cancel.png"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.FromActiveToCanceledOrder, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
+                                                                               CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Image>
+
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </Grid>
         </Border>
 
 
@@ -217,106 +227,113 @@
                 BorderBrush="White" 
                 BorderThickness="2">
 
-            <StackPanel>
+            <Grid>
 
-                <Label Content="Приостановленные заказы"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
-                <DataGrid   FontSize="17"
-                            ScrollViewer.CanContentScroll="True"
-                            VirtualizingPanel.ScrollUnit="Pixel"
-                            HorizontalScrollBarVisibility="Hidden"
-                            FontFamily="Myanmar Text"
-                            RowDetailsTemplate="{StaticResource RowDetailTemplate}"
-                            ItemsSource="{Binding SuspendedOrders}" 
-                            CellStyle="{StaticResource OrdersDataGridCell}"
-                            IsReadOnly="True" 
-                            AutoGenerateColumns="False">
+                <Label Grid.Row="0" FontWeight="Bold" Content="Приостановленные заказы"/>
 
-                    <DataGrid.Columns>
+                <ScrollViewer Grid.Row="1">
+                    <DataGrid   FontSize="17"                                
+                                ScrollViewer.CanContentScroll="True"
+                                VirtualizingPanel.ScrollUnit="Pixel"
+                                HorizontalScrollBarVisibility="Hidden"
+                                FontFamily="Myanmar Text"
+                                RowDetailsTemplate="{StaticResource RowDetailTemplate}"
+                                ItemsSource="{Binding SuspendedOrders}" 
+                                CellStyle="{StaticResource OrdersDataGridCell}"
+                                IsReadOnly="True" 
+                                AutoGenerateColumns="False">
 
-                        <DataGridTextColumn Header="Имя компании"
-                                                    Width="1*"
-                                                    Binding="{Binding Customers.CompanyName}"/>
+                        <DataGrid.Columns>
 
-                        <DataGridTextColumn Header="Заказчик"
-                                                    Width="1*">
-                            <DataGridTextColumn.Binding>
-                                <MultiBinding StringFormat=" {0} {1}">
-                                    <Binding Path = "Customers.ContactFirstName"/>
-                                    <Binding Path = "Customers.ContactLastName" />
-                                </MultiBinding>
-                            </DataGridTextColumn.Binding>
-                        </DataGridTextColumn>
+                            <DataGridTextColumn Header="Имя компании"
+                                                        Width="1*"
+                                                        Binding="{Binding Customers.CompanyName}"/>
 
-                        <DataGridTextColumn Header="Статус" 
-                                                    Width="1*"
-                                                    Binding="{Binding OrderDetails.OrderStatuses.StatusName}"/>
+                            <DataGridTextColumn Header="Заказчик"
+                                                        Width="1*">
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding StringFormat=" {0} {1}">
+                                        <Binding Path = "Customers.ContactFirstName"/>
+                                        <Binding Path = "Customers.ContactLastName" />
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
 
-                        <DataGridTextColumn Header="Дата регистрации"
-                                        Width="1*"
-                                        Binding="{Binding OrderDetails.OrderDate}"/>
+                            <DataGridTextColumn Header="Статус" 
+                                                        Width="1*"
+                                                        Binding="{Binding OrderDetails.OrderStatuses.StatusName}"/>
 
-                        <DataGridTemplateColumn>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
+                            <DataGridTextColumn Header="Дата регистрации"
+                                            Width="1*"
+                                            Binding="{Binding OrderDetails.OrderDate}"/>
 
-                                        <Image  Width="24"
-                                                Height="24" 
-                                                HorizontalAlignment="Center" 
-                                                VerticalAlignment="Center">
-                                            <Image.Style>
-                                                <Style TargetType="{x:Type Image}">
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Source" Value="/Resources/check_hower.png"/>
-                                                        </Trigger>
-                                                        <Trigger Property="IsMouseOver" Value="False">
-                                                            <Setter Property="Source" Value="/Resources/check.png"/>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding DataContext.FromSuspendedToActiveOrder, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
-                                                                           CommandParameter="{Binding}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </Image>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
 
-                                        <Image  Width="24"
-                                                Height="24" 
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center">
-                                            <Image.Style>
-                                                <Style TargetType="{x:Type Image}">
-                                                    <Style.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Source" Value="/Resources/cancel_hower.png"/>
-                                                        </Trigger>
-                                                        <Trigger Property="IsMouseOver" Value="False">
-                                                            <Setter Property="Source" Value="/Resources/cancel.png"/>
-                                                        </Trigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                    <i:InvokeCommandAction Command="{Binding DataContext.FromSuspendedToCanceledOrder, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
-                                                                           CommandParameter="{Binding}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </Image>
+                                            <Image  Width="24"
+                                                    Height="24" 
+                                                    HorizontalAlignment="Center" 
+                                                    VerticalAlignment="Center">
+                                                <Image.Style>
+                                                    <Style TargetType="{x:Type Image}">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Source" Value="/Resources/check_hower.png"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="False">
+                                                                <Setter Property="Source" Value="/Resources/check.png"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.FromSuspendedToActiveOrder, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
+                                                                               CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Image>
 
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                                            <Image  Width="24"
+                                                    Height="24" 
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center">
+                                                <Image.Style>
+                                                    <Style TargetType="{x:Type Image}">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Source" Value="/Resources/cancel_hower.png"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="False">
+                                                                <Setter Property="Source" Value="/Resources/cancel.png"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <i:InvokeCommandAction Command="{Binding DataContext.FromSuspendedToCanceledOrder, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" 
+                                                                               CommandParameter="{Binding}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Image>
 
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </Grid>
         </Border>
 
 
@@ -325,14 +342,22 @@
                 BorderBrush="White" 
                 BorderThickness="2">
 
-            <StackPanel>
+            <Grid>
 
-                <StackPanel Orientation="Horizontal" Margin="10, 10, 0, 0">
-                    <Label Content="Выполненные и отмененные заказы" Margin="0"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10, 10, 0, 0">
+                    <Label FontWeight="Bold" Content="Выполненные и отмененные заказы" Margin="0"/>
                     <Label Content="{Binding ErrorStringContent}" Visibility="{Binding ErrorStringVisibility}"/>
                 </StackPanel>
 
-                <DataGrid   FontSize="17"
+                <ScrollViewer Grid.Row="1">
+                    <DataGrid   FontSize="17"                            
                             ScrollViewer.CanContentScroll="True"
                             VirtualizingPanel.ScrollUnit="Pixel"
                             HorizontalScrollBarVisibility="Hidden"
@@ -373,7 +398,9 @@
 
                     </DataGrid.Columns>
                 </DataGrid>
-            </StackPanel>
+                </ScrollViewer>
+
+            </Grid>
         </Border>
 
 

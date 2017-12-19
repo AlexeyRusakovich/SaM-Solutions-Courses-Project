@@ -374,6 +374,10 @@ namespace IntershipProject.ViewModels
 
         #endregion
 
+        #endregion
+
+        #region Commands & handlers
+
         #region Enter buttons commands & handlers
 
         public string EditButtonContent
@@ -397,7 +401,7 @@ namespace IntershipProject.ViewModels
         // Using a DependencyProperty as the backing store for CancelButtomVisibility.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CancelButtonVisibilityProperty =
             DependencyProperty.Register("CancelButtonVisibility", typeof(Visibility), typeof(OrdersRegistrationViewModel), new PropertyMetadata(Visibility.Collapsed));
-        
+
 
 
         private ICommand edit;
@@ -419,8 +423,8 @@ namespace IntershipProject.ViewModels
                 IsWaitingRingActive = true;
                 WaitingRingVisibility = Visibility.Visible;
 
-                if(await DatabaseConnectionChecker.IsConnected())
-                { 
+                if (await DatabaseConnectionChecker.IsConnected())
+                {
                     int Cost = 0;
                     int.TryParse(NewServieceCost, out Cost);
                     int Count = 0;
@@ -572,7 +576,7 @@ namespace IntershipProject.ViewModels
                 WaitingRingVisibility = Visibility.Visible;
                 AddErrorStringVisibility = Visibility.Collapsed;
 
-                if(await DatabaseConnectionChecker.IsConnected())
+                if (await DatabaseConnectionChecker.IsConnected())
                 {
                     if (SelectExistingCustomerGridVisibility == Visibility.Visible)
                     {
@@ -607,7 +611,7 @@ namespace IntershipProject.ViewModels
                             int Cost = 0;
                             int.TryParse(ServieceCost, out Cost);
                             int Count = 0;
-                            int.TryParse(ServieceCount, out Cost);
+                            int.TryParse(ServieceCount, out Count);
                             int discount = 0;
                             int.TryParse(Discount, out discount);
 
@@ -720,7 +724,7 @@ namespace IntershipProject.ViewModels
 
         private void dataGridItemSelectedHandler(object obj)
         {
-           if(SelectedChangeDataGridItem != null)
+            if (SelectedChangeDataGridItem != null)
             {
                 NewCustomer = SelectedChangeDataGridItem.Customers;
                 NewCompanyAdress = SelectedChangeDataGridItem.Customers.ContactAdress.Replace('\n', ' ');
@@ -741,8 +745,8 @@ namespace IntershipProject.ViewModels
 
             try
             {
-                if(await DatabaseConnectionChecker.IsConnected())
-                { 
+                if (await DatabaseConnectionChecker.IsConnected())
+                {
                     Customers = new ObservableCollection<Customers>(await CustomersModel.getCustomersByUserId());
                     ChangeOrders = new ObservableCollection<Orders>(await OrdersModel.getChangeableOrdersByUserId());
                 }
@@ -765,7 +769,7 @@ namespace IntershipProject.ViewModels
         #endregion
 
         #region Validating
-        
+
         public bool IsNewOrderValid
         {
             get
@@ -912,7 +916,7 @@ namespace IntershipProject.ViewModels
                     return Validating.ValidateValue(ServieceCost, 1, 100000);
 
                 case "ServieceCount":
-                    return Validating.ValidateValue(ServieceCost, 1, 10000);
+                    return Validating.ValidateValue(ServieceCount, 1, 10000);
 
                 case "Discount":
                     return Validating.ValidateValue(Discount, 0, 100);

@@ -34,6 +34,7 @@ namespace IntershipProject.Models
 
 
             order.OrderDetails.Priority = -1;
+            order.OrderDetails.ClosingOrderDate = DateTime.Now.ToString();
             order.OrderDetails.Status = await getStatusIdByStatusName("Выполнен");   
             ordersEntities.SaveChanges();
             DatabaseChanged();
@@ -57,6 +58,7 @@ namespace IntershipProject.Models
             }
 
             order.OrderDetails.Priority = -1;
+            order.OrderDetails.ClosingOrderDate = DateTime.Now.ToString();
             order.OrderDetails.Status = await getStatusIdByStatusName("Отменен");
             ordersEntities.SaveChanges();
             DatabaseChanged();
@@ -481,11 +483,21 @@ namespace IntershipProject.Models
 
                         int StatusId = orderEntities.OrderStatuses.Where(s => s.StatusName.Equals("Выполняется")).First().Id;
 
+                        List<int> PriorityList = await (from o in orderEntities.Orders
+                                                        where o.CustomerId.Equals(customerId)
+                                                        select o.OrderDetails.Priority).ToListAsync();
+
+                        int priority = 1;
+
+                        if (PriorityList.Count() != 0)
+                            priority = PriorityList.Max() + 1;
+
+
                         orderEntities.OrderDetails.Add(new OrderDetails()
                         {
 
                             OrderDescription = OrderDescription,
-                            Priority = 1,
+                            Priority = priority,
                             Status = StatusId,
                             OrderDate = DateTime.Now.ToString(),
                             Quantity = ServieceCount,
